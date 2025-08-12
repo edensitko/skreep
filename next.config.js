@@ -5,6 +5,10 @@ const nextConfig = {
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
   
+  // GitHub Pages configuration
+  basePath: '/skreep',
+  assetPrefix: '/skreep',
+  
   // Disable React Strict Mode to prevent double loading
   reactStrictMode: false,
   
