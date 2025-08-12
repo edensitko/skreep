@@ -1,13 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable static export for GitHub Pages
+  // Enable static export for custom domain
   output: 'export',
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
   
-  // GitHub Pages configuration
-  basePath: '/skreep',
-  assetPrefix: '/skreep',
+  // Custom domain configuration (no basePath needed for skreep.com)
+  // basePath: '/skreep', // Removed for custom domain
+  // assetPrefix: '/skreep', // Removed for custom domain
   
   // Disable React Strict Mode to prevent double loading
   reactStrictMode: false,
