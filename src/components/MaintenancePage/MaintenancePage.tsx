@@ -204,7 +204,7 @@ function MaintenancePage() {
                 <div className="absolute -inset-4 bg-gradient-to-r from-cyan-400/30 via-blue-500/30 to-purple-600/30 blur-2xl rounded-full opacity-50 group-hover:opacity-70 transition-opacity duration-500" />
                 
                 <img 
-                  src="/assets/images/logo-1.png" 
+                  src="./assets/images/logo-1.png" 
                   alt="Skreep Logo" 
                   className="relative h-8 md:h-12 lg:h-16 w-auto mx-auto filter drop-shadow-2xl hover:scale-105 transition-transform duration-300"
                 />
@@ -229,7 +229,7 @@ function MaintenancePage() {
                   <div className="relative w-50 h-50 rounded-2xl overflow-hidden group-hover:scale-105 transition-transform duration-300">
                     {/* Custom Maintenance Image */}
                     <img 
-                      src="/assets/images/maint.png" 
+                      src="./assets/images/maint.png" 
                       alt="Maintenance" 
                       className="w-full h-full object-cover rounded-2xl opacity-90 group-hover:opacity-100 transition-opacity duration-300"
                     />
