@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# סקריפ | skreep - פתרונות בינה מלאכותית
+
+This is a [Next.js](https://nextjs.org/) project with Tailwind CSS, featuring RTL support for Hebrew language and an interactive AI chat interface.
 
 ## Getting Started
 

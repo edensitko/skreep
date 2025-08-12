@@ -1,0 +1,47 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Black gradient background -->
+  <defs>
+    <radialGradient id="bgGradient" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0a0a0a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+    </radialGradient>
+    
+    <!-- Subtle pattern overlay -->
+    <pattern id="logoPattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
+      <circle cx="100" cy="100" r="2" fill="#ffffff" opacity="0.03"/>
+      <circle cx="50" cy="50" r="1.5" fill="#00bcd4" opacity="0.02"/>
+      <circle cx="150" cy="150" r="1.5" fill="#9c27b0" opacity="0.02"/>
+    </pattern>
+    
+    <!-- Subtle grid lines -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.01"/>
+    </pattern>
+  </defs>
+  
+  <!-- Main background -->
+  <rect width="1920" height="1080" fill="url(#bgGradient)"/>
+  
+  <!-- Pattern overlay -->
+  <rect width="1920" height="1080" fill="url(#logoPattern)"/>
+  
+  <!-- Grid overlay -->
+  <rect width="1920" height="1080" fill="url(#grid)"/>
+  
+  <!-- Subtle geometric shapes -->
+  <g opacity="0.02">
+    <circle cx="300" cy="200" r="80" fill="none" stroke="#00bcd4" stroke-width="1"/>
+    <circle cx="1600" cy="300" r="120" fill="none" stroke="#9c27b0" stroke-width="1"/>
+    <circle cx="800" cy="800" r="60" fill="none" stroke="#ffffff" stroke-width="0.5"/>
+    <circle cx="1200" cy="600" r="100" fill="none" stroke="#00bcd4" stroke-width="0.5"/>
+  </g>
+  
+  <!-- Subtle brand elements -->
+  <g opacity="0.015">
+    <rect x="100" y="100" width="60" height="60" rx="8" fill="#00bcd4"/>
+    <rect x="1750" y="200" width="40" height="40" rx="6" fill="#9c27b0"/>
+    <rect x="500" y="900" width="50" height="50" rx="7" fill="#ffffff"/>
+    <rect x="1400" y="800" width="35" height="35" rx="5" fill="#00bcd4"/>
+  </g>
+</svg>
