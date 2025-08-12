@@ -49,7 +49,7 @@ export default function Header() {
           <div className="flex 2xl:space-x-[100px] xl:space-x-10 justify-center items-center w-full xl:w-auto">
             <div className="flex justify-center items-center">
               <Link href="/" aria-label="logo">
-                <img src="/assets/images/logo-1.png" alt="" className="w-[150px] md:w-[150px] pt-3 mr-" />
+                <img src="./assets/images/logo-1.png" alt="" className="w-[150px] md:w-[150px] pt-3 mr-" />
               </Link>
             </div>
           </div>
@@ -86,7 +86,7 @@ export default function Header() {
         <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <Link href="/" aria-label="logo">
             <img 
-              src={"/assets/images/logo-1.png"} 
+              src={"./assets/images/logo-1.png"} 
               alt="" 
               className="ml-8 w-[100px] md:w-[100px] pt-0 transition-all duration-300"
             />
