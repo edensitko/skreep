@@ -12,6 +12,10 @@ const nextConfig = {
   // Disable React Strict Mode to prevent double loading
   reactStrictMode: false,
   
+  // SEO and Performance optimizations
+  poweredByHeader: false,
+  generateEtags: false,
+  
   // Performance optimizations
   experimental: {
     optimizeCss: true,

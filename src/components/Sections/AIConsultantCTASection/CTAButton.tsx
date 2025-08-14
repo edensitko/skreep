@@ -1,12 +1,14 @@
 'use client';
 
 import React, { memo } from 'react';
-import { CTA_CONTENT, ANIMATION_CONFIG } from './constants';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { ANIMATION_CONFIG } from './constants';
 import { getButtonClasses, getAnimationClasses } from './utils';
 import type { CTAButtonProps, AnimationState } from './types';
 
 interface CTAButtonWithAnimationProps extends CTAButtonProps {
   animationState: AnimationState;
+  language: string;
 }
 
 /**
@@ -15,9 +17,11 @@ interface CTAButtonWithAnimationProps extends CTAButtonProps {
 const CTAButton = memo<CTAButtonWithAnimationProps>(({ 
   onClick, 
   animationState,
+  language,
   className = '',
   disabled = false 
 }) => {
+  const { t } = useLanguage();
   const { mounted, isVisible, isHovered } = animationState;
   
   return (
@@ -29,10 +33,11 @@ const CTAButton = memo<CTAButtonWithAnimationProps>(({
         onClick={onClick}
         disabled={disabled}
         className={getButtonClasses(isHovered)}
-        aria-label={CTA_CONTENT.ariaLabel}
+        aria-label={t('aiConsultantCTA.ariaLabel')}
         type="button"
+        dir={language === 'he' ? 'rtl' : 'ltr'}
       >
-        {CTA_CONTENT.buttonText}
+        {t('aiConsultantCTA.buttonText')}
       </button>
     </div>
   );

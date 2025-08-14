@@ -13,4 +13,5 @@ export interface ComparisonRow {
 export interface ComparisonRowProps {
   row: ComparisonRow;
   index: number;
+  language: string;
 }

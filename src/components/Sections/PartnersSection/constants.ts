@@ -52,6 +52,4 @@ export const SWIPER_CONFIG: SwiperConfig = {
 
 export const SWIPER_MODULES = [Autoplay, Pagination];
 
-export const SECTION_TITLE = "חלק מהצלחות שלנו" as const;
-
 export const TAP_TIMEOUT_DURATION = 1000 as const;

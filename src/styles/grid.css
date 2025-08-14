@@ -15,24 +15,28 @@
 @media (max-width: 768px) {
   .win-grid {
     grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(8, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    height: 100%; /* Full section height on tablet */
   }
   
   .win-grid-two {
     grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(8, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    height: 100%; /* Full section height on tablet */
   }
 }
 
 @media (max-width: 480px) {
   .win-grid {
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(8, 1fr);
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+    height: 100%; /* Full section height on mobile */
   }
   
   .win-grid-two {
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(8, 2fr);
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+    height: 100%; /* Full section height on mobile */
   }
 }
 
@@ -44,8 +48,8 @@
 
 /* Add hover effect for grid cells */
 .win-btn:hover {
-  background-color: rgba(74, 207, 255, 0.1);
-  border-color: rgba(74, 207, 255, 0.3) !important;
+  background-color: rgba(74, 207, 255, 0.03);
+  border-color: rgba(74, 207, 255, 0.1) !important;
 }
 
 /* Second hero grid styles */

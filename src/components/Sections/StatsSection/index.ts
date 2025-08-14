@@ -5,12 +5,6 @@
 export { default } from './StatsSection';
 export { default as StatCard } from './StatCard';
 export { default as StatsInfo } from './StatsInfo';
-export type { 
-  Stat, 
-  StatCardProps, 
-  StatsInfoProps 
-} from './types';
-export { 
-  STATS_DATA, 
-  STATS_INFO 
-} from './constants';
+
+// Types are now defined inline in components since they use translation system
+// No constants to export - all data comes from translation files
