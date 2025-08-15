@@ -1,34 +1,22 @@
-# Robots.txt for skreep.com
-# Allow all crawlers access to all content
-
+# *
 User-agent: *
 Allow: /
-
-# Disallow specific paths
 Disallow: /maintenance
 Disallow: /admin
 Disallow: /api
 Disallow: /_next
 Disallow: /static
 
-# Allow AI crawlers
+# GPTBot
 User-agent: GPTBot
 Allow: /
 
+# Google-Extended
 User-agent: Google-Extended
 Allow: /
 
-User-agent: ChatGPT-User
-Allow: /
+# Host
+Host: https://skreep.com
 
-User-agent: CCBot
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
-User-agent: Claude-Web
-Allow: /
-
-# Sitemap location
+# Sitemaps
 Sitemap: https://skreep.com/sitemap.xml

@@ -49,7 +49,7 @@ export default function PageSEO({
 
   // Generate page-specific structured data
   const getStructuredData = () => {
-    const data: any[] = [];
+    const data: Record<string, unknown>[] = [];
 
     // FAQ Schema
     if (faqs && faqs.length > 0) {

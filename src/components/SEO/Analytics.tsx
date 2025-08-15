@@ -125,9 +125,9 @@ export default function Analytics({
 // Type declarations for global objects
 declare global {
   interface Window {
-    gtag: (...args: any[]) => void;
-    dataLayer: any[];
-    fbq: (...args: any[]) => void;
-    lintrk: (...args: any[]) => void;
+    gtag: (...args: unknown[]) => void;
+    dataLayer: unknown[];
+    fbq: (...args: unknown[]) => void;
+    lintrk: (...args: unknown[]) => void;
   }
 }

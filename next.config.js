@@ -75,28 +75,8 @@ const nextConfig = {
     return config;
   },
   
-  // Headers for caching
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY',
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'origin-when-cross-origin',
-          },
-        ],
-      },
-    ];
-  },
+  // Note: Headers are not supported with output: 'export'
+  // Security headers should be configured at the hosting level (GitHub Pages, Netlify, etc.)
 };
 
 module.exports = nextConfig;

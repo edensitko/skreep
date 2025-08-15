@@ -43,7 +43,7 @@ export function useMultilingualSEO() {
   /**
    * Get localized FAQ content
    */
-  const getLocalizedFAQs = (faqs: Array<{ questionKey: string; answerKey: string; translations: any }>) => {
+  const getLocalizedFAQs = (faqs: Array<{ questionKey: string; answerKey: string; translations: Record<string, { question: string; answer: string }> }>) => {
     return faqs.map(faq => ({
       question: faq.translations[currentLang]?.question || faq.questionKey,
       answer: faq.translations[currentLang]?.answer || faq.answerKey,

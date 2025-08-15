@@ -39,7 +39,7 @@ interface AEOProps {
  * Answer Engine Optimization component for AI search engines
  */
 export default function AEO({ questions, howTo, product, language = 'he' }: AEOProps) {
-  const structuredData: any[] = [];
+  const structuredData: Record<string, unknown>[] = [];
 
   // FAQ Schema for AI answers
   if (questions && questions.length > 0) {

@@ -7,8 +7,9 @@ export default getRequestConfig(async ({locale}) => {
   const messages = (await import(`../messages/${locale}.json`)).default;
   
   return {
+    locale: locale as string,
     messages,
     timeZone: 'Asia/Jerusalem',
     now: new Date()
-  } as any;
+  };
 });
