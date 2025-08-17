@@ -1,0 +1,520 @@
+{
+  "hero": {
+    "business": {
+      "title": "Increase Profitability",
+      "titleHighlight": "Through Technology",
+      "subtitle": "Custom Solutions for Your Business",
+      "description": "We provide advanced technology solutions that help your business reduce costs, increase efficiency, and achieve measurable business goals in a short time.",
+      "servicesButton": "Business Solutions",
+      "contactButton": "Get a Quote"
+    },
+    "entrepreneurs": {
+      "title": "From Idea to Successful",
+      "titleHighlight": "Startup",
+      "subtitle": "Building Your First Digital Product",
+      "description": "We take your idea and build a professional MVP that will allow you to raise investments, find first customers, and prove your concept in the market.",
+      "servicesButton": "Build MVP",
+      "contactButton": "Start Now"
+    }
+  },
+  "navigation": {
+    "business": "Business",
+    "entrepreneurs": "Entrepreneurs"
+  },
+  "header": {
+    "home": "Home",
+    "services": "Services",
+    "blog": "Blog",
+    "pages": "Pages",
+    "about": "About",
+    "contact": "Contact",
+    "projects": "projects",
+    "talkToUs": "Talk to Us",
+    "search": "Search"
+  },
+  "partners": {
+    "title": "Part of Our Success",
+    "ariaLabel": "Business Partners",
+    "listAriaLabel": "Business Partners List"
+  },
+  "metadata": {
+    "title": "Skreep - AI Solutions for Business",
+    "description": "Advanced AI solutions for businesses",
+    "keywords": "artificial intelligence, AI, business solutions, technology, innovation"
+  },
+  "about": {
+    "sectionAriaLabel": "About Us",
+    "title": "About Us",
+    "heading": "Leading Software House",
+    "description": "Defined by digital dynamics, our digital marketing agency stands out as a beacon of innovation and strategic capability.\n\nWe love to turn our knowledge and understanding into something that will help you succeed.\n\nWe believe in the power of challenge and change to make the world more efficient.",
+    "buttonText": "Read More",
+    "imageAlt": "About us main image"
+  },
+  "stats": {
+    "sectionAriaLabel": "Company Statistics",
+    "description": "Defined by digital dynamics, our digital marketing agency stands out as a beacon of innovation and strategic capability.",
+    "buttonText": "Learn More",
+    "buttonHref": "/",
+    "cardAriaLabel": "Statistic",
+    "data": [
+      {
+        "number": "5",
+        "suffix": "+",
+        "label": "Years of Experience"
+      },
+      {
+        "number": "50",
+        "suffix": "+",
+        "label": "Successful Projects"
+      },
+      {
+        "number": "100",
+        "suffix": "%",
+        "label": "Customer Satisfaction"
+      }
+    ]
+  },
+  "chat": {
+    "title": "Your AI Assistant",
+    "subtitle": "Chat about your idea with our AI assistant to get started.",
+    "placeholder": "Type a message...",
+    "sendButton": "Send",
+    "helperText": "Send a message to start chatting",
+    "botResponses": [
+      "Thank you for your message! We'll get back to you soon",
+      "We received your inquiry and will handle it promptly",
+      "We're here to help! We'll get back to you with a detailed response",
+      "Your message is important to us, we'll get back to you as soon as possible"
+    ]
+  },
+  "services": {
+    "title": "Advanced AI Solutions for Your Business",
+    "titleHighlight": "AI Solutions",
+    "subtitle": "We provide customized AI solutions that will help your business advance and achieve goals",
+    "items": [
+      {
+        "id": 1,
+        "icon": "🔍",
+        "title": "Artificial Intelligence",
+        "subtitle": "Advanced Solutions",
+        "description": "Development of advanced AI systems for businesses, including natural language processing and smart data analysis",
+        "delay": 0
+      },
+      {
+        "id": 2,
+        "icon": "🎯",
+        "title": "Smart Automation",
+        "subtitle": "Automated Processes",
+        "description": "Creating automated workflows that improve efficiency and reduce operational costs",
+        "delay": 100
+      },
+      {
+        "id": 3,
+        "icon": "💬",
+        "title": "Chatbots",
+        "subtitle": "24/7 Customer Service",
+        "description": "Development of smart chatbots that provide professional customer service around the clock",
+        "delay": 200
+      },
+      {
+        "id": 4,
+        "icon": "💭",
+        "title": "Data Analysis",
+        "subtitle": "Business Insights",
+        "description": "Advanced analysis of business data to generate insights and improve decision making",
+        "delay": 300
+      },
+      {
+        "id": 5,
+        "icon": "⚙️",
+        "title": "Integration",
+        "subtitle": "System Connection",
+        "description": "Seamless integration of AI solutions with existing organizational systems",
+        "delay": 400
+      },
+      {
+        "id": 6,
+        "icon": "🤖",
+        "title": "Technology Consulting",
+        "subtitle": "Professional Training",
+        "description": "Professional consulting and training for teams in implementing advanced AI technologies",
+        "delay": 500
+      }
+    ]
+  },
+  "interactiveServices": {
+    "title": "Our Services",
+    "subtitle": "We offer a wide range of advanced technological services",
+    "keyFeatures": "Key Features",
+    "items": [
+      {
+        "id": "ai-solutions",
+        "title": "AI Solutions",
+        "description": "Advanced AI systems for businesses",
+        "longDescription": "Development of customized artificial intelligence solutions that improve business efficiency and enable data-driven decision making.",
+        "features": ["Advanced Machine Learning", "Natural Language Processing", "Smart Data Analysis", "Smart Automation"],
+        "color": "from-blue-500 to-purple-600",
+        "imageBg": "/assets/images/img/6.png"
+      },
+      {
+        "id": "web-development",
+        "title": "Web Development",
+        "description": "Custom digital solutions",
+        "longDescription": "Creating advanced websites and applications with responsive design, fast performance and excellent user experience.",
+        "features": ["Responsive Design", "Fast Performance", "Advanced SEO", "High Security"],
+        "color": "from-green-500 to-teal-600",
+        "imageBg": "/assets/images/img/7.png"
+      },
+      {
+        "id": "automation",
+        "title": "Automation & Processes",
+        "description": "Time and resource savings",
+        "longDescription": "Implementation of advanced automation solutions that streamline business processes and reduce operational costs.",
+        "features": ["Process Automation", "Workflow Management", "Automated Reports", "Advanced Integrations"],
+        "color": "from-orange-500 to-red-600",
+        "imageBg": "/assets/images/img/8.png"
+      },
+      {
+        "id": "mobile-apps",
+        "title": "Mobile App Development",
+        "description": "Native and hybrid mobile development with excellent user experience and high performance",
+        "longDescription": "Development of native and hybrid mobile applications with excellent user experience and high performance.",
+        "features": ["Native Development", "Advanced UX/UI Design", "API Integration", "App Store Publishing"],
+        "color": "from-pink-500 to-rose-600",
+        "imageBg": "/assets/images/img/9.png"
+      },
+      {
+        "id": "cloud-solutions",
+        "title": "Cloud Solutions",
+        "description": "Advanced and secure cloud infrastructure",
+        "longDescription": "Setup and management of advanced cloud infrastructure with high availability, maximum security and full flexibility.",
+        "features": ["AWS & Azure", "Data Security", "Automated Backups", "24/7 Monitoring"],
+        "color": "from-cyan-500 to-blue-600",
+        "imageBg": "/assets/images/img/10.png"
+      }
+    ]
+  },
+  "ourProjects": {
+    "title": "projects",
+    "subtitle": "Advanced digital solutions we created for our clients",
+    "viewMore": "View More",
+    "viewMoreProjects": "View More Works",
+    "projects": [
+      {
+        "id": 3,
+        "slug": "real-estate-management",
+        "title": "Real Estate Management System",
+        "subtitle": "500M+ NIS in Assets",
+        "description": "Comprehensive management system with custom CRM, digital contracts and analytics dashboard.",
+        "gradient": "from-green-400/20 to-emerald-500/20",
+        "accentColor": "green-400"
+      },
+      {
+        "id": 1,
+        "slug": "e-commerce-platform",
+        "title": "E-commerce Platform",
+        "subtitle": "50,000+ Products",
+        "description": "Complete commerce platform with secure payments, smart inventory management and AI recommendation system.",
+        "gradient": "from-cyan-400/20 to-blue-500/20",
+        "accentColor": "cyan-400"
+      },
+      {
+        "id": 2,
+        "slug": "healthcare-application",
+        "title": "Healthcare Application",
+        "subtitle": "10,000+ Active Users",
+        "description": "Digital health application with secure video conferencing and smart appointment system.",
+        "gradient": "from-purple-400/20 to-pink-500/20",
+        "accentColor": "purple-400"
+      }
+    ]
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "entrepreneursSubtitle": "Everything entrepreneurs want to know about AI solutions",
+    "businessSubtitle": "Answers to the most common questions from business owners",
+    "entrepreneursFaqs": [
+      {
+        "id": 1,
+        "question": "How long does it take to develop an MVP with AI?",
+        "answer": "A basic AI MVP can be ready within 2-4 weeks. This includes a simple chatbot, basic data analysis, and integration with your existing systems. We focus on a quick solution that allows you to test the idea in the market."
+      },
+      {
+        "id": 2,
+        "question": "How can AI help me find customers?",
+        "answer": "AI can analyze potential customer behavior, identify patterns in data, and predict who is most likely to purchase. We build systems that identify quality leads, personalize marketing messages, and optimize the sales process - which can increase conversion rates by 40-60%."
+      },
+      {
+        "id": 3,
+        "question": "How much does it cost for a startup entrepreneur?",
+        "answer": "We understand that startup entrepreneurs have limited budgets. Our basic package starts at $400 per month and includes all the basic tools. Additionally, we offer a gradual program that starts with low costs and scales according to business growth."
+      },
+      {
+        "id": 4,
+        "question": "Do I need technical knowledge to use the solutions?",
+        "answer": "Not at all! We design our solutions specifically for entrepreneurs without technical backgrounds. The interface is simple and intuitive, we provide personal training, and we have a support team available to help with any questions. The goal is for you to focus on business, not technology."
+      },
+      {
+        "id": 5,
+        "question": "How do I know the AI actually works for my business?",
+        "answer": "We start with a small pilot that allows you to see tangible results within 30 days. We define clear KPIs, provide weekly reports, and show exactly how AI affects sales, time savings, or customer service improvement. Only after you see real value do we proceed to the next stage."
+      }
+    ],
+    "businessFaqs": [
+      {
+        "id": 1,
+        "question": "How can AI improve our organizational efficiency?",
+        "answer": "AI can automate repetitive processes, analyze complex business data, and provide insights for decision-making. We implement solutions that optimize inventory management, customer service, performance analysis, and more. Our businesses see 30-50% improvement in operational efficiency."
+      },
+      {
+        "id": 2,
+        "question": "How do you ensure smooth integration with existing systems?",
+        "answer": "We specialize in integration with existing ERP, CRM, and BI systems. Our team analyzes the current architecture and builds technological bridges that ensure smooth data flow. We support all standard protocols and provide custom APIs."
+      },
+      {
+        "id": 3,
+        "question": "What is the level of security and regulatory compliance in your solutions?",
+        "answer": "Information security is our top priority. We work according to ISO 27001, GDPR, and SOC 2 standards. All data is encrypted with 256-bit encryption, we conduct quarterly security audits, and provide detailed compliance reports. Our solutions undergo external penetration testing."
+      },
+      {
+        "id": 4,
+        "question": "How is the implementation and training process carried out?",
+        "answer": "The implementation process begins with an in-depth analysis of existing processes. We build a phased implementation plan, provide comprehensive team training, and offer close support for the first 90 days. Each employee receives personal guidance and the system is tailored to their specific role."
+      },
+      {
+        "id": 5,
+        "question": "How do you measure ROI and results from AI investment?",
+        "answer": "We define clear KPIs before implementation and provide real-time dashboards to track results. We measure cost savings, efficiency improvements, revenue increases, and customer satisfaction. Our clients see an average ROI of 300-400% within the first year."
+      }
+    ]
+  },
+  "aiConsultantCTA": {
+    "primaryButtonText": "Try Our AI Consultant",
+    "primaryAriaLabel": "Try our AI consultant",
+    "secondaryButtonText": "Get Free Consultation",
+    "secondaryAriaLabel": "Get free consultation",
+    "title": "Advanced AI Consultant",
+    "sectionAriaLabel": "Call to action - AI consultant"
+  },
+  "testimonials": {
+    "title": "What Our Clients Say",
+    "subtitle": "Discover how we helped businesses achieve digital success",
+    "sectionAriaLabel": "Client testimonials",
+    "firstSliderAriaLabel": "Testimonials - first row",
+    "secondSliderAriaLabel": "Testimonials - second row",
+    "testimonialAriaLabel": "Testimonial from",
+    "data": [
+      {
+        "id": 1,
+        "name": "Matthew B. Law",
+        "title": "Manager & Founder",
+        "company": "Innovative Technologies",
+        "image": "👤",
+        "rating": 5,
+        "text": "Working with Skreep was a breakthrough for our brand. Their innovative approach and attention to detail helped us significantly upgrade our marketing."
+      },
+      {
+        "id": 2,
+        "name": "Sarah Cohen",
+        "title": "Product Manager",
+        "company": "Tech Startup",
+        "image": "👩",
+        "rating": 5,
+        "text": "Skreep's solutions saved us months of development. Their professional and dedicated team turned our dream into reality."
+      },
+      {
+        "id": 3,
+        "name": "David Levy",
+        "title": "Founder",
+        "company": "Consulting Company",
+        "image": "👨",
+        "rating": 5,
+        "text": "The results speak for themselves - a 300% increase in conversions and significant improvement in user experience. Highly recommended!"
+      },
+      {
+        "id": 4,
+        "name": "Rachel Abraham",
+        "title": "Marketing Manager",
+        "company": "E-commerce Company",
+        "image": "👩‍💼",
+        "rating": 5,
+        "text": "Skreep's personalized approach and ability to understand our unique needs made them a vital strategic partner."
+      },
+      {
+        "id": 5,
+        "name": "Yossi Mizrahi",
+        "title": "CEO",
+        "company": "Fintech Company",
+        "image": "👨‍💼",
+        "rating": 5,
+        "text": "Thanks to Skreep, we managed to launch our product to market 50% faster than planned, with quality that exceeds all expectations."
+      },
+      {
+        "id": 6,
+        "name": "Michal Green",
+        "title": "Project Manager",
+        "company": "High-tech Company",
+        "image": "👩‍💻",
+        "rating": 5,
+        "text": "The professional service, high availability, and ability to provide creative solutions made Skreep our first choice."
+      },
+      {
+        "id": 7,
+        "name": "Avi Samuel",
+        "title": "Co-founder",
+        "company": "Design Studio",
+        "image": "🧑‍💻",
+        "rating": 5,
+        "text": "Skreep's team doesn't just understand technology, but also design and user experience. This combination created a perfect result."
+      }
+    ]
+  },
+  "comparisonTable": {
+    "title": "Why Choose",
+    "titleHighlight": "Skreep",
+    "sectionAriaLabel": "Service comparison",
+    "tableAriaLabel": "Comparison table between service providers",
+    "headers": {
+      "freelancers": "Freelancers",
+      "competitors": "Competitors",
+      "skreepProduct": "Product by"
+    },
+    "cta": {
+      "title": "Ready to Get Started?",
+      "subtitle": "Let's talk about your project and see how Skreep can help you bring it to life",
+      "buttonText": "Let's Talk",
+      "buttonAriaLabel": "Open contact dialog"
+    },
+    "data": [
+      {
+        "category": "Quality",
+        "agencies": "Generally good quality",
+        "freelancers": "Varied levels",
+        "inHouse": "Varied levels",
+        "skreep": "Highest quality, no compromises"
+      },
+      {
+        "category": "Cost",
+        "agencies": "High costs",
+        "freelancers": "Varies by skill level",
+        "inHouse": "High costs for maintaining permanent team",
+        "skreep": "Relatively low investment cost thanks to efficient and innovative work model"
+      },
+      {
+        "category": "Development & Hiring Time",
+        "agencies": "Slow development pace",
+        "freelancers": "Slow development pace",
+        "inHouse": "Fast development pace",
+        "skreep": "Very fast development time thanks to using innovative technologies and platforms"
+      },
+      {
+        "category": "Resources",
+        "agencies": "Variable",
+        "freelancers": "Limited",
+        "inHouse": "Limited",
+        "skreep": "Variable and tailored to your needs"
+      },
+      {
+        "category": "Service & Availability",
+        "agencies": "Good customer service",
+        "freelancers": "Low availability - hard to coordinate schedules",
+        "inHouse": "Depends on resources",
+        "skreep": "Excellent customer service and fast response"
+      }
+    ]
+  },
+  "contactForm": {
+    "title": "Let's Start Your Project",
+    "subtitle": "Fill in the details and we'll get back to you quickly",
+    "sectionAriaLabel": "Contact form",
+    "formAriaLabel": "Service inquiry form",
+    "fields": {
+      "fullName": {
+        "placeholder": "Full Name",
+        "label": "Full Name"
+      },
+      "email": {
+        "placeholder": "Email Address",
+        "label": "Email Address"
+      },
+      "phone": {
+        "placeholder": "Phone Number",
+        "label": "Phone Number"
+      },
+      "description": {
+        "placeholder": "Tell us about your project",
+        "label": "Project Description"
+      }
+    },
+    "businessType": {
+      "legend": "I am:",
+      "options": {
+        "business-owner": "Business Owner",
+        "startup-founder": "Startup Founder"
+      }
+    },
+    "submitButton": {
+      "idle": "Submit",
+      "submitting": "Submitting...",
+      "success": "Sent Successfully!",
+      "error": "Try Again"
+    },
+    "errors": {
+      "requiredField": "This field is required",
+      "invalidEmail": "Invalid email address",
+      "invalidPhone": "Invalid phone number",
+      "submissionError": "An error occurred, please try again",
+      "networkError": "Network issue, please check your connection"
+    },
+    "contactInfo": {
+      "email": "info@skreep.com",
+      "phone": "0585887744"
+    }
+  },
+  "footer": {
+    "copyright": "2025 © All rights reserved to Skreep Systems",
+    "links": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Use"
+    },
+    "ariaLabels": {
+      "footer": "Footer",
+      "navigation": "Navigation links",
+      "scrollToTop": "Scroll to top",
+      "whatsapp": "Contact via WhatsApp"
+    }
+  },
+  "mainFooter": {
+    "about": {
+      "title": "About",
+      "description": "Skreep provides advanced artificial intelligence solutions for businesses, allowing you to focus on growth while we handle the technology.",
+      "socialLinks": {
+        "facebook": "Facebook",
+        "instagram": "Instagram",
+        "twitter": "Twitter"
+      }
+    },
+    "quickLinks": {
+      "title": "Quick Links",
+      "home": "Home",
+      "projects": "Projects",
+      "contact": "Contact"
+    },
+    "contactInfo": {
+      "title": "Address",
+      "address": "Tel Aviv, Israel",
+      "email": "info@skreep.com",
+      "phone": "-"
+    },
+    "newsletter": {
+      "title": "Subscribe to Newsletter",
+      "description": "Subscribe to our newsletter to receive updates on new products and offers",
+      "placeholder": "Enter your email",
+      "submitAriaLabel": "Subscribe to newsletter"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error"
+  }
+}

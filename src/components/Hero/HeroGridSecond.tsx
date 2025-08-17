@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useUserType } from '@/hooks/useGlobalUserType';
+import { useLanguage } from '@/contexts/LanguageContext';
+
 
 // Custom hook for responsive grid size
 const useGridSize = () => {
@@ -12,9 +14,9 @@ const useGridSize = () => {
   useEffect(() => {
     const updateGridSize = () => {
       if (window.innerWidth <= 480) {
-        setGridSize(64); // 8x8 for mobile
+        setGridSize(90); // 6x15 for mobile (6 columns × 15 rows)
       } else if (window.innerWidth <= 768) {
-        setGridSize(36); // 6x6 for tablet
+        setGridSize(96); // 8x12 for tablet (8 columns × 12 rows)
       } else {
         setGridSize(100); // 10x10 for desktop
       }
@@ -34,6 +36,7 @@ const useGridSize = () => {
 export default function HeroGridSecond() {
   const gridSize = useGridSize();
   const { userType, setUserType } = useUserType();
+  const { t, language } = useLanguage();
   
   // Add interactive effect to grid cells on mouse move
   useEffect(() => {
@@ -55,11 +58,11 @@ export default function HeroGridSecond() {
         const maxDistance = 300;
         if (distance < maxDistance) {
           const intensity = 1 - distance / maxDistance;
-          (cell as HTMLElement).style.backgroundColor = `rgba(74, 207, 255, ${intensity * 0.1})`;
-          (cell as HTMLElement).style.borderColor = `rgba(74, 207, 255, ${intensity * 0.3})`;
+          (cell as HTMLElement).style.backgroundColor = `rgba(74, 207, 255, ${intensity * 0.02})`;
+          (cell as HTMLElement).style.borderColor = `rgba(74, 207, 255, ${intensity * 0.1})`;
         } else {
           (cell as HTMLElement).style.backgroundColor = '';
-          (cell as HTMLElement).style.borderColor = 'rgba(100, 100, 100, 0.2)';
+          (cell as HTMLElement).style.borderColor = 'rgba(29, 130, 130, 0.12)';
         }
       });
     };
@@ -73,8 +76,12 @@ export default function HeroGridSecond() {
 
   return (
     <>
+      {/* Language Switcher */}
+      <div className="absolute top-4 left-4 z-50">
+
+      </div>
      
-      <section className="relative w-full min-h-screen overflow-hidden bg-gradient-to-br from-gray-700 via-gray-900 to-black" dir="rtl">
+      <section className="relative w-full min-h-screen overflow-hidden bg-gradient-to-br from-gray-700 via-gray-900 to-black" dir={language === 'he' ? 'rtl' : 'ltr'}>
         {/* Background Pattern */}
        
 
@@ -85,7 +92,7 @@ export default function HeroGridSecond() {
               key={index} 
               className="win-btn" 
               id={`${index}`} 
-              style={{ border: '1px solid rgba(100, 100, 100, 0.2)' }}
+              style={{ border: '1px solid rgba(29, 130, 130, 0.07)' }}
             ></div>
           ))}
         </div>
@@ -112,39 +119,34 @@ export default function HeroGridSecond() {
             </div>
 
             {/* Right Side - Content */}
-            <div className="w-full lg:w-1/2 text-right order-1 lg:order-2">
+            <div className={`w-full lg:w-1/2 order-1 lg:order-2 ${language === 'he' ? 'text-right' : 'text-left'}`}>
               {/* Heading */}
-              <h2 className="text-4xl md:text-5xl xl:text-55 text-white/70 font-semibold mb-[35px] pointer-events-auto xl:ml-5 mx-auto">
-                <span>פיתוח </span>מוצר
-                <span className="relative inline-block px-3 font-bold text-white uppercase" dir="ltr">
-                  <span className="relative z-10">{userType === 'entrepreneurs' ? 'ליזמים' : 'לעסקים'} </span>
+              <h2 className={`text-4xl md:text-5xl xl:text-55 text-white/70 font-semibold mb-[35px] pointer-events-auto xl:ml-5 mx-auto ${language === 'he' ? 'text-right' : 'text-left'}`} dir={language === 'he' ? 'rtl' : 'ltr'}>
+                <span>{t(`hero.${userType}.title`)} </span>
+                <span className="relative inline-block px-3 font-bold text-white uppercase">
+                  <span className="relative z-10">{t(`hero.${userType}.titleHighlight`)} </span>
                   <span className="absolute top-0 left-0 block w-full h-full bg-gradient-to-r from-cyan-400"></span>
                 </span>
                 <br />
-                <span className="italic">בפיתוח מוצרים</span>
+                <span className="italic">{t(`hero.${userType}.subtitle`)}</span>
               </h2>
 
 
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4 animate-in" style={{ animationName: 'fade-up', animationDuration: '0.8s', animationDelay: '0.6s', animationFillMode: 'both' }}>
-              <p className="text-white/60 bg-white/10 pr-5 ml-20 mb-10 border-r-[3px] border-cyan-400 p-3 rounded  rounded-l-2xl text-xs " dir="rtl">
-                {userType === 'entrepreneurs' 
-                  ? 'אנחנו מסייעים ליזמים להפוך את הרעיונות שלהם למציאות דיגיטלית עם פתרונות AI חדשניים וטכנולוגיות מתקדמות.'
-                  : 'מוגדרים על ידי דינמיות דיגיטלית, סוכנות השיווק הדיגיטלית שלנו מתבלטת כמגדלור של חדשנות ויכולת אסטרטגית.'
-                }
+              <p className={`text-white/60 bg-white/10 mb-10 border-cyan-400 p-3 rounded text-xs ${
+                language === 'he' 
+                  ? 'pr-5 ml-20 rounded-l-2xl text-right' 
+                  : 'pl-5 mr-20 rounded-r-2xl text-left'
+              }`} dir={language === 'he' ? 'rtl' : 'ltr'}>
+                {t(`hero.${userType}.description`)}
             </p>
                 <Link href="/services" className="flex items-center gap-2 bg-transparent border border-cyan-400/30 text-white px-8 py-4 rounded-full hover:bg-cyan-400/10 transition-all">
-                  <span>שירותים</span>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15 6L15 12L15 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <span>{t(`hero.${userType}.servicesButton`)}</span>
                 </Link>
-                <Link href="/contact" className="flex items-center gap-2 border-white/10 border-l-[2px] border-t-[2px] gradient-to-r from-cyan-400/40 to-cyan-400/40 bg-cyan-400/40 border-cyan-400/40 text-white px-8 py-4 rounded-full hover:bg-cyan-500/40 transition-all">
-                  <span>בואו נדבר</span>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15 6L15 12L15 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                <Link href="/contact" className="flex items-center gap-2 border-white/10 gradient-to-r from-cyan-400/40 to-cyan-400/40 bg-cyan-400/40 border-cyan-400/40 text-white px-8 py-4 rounded-full hover:bg-cyan-500/40 transition-all">
+                  <span>{t(`hero.${userType}.contactButton`)}</span>
                 </Link>
               </div>
             </div>

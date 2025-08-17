@@ -13,7 +13,8 @@ const FormField = memo<FormFieldProps>(({
   error, 
   required = false,
   autoComplete,
-  'data-testid': testId
+  'data-testid': testId,
+  language
 }) => {
   const inputId = `form-${name}`;
   const errorId = `${inputId}-error`;
@@ -38,7 +39,7 @@ const FormField = memo<FormFieldProps>(({
             ? 'border-red-400/50 focus:ring-red-400/50 focus:border-red-400/50' 
             : 'border-white/20'
         }`}
-        dir="rtl"
+        dir={language === 'he' ? 'rtl' : 'ltr'}
         aria-invalid={error ? 'true' : 'false'}
         aria-describedby={error ? errorId : undefined}
         aria-label={placeholder}
@@ -47,7 +48,7 @@ const FormField = memo<FormFieldProps>(({
         <p 
           id={errorId}
           className="mt-2 text-red-400 text-sm animate-fadeIn" 
-          dir="rtl" 
+          dir={language === 'he' ? 'rtl' : 'ltr'} 
           role="alert"
           aria-live="polite"
         >

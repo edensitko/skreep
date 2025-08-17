@@ -5,7 +5,7 @@ import type { ComparisonRowProps } from './types';
  * Memoized comparison table row component
  * Displays comparison data across different service providers
  */
-const ComparisonRow = memo<ComparisonRowProps>(({ row }) => (
+const ComparisonRow = memo<ComparisonRowProps>(({ row, language }) => (
   <div 
     className="grid grid-cols-4 border-t border-white/5 hover:bg-white/5 transition-all duration-300 group"
     role="row"
@@ -15,11 +15,11 @@ const ComparisonRow = memo<ComparisonRowProps>(({ row }) => (
     {/* Freelancers column */}
     <div className="py-2 px-2 text-center border-l border-white/10" role="gridcell">
       <div>
-        <h4 className="font-medium text-white text-xs" dir="rtl">
+        <h4 className="font-medium text-white text-xs" dir="ltr">
           {row.category}
         </h4>
       </div>
-      <p className="text-gray-400 text-xs" dir="rtl">
+      <p className="text-gray-400 text-xs" dir="ltr">
         {row.freelancers}
       </p>
     </div>
@@ -27,11 +27,11 @@ const ComparisonRow = memo<ComparisonRowProps>(({ row }) => (
     {/* In-house column */}
     <div className="py-2 px-2 text-center border-l border-white/10" role="gridcell">
       <div>
-        <h4 className="font-medium text-white text-xs" dir="rtl">
+        <h4 className="font-medium text-white text-xs" dir="ltr">
           {row.category}
         </h4>
       </div>
-      <p className="text-gray-400 text-xs" dir="rtl">
+      <p className="text-gray-400 text-xs" dir="ltr">
         {row.inHouse}
       </p>
     </div>
@@ -52,10 +52,10 @@ const ComparisonRow = memo<ComparisonRowProps>(({ row }) => (
           </svg>
         </div>
         <div className="flex-1">
-          <h4 className="font-bold text-white text-xs" dir="rtl">
+          <h4 className="font-bold text-white text-xs" dir="ltr">
             {row.category}
           </h4>
-          <p className="text-gray-200 text-xs leading-relaxed" dir="rtl">
+          <p className="text-gray-200 text-xs leading-relaxed" dir="ltr">
             {row.skreep}
           </p>
         </div>

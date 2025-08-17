@@ -43,6 +43,7 @@ export interface FormFieldProps {
   required?: boolean;
   autoComplete?: string;
   'data-testid'?: string;
+  language: string;
 }
 
 export interface TextAreaFieldProps {
@@ -52,8 +53,10 @@ export interface TextAreaFieldProps {
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   rows?: number;
   'data-testid'?: string;
+  language: string;
 }
 
 export interface ContactInfoItemProps {
   contact: ContactInfo;
+  language: string;
 }

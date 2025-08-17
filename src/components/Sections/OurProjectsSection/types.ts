@@ -4,6 +4,7 @@
 
 export interface ProjectSection {
   readonly id: number;
+  readonly slug: string;
   readonly title: string;
   readonly subtitle: string;
   readonly description: string;
@@ -14,6 +15,7 @@ export interface ProjectSection {
 export interface ProjectCardProps {
   section: ProjectSection;
   index: number;
+  language: string;
 }
 
 export interface MouseAnimationProps {

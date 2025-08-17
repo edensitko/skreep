@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react';
 import Image from 'next/image';
+import { useLanguage } from '@/contexts/LanguageContext';
 import FormField from './FormField';
 import TextAreaField from './TextAreaField';
 import ContactInfoItem from './ContactInfoItem';
@@ -14,6 +15,12 @@ import type { FormData, FormErrors, BusinessType, SubmissionStatus } from './typ
  * Features form validation, sanitization, debounced input, and loading states
  */
 function ContactFormSection() {
+  // ============================================================================
+  // LANGUAGE CONTEXT
+  // ============================================================================
+  
+  const { language, t } = useLanguage();
+  
   // ============================================================================
   // STATE MANAGEMENT
   // ============================================================================
@@ -177,7 +184,7 @@ function ContactFormSection() {
       id="contact" 
       className="w-full py-16 md:py-24 bg-black/30 relative overflow-hidden"
       role="region"
-      aria-label="טופס יצירת קשר"
+      aria-label={t('contactForm.sectionAriaLabel')}
     >
       {/* Background Image with Opacity */}
       <div className="absolute inset-0 z-0">
@@ -196,11 +203,11 @@ function ContactFormSection() {
         <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              בואו נתחיל לעבוד
+            <h2 className="text-2xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-white via-white/80 to-white/60 bg-clip-text text-transparent leading-tight" >
+              {t('contactForm.title')}
             </h2>
-            <p className="text-lg text-white/70 leading-relaxed">
-              מוכנים להפוך את החזון שלכם למציאות? צרו איתנו קשר ונתחיל לתכנן את הפרויקט הבא שלכם
+            <p className="text-xl text-white/70 max-w-2xl mx-auto leading-relaxed text-center">
+              {t('contactForm.subtitle')}
             </p>
           </div>
 
@@ -238,67 +245,71 @@ function ContactFormSection() {
               onSubmit={handleSubmit} 
               className="space-y-6"
               noValidate
-              aria-label="טופס יצירת קשר"
+              aria-label={t('contactForm.formAriaLabel')}
             >
               {/* Full Name */}
               <FormField
-                type="text"
                 name="fullName"
-                placeholder="שם מלא *"
+                type="text"
+                placeholder={t('contactForm.fields.fullName.placeholder')}
                 value={formData.fullName}
                 onChange={handleInputChange}
                 error={errors.fullName}
                 required
                 autoComplete="name"
                 data-testid="fullName-input"
+                language={language}
               />
 
               {/* Email */}
               <FormField
-                type="email"
                 name="email"
-                placeholder="כתובת אימייל *"
+                type="email"
+                placeholder={t('contactForm.fields.email.placeholder')}
                 value={formData.email}
                 onChange={handleInputChange}
                 error={errors.email}
                 required
                 autoComplete="email"
                 data-testid="email-input"
+                language={language}
               />
 
               {/* Phone */}
               <FormField
-                type="tel"
                 name="phone"
-                placeholder="מספר טלפון *"
+                type="tel"
+                placeholder={t('contactForm.fields.phone.placeholder')}
                 value={formData.phone}
                 onChange={handleInputChange}
                 error={errors.phone}
                 required
                 autoComplete="tel"
                 data-testid="phone-input"
+                language={language}
               />
 
               {/* Description */}
               <TextAreaField
                 name="description"
-                placeholder="ספרו לנו על הפרויקט שלכם"
+                placeholder={t('contactForm.fields.description.placeholder')}
                 value={formData.description}
                 onChange={handleInputChange}
                 rows={3}
                 data-testid="description-input"
+                language={language}
               />
 
               {/* Business Type */}
               <div className="space-y-3 pt-2">
                 <fieldset>
-                  <legend className="text-white/70 text-sm mb-3" dir="rtl">אני:</legend>
+                  <legend className="text-white/70 text-sm mb-3" dir={language === 'he' ? 'rtl' : 'ltr'}>{t('contactForm.businessType.legend')}</legend>
                   <div className="flex flex-col space-y-2" role="radiogroup" aria-required="true">
                     {BUSINESS_TYPES.map((businessType) => (
                       <label 
                         key={businessType.value}
                         className="flex items-center gap-3 cursor-pointer hover:bg-white/5 p-2 rounded transition-colors duration-300" 
-                        dir="rtl"
+                        dir={language === 'he' ? 'rtl' : 'ltr'}
                       >
                         <input
                           type="radio"
@@ -310,7 +321,7 @@ function ContactFormSection() {
                           aria-describedby={errors.businessType ? 'businessType-error' : undefined}
                         />
                         <span className="text-white/90 hover:text-white transition-colors duration-300">
-                          {businessType.label}
+                          {t(`contactForm.businessType.options.${businessType.value}`)}
                         </span>
                       </label>
                     ))}
@@ -319,7 +330,7 @@ function ContactFormSection() {
                     <p 
                       id="businessType-error" 
                       className="mt-2 text-red-400 text-sm animate-fadeIn" 
-                      dir="rtl" 
+                      dir={language === 'he' ? 'rtl' : 'ltr'} 
                       role="alert"
                       aria-live="polite"
                     >
@@ -344,8 +355,8 @@ function ContactFormSection() {
                   {isSubmitting && (
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   )}
-                  <span dir="rtl">
-                    {isSubmitting ? 'שולח...' : 'שליחה'}
+                  <span dir={language === 'he' ? 'rtl' : 'ltr'}>
+                    {isSubmitting ? t('contactForm.submitButton.submitting') : t('contactForm.submitButton.idle')}
                   </span>
                 </button>
               </div>
@@ -357,6 +368,7 @@ function ContactFormSection() {
                 <ContactInfoItem
                   key={index}
                   contact={contact}
+                  language={language}
                 />
               ))}
             </div>

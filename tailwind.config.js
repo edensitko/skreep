@@ -13,7 +13,8 @@ module.exports = {
         'white': '#ffffff',
       },
       fontFamily: {
-        hebrew: ['var(--font-hebrew)'],
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        hebrew: ['var(--font-hebrew)', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         '55': '55px',

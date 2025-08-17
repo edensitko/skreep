@@ -1,20 +1,40 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, memo } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import ScrollButton from './ScrollButton';
 import WhatsAppButton from './WhatsAppButton';
-import { FOOTER_LINKS, COPYRIGHT_TEXT, WHATSAPP_URL, SCROLL_THRESHOLD } from './constants';
+import { WHATSAPP_URL, SCROLL_THRESHOLD } from './constants';
 import { scrollToTop, shouldShowScrollButton } from './utils';
+import { GiUluru } from 'react-icons/gi';
 
 /**
  * Footer section with responsive layout, scroll-to-top functionality, and social buttons
  */
 function FooterSection() {
   // ============================================================================
-  // STATE MANAGEMENT
+  // CONTEXT & STATE
   // ============================================================================
   
+  const { language, t } = useLanguage();
   const [showScrollTop, setShowScrollTop] = useState(false);
+  
+  // Dynamic footer data based on language
+  const footerLinks = [
+    {
+      href: "/privacy-policy",
+      text: language === 'he' ? 'מדיניות פרטיות' : 'Privacy Policy',
+      ariaLabel: language === 'he' ? 'מדיניות פרטיות' : 'Privacy Policy'
+    },
+    {
+      href: "/accessibility-statement",
+      text: language === 'he' ? 'הצהרת נגישות' : 'Accessibility Statement',
+      ariaLabel: language === 'he' ? 'הצהרת נגישות' : 'Accessibility Statement'
+    }
+  ];
+  
+  const copyrightText = t('footer.copyright');
+  const textDirection = language === 'he' ? 'rtl' : 'ltr';
 
   // ============================================================================
   // HANDLERS
@@ -70,27 +90,31 @@ function FooterSection() {
           backgroundImage: 'linear-gradient(90deg, rgb(74, 231, 255) 0%, rgb(23, 23, 23) 63.23%)'
         }}
         role="contentinfo"
-        aria-label="כותרת תחתונה"
+        aria-label={t('footer.ariaLabels.footer')}
       >
         <div className="h-full mx-auto px-4 md:px-6 max-w-7xl">
           {/* Mobile Layout */}
           <div className="md:hidden py-2 space-y-2">
             {/* Copyright Text */}
-            <div className="text-center">
+            <div className="text-center" dir={textDirection}>
               <span className="text-white text-sm">
-                <span dangerouslySetInnerHTML={{ __html: COPYRIGHT_TEXT }} />
+                {copyrightText}
               </span>
             </div>
             
             {/* Navigation Links */}
-            <nav className="flex justify-center items-center space-x-4" dir="ltr" aria-label="קישורי ניווט">
-              {FOOTER_LINKS.map((link, index) => (
+            <nav 
+              className={`flex justify-center items-center ${language === 'he' ? 'space-x-reverse space-x-4' : 'space-x-4'}`} 
+              dir={textDirection} 
+              aria-label={t('footer.ariaLabels.navigation')}
+            >
+              {footerLinks.map((link, index) => (
                 <React.Fragment key={link.text}>
-                  {index > 0 && <span className="text-black text-sm">|</span>}
+                  {index > 0 && <span className="text-white text-sm">|</span>}
                   <a 
                     href={link.href} 
-                    className="text-black text-sm hover:text-white hover:underline transition-colors"
-                    aria-label={link.ariaLabel || link.text}
+                    className="text-white text-sm hover:text-cyan-400 hover:underline transition-colors"
+                    aria-label={link.ariaLabel}
                   >
                     {link.text}
                   </a>
@@ -100,10 +124,10 @@ function FooterSection() {
           </div>
 
           {/* Desktop Layout */}
-          <div className="hidden md:flex items-center justify-between w-full h-full text-base">
+          <div className="hidden md:flex items-center justify-between w-full h-full text-base" dir={textDirection}>
             {/* Copyright Text */}
             <span className="text-white">
-              <span dangerouslySetInnerHTML={{ __html: COPYRIGHT_TEXT }} />
+              {copyrightText}
             </span>
 
             {/* Scroll to Top Button */}
@@ -112,7 +136,7 @@ function FooterSection() {
                 <a 
                   href="#" 
                   onClick={handleDesktopScrollToTop}
-                  aria-label="חזור למעלה"
+                  aria-label={t('footer.ariaLabels.scrollToTop')}
                   className="w-[45px] h-[45px] rounded-full border-[3px] border-black flex justify-center items-center bg-cyan-400 absolute -top-[55px] hover:bg-cyan-300 transition-colors"
                 >
                   <svg 
@@ -135,19 +159,21 @@ function FooterSection() {
             </div>
 
             {/* Navigation Links */}
-            <nav className="flex items-center space-x-6" dir="ltr" aria-label="קישורי ניווט">
-              {FOOTER_LINKS.map((link, index) => (
+            <nav 
+              className={`flex items-center ${language === 'he' ? 'space-x-reverse space-x-6' : 'space-x-6'}`} 
+              dir={textDirection} 
+              aria-label={t('footer.ariaLabels.navigation')}
+            >
+              {footerLinks.map((link, index) => (
                 <React.Fragment key={link.text}>
-                  {index > 0 && <li className="font-medium text-black">|</li>}
-                  <li>
-                    <a 
-                      href={link.href} 
-                      className="font-medium hover:text-white hover:underline transition-colors text-black"
-                      aria-label={link.ariaLabel || link.text}
-                    >
-                      {link.text}
-                    </a>
-                  </li>
+                  {index > 0 && <span className="font-medium text-white">|</span>}
+                  <a 
+                    href={link.href} 
+                    className="font-medium hover:text-white hover:underline transition-colors text-white"
+                    aria-label={link.ariaLabel}
+                  >
+                    {link.text}
+                  </a>
                 </React.Fragment>
               ))}
             </nav>
@@ -160,7 +186,7 @@ function FooterSection() {
         {/* WhatsApp Button - Left Corner */}
         <WhatsAppButton
           href={WHATSAPP_URL}
-          ariaLabel="צור קשר בוואטסאפ"
+          ariaLabel={t('footer.ariaLabels.whatsapp')}
           icon={WhatsAppIcon}
           className="fixed bottom-6 left-6"
         />
@@ -168,7 +194,7 @@ function FooterSection() {
         {/* Scroll to Top Button - Right Corner */}
         <ScrollButton
           onClick={handleScrollToTop}
-          ariaLabel="חזור למעלה"
+          ariaLabel={t('footer.ariaLabels.scrollToTop')}
           className="fixed bottom-6 right-6"
         />
       </div>

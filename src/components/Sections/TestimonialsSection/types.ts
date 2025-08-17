@@ -15,6 +15,7 @@ export interface Testimonial {
 export interface TestimonialCardProps {
   testimonial: Testimonial;
   index: number;
+  language: string;
 }
 
 export interface SliderConfig {

@@ -1,20 +1,89 @@
 'use client';
 
-import React, { memo, useState, useRef } from 'react';
+import React, { memo, useState, useRef, useEffect } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import ProjectCard from './ProjectCard';
-import { PROJECT_SECTIONS, SECTION_TITLE, SECTION_SUBTITLE, VIEW_MORE_PROJECTS_TEXT } from './constants';
+
+interface ProjectSection {
+  id: number;
+  title: string;
+  slug: string;
+  subtitle: string;
+  description: string;
+  gradient: string;
+  accentColor: string;
+}
 
 /**
  * Our Projects section with vertical carousel
  */
 function OurProjectsSection() {
+  const { language, t } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [projectsData, setProjectsData] = useState<ProjectSection[]>([]);
   const carouselRef = useRef<HTMLDivElement>(null);
+
+  // Update projects data when language changes
+  useEffect(() => {
+    const getProjectsData = async (): Promise<ProjectSection[]> => {
+      try {
+        // Dynamically import the translation file
+        const messages = await import(`../../../../messages/${language}.json`);
+        const projectsItems = messages.default?.ourProjects?.projects || messages.ourProjects?.projects;
+        if (Array.isArray(projectsItems)) {
+          return projectsItems;
+        }
+      } catch (error) {
+        console.warn('Failed to load projects data:', error);
+      }
+      
+      // Fallback data if translation loading fails
+      return [
+        {
+          id: 3,
+          slug: 'real-estate-management',
+          title: language === 'he' ? 'מערכת ניהול נדל״ן' : 'Real Estate Management System',
+          subtitle: language === 'he' ? '500M+ שקל בנכסים' : '500M+ NIS in Assets',
+          description: language === 'he' 
+            ? 'מערכת ניהול מקיפה עם CRM מותאם, חוזים דיגיטליים ודשבורד אנליטיקה.'
+            : 'Comprehensive management system with custom CRM, digital contracts and analytics dashboard.',
+          gradient: 'from-green-400/20 to-emerald-500/20',
+          accentColor: 'green-400'
+        },
+        {
+          id: 1,
+          slug: 'e-commerce-platform',
+          title: language === 'he' ? 'פלטפורמת E-commerce' : 'E-commerce Platform',
+          subtitle: language === 'he' ? '50,000+ מוצרים' : '50,000+ Products',
+          description: language === 'he'
+            ? 'פלטפורמת מסחר מלאה עם תשלומים מאובטחים, ניהול מלאי חכם ומערכת המלצות AI.'
+            : 'Complete commerce platform with secure payments, smart inventory management and AI recommendation system.',
+          gradient: 'from-cyan-400/20 to-blue-500/20',
+          accentColor: 'cyan-400'
+        },
+        {
+          id: 2,
+          slug: 'healthcare-application',
+          title: language === 'he' ? 'אפליקציית בריאות' : 'Healthcare Application',
+          subtitle: language === 'he' ? '10,000+ משתמשים פעילים' : '10,000+ Active Users',
+          description: language === 'he'
+            ? 'אפליקציה לבריאות דיגיטלית עם וידאו קונפרנס מאובטח ומערכת תורים חכמה.'
+            : 'Digital health application with secure video conferencing and smart appointment system.',
+          gradient: 'from-purple-400/20 to-pink-500/20',
+          accentColor: 'purple-400'
+        }
+      ];
+    };
+
+    getProjectsData().then((data) => {
+      setProjectsData(data);
+    });
+  }, [language]);
 
   const scrollToCard = (index: number) => {
     setCurrentIndex(index);
     if (carouselRef.current) {
-      const cardHeight = carouselRef.current.scrollHeight / PROJECT_SECTIONS.length;
+      const cardHeight = carouselRef.current.scrollHeight / projectsData.length;
       carouselRef.current.scrollTo({
         top: cardHeight * index,
         behavior: 'smooth'
@@ -23,12 +92,14 @@ function OurProjectsSection() {
   };
 
   const nextCard = () => {
-    const nextIndex = (currentIndex + 1) % PROJECT_SECTIONS.length;
+    if (projectsData.length === 0) return;
+    const nextIndex = (currentIndex + 1) % projectsData.length;
     scrollToCard(nextIndex);
   };
 
   const prevCard = () => {
-    const prevIndex = currentIndex === 0 ? PROJECT_SECTIONS.length - 1 : currentIndex - 1;
+    if (projectsData.length === 0) return;
+    const prevIndex = currentIndex === 0 ? projectsData.length - 1 : currentIndex - 1;
     scrollToCard(prevIndex);
   };
 
@@ -36,7 +107,7 @@ function OurProjectsSection() {
     <section 
       className="w-full py-16 md:py-24 relative overflow-hidden"
       role="region"
-      aria-label="הפרויקטים שלנו"
+      aria-label={t('ourProjects.title')}
     >
       <div className="container mx-auto px-10 ">
         <div className="max-w-7xl mx-auto">
@@ -44,16 +115,16 @@ function OurProjectsSection() {
           <div className="text-center mb-2">
             <h1 
               className="font-bold bg-gradient-to-br from-white via-white-60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide"
-              dir="rtl"
+              dir={language === 'he' ? 'rtl' : 'ltr'}
               style={{ textAlign: 'center' }}
             >
-              {SECTION_TITLE}
+              {t('ourProjects.title')}
             </h1>
             <p 
               className="text-lg md:text-xl text-white/70 leading-relaxed max-w-3xl mx-auto"
-              dir="rtl"
+              dir={language === 'he' ? 'rtl' : 'ltr'}
             >
-              {SECTION_SUBTITLE}
+              {t('ourProjects.subtitle')}
             </p>
           </div>
 
@@ -69,11 +140,12 @@ function OurProjectsSection() {
               }}
             >
               <div className="space-y-10 lg:space-y-24">
-                {PROJECT_SECTIONS.map((section, index) => (
+                {projectsData.map((section, index) => (
                   <div key={section.id} className="min-h-[400px] lg:min-h-[400px]  items-center">
                     <ProjectCard
                       section={section}
                       index={index}
+                      language={language}
                     />
                   </div>
                 ))}
@@ -86,7 +158,7 @@ function OurProjectsSection() {
               <button
                 onClick={prevCard}
                 className="w-12 h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
-                aria-label="Previous project"
+                aria-label={language === 'he' ? 'פרויקט קודם' : 'Previous project'}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M18 15L12 9L6 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -97,7 +169,7 @@ function OurProjectsSection() {
               <button
                 onClick={nextCard}
                 className="w-12 h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
-                aria-label="Next project"
+                aria-label={language === 'he' ? 'פרויקט הבא' : 'Next project'}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -110,10 +182,10 @@ function OurProjectsSection() {
           <div className="flex justify-center mt-16">
             <button 
               className="bg-gradient-to-l from-cyan-400/10 via-cyan-400/30 to-cyan-400/60 text-white border border-white/20 px-6 py-3 rounded-full font-semibold flex items-center gap-2" 
-              dir="rtl"
-              aria-label={VIEW_MORE_PROJECTS_TEXT}
+              dir={language === 'he' ? 'rtl' : 'ltr'}
+              aria-label={t('ourProjects.viewMoreProjects')}
             >
-              {VIEW_MORE_PROJECTS_TEXT}
+              {t('ourProjects.viewMoreProjects')}
               <svg 
                 className="transition-all duration-300" 
                 width="16" 

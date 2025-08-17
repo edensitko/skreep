@@ -1,0 +1,22 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /maintenance
+Disallow: /admin
+Disallow: /api
+Disallow: /_next
+Disallow: /static
+
+# GPTBot
+User-agent: GPTBot
+Allow: /
+
+# Google-Extended
+User-agent: Google-Extended
+Allow: /
+
+# Host
+Host: https://skreep.com
+
+# Sitemaps
+Sitemap: https://skreep.com/sitemap.xml
