@@ -66,10 +66,13 @@ async function getProjectData(slug: string, language: string = 'en'): Promise<Pr
   }
 }
 
-export default async function ProjectPage({ params }: { params: { slug: string } }) {
+export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
+  // Await the params Promise as required by Next.js 15
+  const { slug } = await params;
+  
   // Get project data for both languages
-  const projectEn = await getProjectData(params.slug, 'en');
-  const projectHe = await getProjectData(params.slug, 'he');
+  const projectEn = await getProjectData(slug, 'en');
+  const projectHe = await getProjectData(slug, 'he');
   
   // If project doesn't exist, show 404
   if (!projectEn && !projectHe) {
@@ -93,7 +96,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
         projectHe={projectHe}
         allProjectsEn={allProjectsEn}
         allProjectsHe={allProjectsHe}
-        projectSlug={params.slug}
+        projectSlug={slug}
       />
     </>
   );
