@@ -22,14 +22,14 @@ function FooterSection() {
   // Dynamic footer data based on language
   const footerLinks = [
     {
-      href: "#",
-      text: t('footer.links.privacy'),
-      ariaLabel: t('footer.links.privacy')
+      href: "/privacy-policy",
+      text: language === 'he' ? 'מדיניות פרטיות' : 'Privacy Policy',
+      ariaLabel: language === 'he' ? 'מדיניות פרטיות' : 'Privacy Policy'
     },
     {
-      href: "#",
-      text: t('footer.links.terms'),
-      ariaLabel: t('footer.links.terms')
+      href: "/accessibility-statement",
+      text: language === 'he' ? 'הצהרת נגישות' : 'Accessibility Statement',
+      ariaLabel: language === 'he' ? 'הצהרת נגישות' : 'Accessibility Statement'
     }
   ];
   
@@ -110,10 +110,10 @@ function FooterSection() {
             >
               {footerLinks.map((link, index) => (
                 <React.Fragment key={link.text}>
-                  {index > 0 && <span className="text-black text-sm">|</span>}
+                  {index > 0 && <span className="text-white text-sm">|</span>}
                   <a 
                     href={link.href} 
-                    className="text-black text-sm hover:text-white hover:underline transition-colors"
+                    className="text-white text-sm hover:text-cyan-400 hover:underline transition-colors"
                     aria-label={link.ariaLabel}
                   >
                     {link.text}

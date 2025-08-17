@@ -220,21 +220,17 @@ export default function HeroGrid() {
               <div className="flex flex-wrap gap-4 animate-in" style={{ animationName: 'fade-up', animationDuration: '0.8s', animationDelay: '0.6s', animationFillMode: 'both' }}>
                 <p className={`text-white/60 bg-white/10 mb-10 border-cyan-400 p-3 rounded text-xs ${
                   language === 'he' 
-                    ? 'pr-5 ml-20 border-r-[3px] rounded-l-2xl text-right' 
-                    : 'pl-5 mr-20 border-l-[3px] rounded-r-2xl text-left'
+                    ? 'pr-5 ml-20 rounded-l-2xl text-right' 
+                    : 'pl-5 mr-20 rounded-r-2xl text-left'
                 }`} dir={language === 'he' ? 'rtl' : 'ltr'}>
                   {t(`hero.${userType}.description`)}</p>
                 <Link href="/services" className="flex items-center gap-2 bg-transparent border border-cyan-400/30 text-white px-8 py-4 rounded-full hover:bg-cyan-400/10 transition-all">
                   <span>{t(`hero.${userType}.servicesButton`)}</span>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15 6L15 12L15 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                 
                 </Link>
-                <Link href="/contact" className="flex items-center gap-2 border-white/10 border-l-[2px] border-t-[2px] gradient-to-r from-cyan-400/40 to-cyan-400/40 bg-cyan-400/40 border-cyan-400/40 text-white px-8 py-4 rounded-full hover:bg-cyan-500/40 transition-all">
+                <Link href="/contact" className="flex items-center gap-2 border-white/10 gradient-to-r from-cyan-400/40 to-cyan-400/40 bg-cyan-400/40 border-cyan-400/40 text-white px-8 py-4 rounded-full hover:bg-cyan-500/40 transition-all">
                   <span>{t(`hero.${userType}.contactButton`)}</span>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15 6L15 12L15 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                 
                 </Link>
               </div>
             </div>

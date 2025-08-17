@@ -4,6 +4,7 @@
 
 export interface ProjectSection {
   readonly id: number;
+  readonly slug: string;
   readonly title: string;
   readonly subtitle: string;
   readonly description: string;

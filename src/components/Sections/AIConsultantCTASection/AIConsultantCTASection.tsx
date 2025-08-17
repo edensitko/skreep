@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect, memo, useCallback } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import CubeButton from './CubeButton';
 import BackgroundEffects from './BackgroundEffects';
 import { LAYOUT_CONFIG, ANIMATION_CONFIG } from './constants';
 import { createAnimationTimer } from './utils';
 import type { AnimationState } from './types';
+import CubeButton from './CubeButton';
 
 /**
  * AI Consultant CTA section with enhanced animations and accessibility
@@ -33,15 +33,6 @@ function AIConsultantCTASection() {
     console.log('Primary CTA clicked - AI Consultant');
     // Add your navigation logic here
   }, []);
-
-  const handleSecondaryClick = useCallback(() => {
-    // Navigate to consultation or trigger action
-    console.log('Secondary CTA clicked - Free Consultation');
-    // Add your navigation logic here
-  }, []);
-
-
-
   // ============================================================================
   // EFFECTS
   // ============================================================================
@@ -107,40 +98,26 @@ function AIConsultantCTASection() {
       `}</style>
       
       <section 
-        className="mx-auto theme-container container px-4 py-8 md:py-6"
+        className="mx-auto theme-container container px-4 py-6 md:py-8"
         role="region"
         aria-label={t('aiConsultantCTA.sectionAriaLabel')}
       >
         <div 
-          className="relative flex items-center justify-center overflow-hidden min-h-[200px] md:min-h-[200px]"
+          className="relative flex items-center justify-center overflow-hidden min-h-[150px] md:min-h-[160px]"
         >
           <div 
-            className="w-full flex justify-center items-center gap-6 md:gap-8 flex-col md:flex-row relative z-10 px-4"
-            style={{ maxWidth: LAYOUT_CONFIG.maxWidth }}
+            className="w-full flex justify-center items-center relative z-10 px-4"
+            style={{ maxWidth: '400px' }}
           >
-            {/* Primary Cube Button */}
+            {/* Single Cube Button */}
             <div 
               className={`transition-all duration-800 ${animationState.mounted && animationState.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
               style={{ animationDelay: '0.1s' }}
             >
               <CubeButton
                 onClick={handlePrimaryClick}
-                variant="primary"
                 language={language}
-                className="min-w-[280px] md:min-w-[320px]"
-              />
-            </div>
-
-            {/* Secondary Cube Button */}
-            <div 
-              className={`transition-all duration-800 ${animationState.mounted && animationState.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-              style={{ animationDelay: '0.3s' }}
-            >
-              <CubeButton
-                onClick={handleSecondaryClick}
-                variant="secondary"
-                language={language}
-                className="min-w-[280px] md:min-w-[320px]"
+                className="min-w-[240px] md:min-w-[280px]"
               />
             </div>
           </div>
