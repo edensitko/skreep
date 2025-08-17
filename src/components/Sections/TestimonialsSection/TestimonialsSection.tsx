@@ -2,7 +2,7 @@
 
 import React, { useMemo, memo, useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, FreeMode } from 'swiper/modules';
+import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import { useLanguage } from '@/contexts/LanguageContext';

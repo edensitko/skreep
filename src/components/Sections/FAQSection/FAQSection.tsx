@@ -36,7 +36,7 @@ function FAQSection() {
   useEffect(() => {
     const loadFaqData = async () => {
       try {
-        const messages = await import(`../../../messages/${language}.json`);
+        const messages = await import(`../../../../messages/${language}.json`);
         const faqSection = messages.default?.faq || messages.faq;
         const translatedFaqData = userType === 'entrepreneurs' 
           ? faqSection?.entrepreneursFaqs
