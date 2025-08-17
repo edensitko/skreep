@@ -318,7 +318,7 @@ function TestimonialsSection() {
             
                 {/* Testimonial Text */}
                 <blockquote className="text-white/90 text-xs leading-relaxed mb-4 flex-grow">
-                  "{testimonial.text}"
+                  {testimonial.text}
                 </blockquote>
 
                 {/* Author Info */}
@@ -352,7 +352,7 @@ function TestimonialsSection() {
             
                 {/* Testimonial Text */}
                 <blockquote className="text-white/90 text-xs leading-relaxed mb-4 flex-grow">
-                  "{testimonial.text}"
+                  {testimonial.text}
                 </blockquote>
 
                 {/* Author Info */}
