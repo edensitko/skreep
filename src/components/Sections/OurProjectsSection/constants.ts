@@ -11,7 +11,8 @@ export const PROJECT_SECTIONS: ReadonlyArray<ProjectSection> = [
     subtitle: "500M+ שקל בנכסים",
     description: "מערכת ניהול מקיפה עם CRM מותאם, חוזים דיגיטליים ודשבורד אנליטיקה.",
     gradient: "from-green-400/20 to-emerald-500/20",
-    accentColor: "green-400"
+    accentColor: "green-400",
+    slug: "property-management-system"
   },
   {
     id: 1,
@@ -19,15 +20,17 @@ export const PROJECT_SECTIONS: ReadonlyArray<ProjectSection> = [
     subtitle: "50,000+ מוצרים",
     description: "פלטפורמת מסחר מלאה עם תשלומים מאובטחים, ניהול מלאי חכם ומערכת המלצות AI.",
     gradient: "from-cyan-400/20 to-blue-500/20",
-    accentColor: "cyan-400"
+    accentColor: "cyan-400",
+    slug: "ecommerce-platform"
   },
   {
     id: 2,
-    title: "אפליקציית בריאות",
+    title: "apl",
     subtitle: "10,000+ משתמשים פעילים",
     description: "אפליקציה לבריאות דיגיטלית עם וידאו קונפרנס מאובטח ומערכת תורים חכמה.",
     gradient: "from-purple-400/20 to-pink-500/20",
-    accentColor: "purple-400"
+    accentColor: "purple-400",
+    slug: "health-app"
   }
 ] as const;
 

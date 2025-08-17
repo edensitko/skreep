@@ -170,7 +170,7 @@ function FAQSection() {
 
   return (
     <section 
-      className="w-full py-16 md:py-24 relative overflow-hidden bg-black/20"
+      className="w-full rounded-b-2xl pt-16 md:pt-24 relative overflow-hidden bg-black/20"
       role="region"
       aria-label={t('faq.title')}
     >
@@ -189,7 +189,7 @@ function FAQSection() {
               {t('faq.title')}
             </h2>
             <p 
-              className={`text-lg md:text-xl text-white/70 leading-relaxed transition-all duration-1000 delay-200 ${
+              className={`text-lg md:text-xl text-white/70 leading-relaxed transition-all duration-1000 delay-200 text-center ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               dir={language === 'he' ? 'rtl' : 'ltr'}

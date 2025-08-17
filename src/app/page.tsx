@@ -4,7 +4,7 @@ import HeroGrid from '@/components/Hero/HeroGrid';
 import PartnersSection from '@/components/Sections/PartnersSection';
 import AboutSection from '@/components/Sections/AboutSection';
 import OurProjectsSection from '@/components/Sections/OurProjectsSection';
-import ServicesSection from '@/components/InteractiveShowcaseSection';
+import ServicesSection from '@/components/Sections/InteractiveShowcaseSection';
 import HeroFour from '@/components/Hero/HeroFour';
 import Header from '@/components/Layout/Header/Header';
 import Footer from '@/components/Layout/Footer/Footer';
@@ -88,8 +88,8 @@ export default function Home() {
       <AboutSection />
       <StatsSection />
       <ChatSection />
-      <ServicesSection />
-      {/* <NoCodeBenefitsSection /> */}
+      <InteractiveShowcaseSection />
+      <NoCodeBenefitsSection />
       <OurProjectsSection />
       <FAQSection />
       

@@ -51,7 +51,7 @@ export default function Header() {
           <div className="flex 2xl:space-x-[100px] xl:space-x-10 justify-center items-center w-full xl:w-auto">
             <div className="flex justify-center items-center">
               <Link href="/" aria-label="logo">
-                <img src="./assets/images/logo-1.png" alt="" className="w-[150px] md:w-[150px] pt-3 mr-" />
+                <img src="./assets/images/logo-1.png" alt="Skreep - פתרונות בינה מלאכותית" className="w-[150px] md:w-[150px] pt-3 mr-" />
               </Link>
             </div>
           </div>
@@ -89,7 +89,7 @@ export default function Header() {
           <Link href="/" aria-label="logo">
             <img 
               src={"./assets/images/logo-1.png"} 
-              alt="" 
+              alt="Skreep - פתרונות בינה מלאכותית" 
               className="ml-8 w-[100px] md:w-[100px] pt-0 transition-all duration-300"
             />
           </Link>
@@ -163,7 +163,7 @@ export default function Header() {
                 <Link href="/services">{t('header.services')}</Link>
               </li>
               <li className="font-semibold text-white hover:underline hover:text-cyan-400 transition-colors">
-                <Link href="/blog-details">{t('header.blog')}</Link>
+                <Link href="/blog">{t('header.blog')}</Link>
               </li>
               <li className="relative group">
                 <Link href="#" className="flex items-center gap-2 font-semibold text-white hover:underline hover:text-cyan-400 transition-colors">
@@ -186,8 +186,13 @@ export default function Header() {
                       </Link>
                     </li>
                     <li className="relative py-1">
-                      <Link href="/portfolio" className="relative font-medium leading-5 hover:text-cyan-400 text-white block py-2 transition-colors">
-                        {t('header.portfolio')}
+                      <Link href="/projects" className="relative font-medium leading-5 hover:text-cyan-400 text-white block py-2 transition-colors">
+                        {t('header.projects')}
+                      </Link>
+                    </li>
+                    <li className="relative py-1">
+                      <Link href="/ai-consultant" className="relative font-medium leading-5 hover:text-cyan-400 text-white block py-2 transition-colors">
+                        {language === 'he' ? 'יועץ AI' : 'AI Consultant'}
                       </Link>
                     </li>
                   </ul>
@@ -287,7 +292,7 @@ export default function Header() {
                 </li>
                 <li>
                   <Link 
-                    href="/blog-details" 
+                    href="/blog" 
                     className="block text-white text-lg font-semibold hover:text-cyan-400 transition-colors py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -295,32 +300,40 @@ export default function Header() {
                   </Link>
                 </li>
                 <li>
-                  <div className="space-y-4">
-                    <p className="text-white text-lg font-semibold">{t('header.pages')}</p>
-                    <div className="pr-4 space-y-3">
-                      <Link 
-                        href="/about" 
-                        className="block text-white/80 hover:text-cyan-400 transition-colors py-1"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {t('header.about')}
-                      </Link>
-                      <Link 
-                        href="/contact" 
-                        className="block text-white/80 hover:text-cyan-400 transition-colors py-1"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {t('header.contact')}
-                      </Link>
-                      <Link 
-                        href="/portfolio" 
-                        className="block text-white/80 hover:text-cyan-400 transition-colors py-1"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {t('header.portfolio')}
-                      </Link>
-                    </div>
-                  </div>
+                  <Link 
+                    href="/about" 
+                    className="block text-white text-lg font-semibold hover:text-cyan-400 transition-colors py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {t('header.about')}
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="/contact" 
+                    className="block text-white text-lg font-semibold hover:text-cyan-400 transition-colors py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {t('header.contact')}
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="/projects" 
+                    className="block text-white text-lg font-semibold hover:text-cyan-400 transition-colors py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {t('header.projects')}
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="/ai-consultant" 
+                    className="block text-white text-lg font-semibold hover:text-cyan-400 transition-colors py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {language === 'he' ? 'יועץ AI' : 'AI Consultant'}
+                  </Link>
                 </li>
               </ul>
               

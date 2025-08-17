@@ -7,6 +7,7 @@ import ProjectCard from './ProjectCard';
 interface ProjectSection {
   id: number;
   title: string;
+  slug: string;
   subtitle: string;
   description: string;
   gradient: string;
@@ -27,7 +28,7 @@ function OurProjectsSection() {
     const getProjectsData = async (): Promise<ProjectSection[]> => {
       try {
         // Dynamically import the translation file
-        const messages = await import(`../../../messages/${language}.json`);
+        const messages = await import(`../../../../messages/${language}.json`);
         const projectsItems = messages.default?.ourProjects?.projects || messages.ourProjects?.projects;
         if (Array.isArray(projectsItems)) {
           return projectsItems;
@@ -40,6 +41,7 @@ function OurProjectsSection() {
       return [
         {
           id: 3,
+          slug: 'real-estate-management',
           title: language === 'he' ? 'מערכת ניהול נדל״ן' : 'Real Estate Management System',
           subtitle: language === 'he' ? '500M+ שקל בנכסים' : '500M+ NIS in Assets',
           description: language === 'he' 
@@ -50,6 +52,7 @@ function OurProjectsSection() {
         },
         {
           id: 1,
+          slug: 'e-commerce-platform',
           title: language === 'he' ? 'פלטפורמת E-commerce' : 'E-commerce Platform',
           subtitle: language === 'he' ? '50,000+ מוצרים' : '50,000+ Products',
           description: language === 'he'
@@ -60,6 +63,7 @@ function OurProjectsSection() {
         },
         {
           id: 2,
+          slug: 'healthcare-application',
           title: language === 'he' ? 'אפליקציית בריאות' : 'Healthcare Application',
           subtitle: language === 'he' ? '10,000+ משתמשים פעילים' : '10,000+ Active Users',
           description: language === 'he'

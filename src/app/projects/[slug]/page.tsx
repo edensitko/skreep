@@ -1,0 +1,242 @@
+import React from 'react';
+import { notFound } from 'next/navigation';
+import PageSEO from '@/components/SEO/PageSEO';
+import ProjectPageClient from './ProjectPageClient';
+
+interface ProjectData {
+  id: number;
+  slug: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  gradient: string;
+  accentColor: string;
+  fullDescription?: string;
+  technologies?: string[];
+  features?: string[];
+  stats?: {
+    label: string;
+    value: string;
+  }[];
+  images?: string[];
+  client?: string;
+  duration?: string;
+  category?: string;
+}
+
+// Generate static params for all project slugs
+export async function generateStaticParams() {
+  // Define the project slugs that exist in your system
+  const projectSlugs = ['real-estate-management', 'e-commerce-platform', 'healthcare-application'];
+  
+  return projectSlugs.map((slug) => ({
+    slug: slug,
+  }));
+}
+
+// Server-side data fetching
+async function getProjectData(slug: string, language: string = 'en'): Promise<ProjectData | null> {
+  try {
+    // Load translation data
+    const messages = await import(`../../../../messages/${language}.json`);
+    const projectsData = messages.default?.ourProjects?.projects || messages.ourProjects?.projects || [];
+    
+    // Find specific project by slug
+    const foundProject = projectsData.find((p: ProjectData) => p.slug === slug);
+    
+    if (foundProject) {
+      // Enhance project data with additional details
+      return {
+        ...foundProject,
+        fullDescription: getFullDescription(foundProject.id, language),
+        technologies: getTechnologies(foundProject.id),
+        features: getFeatures(foundProject.id, language),
+        stats: getStats(foundProject.id, language),
+        images: getProjectImages(foundProject.id),
+        client: getClient(foundProject.id, language),
+        duration: getDuration(foundProject.id, language),
+        category: getCategory(foundProject.id, language)
+      };
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Error loading project data:', error);
+    return null;
+  }
+}
+
+export default async function ProjectPage({ params }: { params: { slug: string } }) {
+  // Get project data for both languages
+  const projectEn = await getProjectData(params.slug, 'en');
+  const projectHe = await getProjectData(params.slug, 'he');
+  
+  // If project doesn't exist, show 404
+  if (!projectEn && !projectHe) {
+    notFound();
+  }
+  
+  // Get all projects for navigation
+  const allProjectsEn = await getAllProjects('en');
+  const allProjectsHe = await getAllProjects('he');
+
+  return (
+    <>
+      <PageSEO 
+        pageType="projects"
+        title={`${projectEn?.title || projectHe?.title} - Skreep`}
+        description={projectEn?.description || projectHe?.description || ''}
+      />
+      
+      <ProjectPageClient 
+        projectEn={projectEn}
+        projectHe={projectHe}
+        allProjectsEn={allProjectsEn}
+        allProjectsHe={allProjectsHe}
+        projectSlug={params.slug}
+      />
+    </>
+  );
+}
+
+// Helper function to get all projects
+async function getAllProjects(language: string): Promise<ProjectData[]> {
+  try {
+    const messages = await import(`../../../../messages/${language}.json`);
+    return messages.default?.ourProjects?.projects || messages.ourProjects?.projects || [];
+  } catch (error) {
+    console.error('Error loading all projects:', error);
+    return [];
+  }
+}
+
+// Enhanced project data functions
+function getFullDescription(slug: string, lang: string): string {
+    const descriptions: Record<string, Record<string, string>> = {
+      'e-commerce-platform': {
+        he: 'פלטפורמת מסחר אלקטרוני מתקדמת שפותחה עבור חברה מובילה בתחום הקמעונאות. המערכת כוללת ניהול מלאי חכם, מערכת תשלומים מאובטחת, והמלצות מותאמות אישית באמצעות בינה מלאכותית. הפלטפורמה מטפלת ביותר מ-50,000 מוצרים ומשרתת אלפי לקוחות מדי יום.',
+        en: 'Advanced e-commerce platform developed for a leading retail company. The system includes smart inventory management, secure payment system, and personalized recommendations using artificial intelligence. The platform handles over 50,000 products and serves thousands of customers daily.'
+      },
+      'healthcare-application': {
+        he: 'אפליקציית בריאות דיגיטלית חדשנית המאפשרת למטופלים לקבל טיפול רפואי מרחוק. המערכת כוללת וידאו קונפרנס מאובטח, מערכת תורים חכמה, וניהול רשומות רפואיות. האפליקציה משרתת יותר מ-10,000 משתמשים פעילים ומאפשרת גישה לטיפול רפואי איכותי מכל מקום.',
+        en: 'Innovative digital health application that enables patients to receive remote medical care. The system includes secure video conferencing, smart appointment system, and medical records management. The application serves over 10,000 active users and enables access to quality medical care from anywhere.'
+      },
+      'real-estate-management': {
+        he: 'מערכת ניהול נדל"ן מקיפה המיועדת לחברות ניהול נכסים גדולות. המערכת כוללת CRM מותאם, חוזים דיגיטליים, דשבורד אנליטיקה מתקדם, וניהול תחזוקה אוטומטי. המערכת מנהלת נכסים בשווי של יותר מ-500 מיליון שקל ומשרתת מאות בעלי נכסים ושוכרים.',
+        en: 'Comprehensive real estate management system designed for large property management companies. The system includes custom CRM, digital contracts, advanced analytics dashboard, and automated maintenance management. The system manages assets worth over 500 million NIS and serves hundreds of property owners and tenants.'
+      }
+    };
+    return descriptions[slug]?.[lang] || '';
+  };
+
+function getTechnologies(slug: string): string[] {
+    const tech: Record<string, string[]> = {
+      'e-commerce-platform': ['Next.js', 'React', 'TypeScript', 'Node.js', 'PostgreSQL', 'Stripe', 'AWS', 'Docker'],
+      'healthcare-application': ['React Native', 'Node.js', 'MongoDB', 'WebRTC', 'Socket.io', 'AWS', 'Firebase'],
+      'real-estate-management': ['Vue.js', 'Laravel', 'MySQL', 'Redis', 'Docker', 'AWS', 'Elasticsearch']
+    };
+    return tech[slug] || [];
+  };
+
+function getFeatures(slug: string, lang: string): string[] {
+    const features: Record<string, Record<string, string[]>> = {
+      'e-commerce-platform': {
+        he: ['ניהול מלאי חכם', 'מערכת תשלומים מאובטחת', 'המלצות AI', 'דשבורד ניהול', 'אינטגרציה עם ספקים'],
+        en: ['Smart Inventory Management', 'Secure Payment System', 'AI Recommendations', 'Management Dashboard', 'Supplier Integration']
+      },
+      'healthcare-application': {
+        he: ['וידאו קונפרנס מאובטח', 'מערכת תורים חכמה', 'ניהול רשומות רפואיות', 'התראות אוטומטיות', 'אינטגרציה עם מעבדות'],
+        en: ['Secure Video Conferencing', 'Smart Appointment System', 'Medical Records Management', 'Automatic Notifications', 'Lab Integration']
+      },
+      'real-estate-management': {
+        he: ['CRM מותאם', 'חוזים דיגיטליים', 'דשבורד אנליטיקה', 'ניהול תחזוקה', 'דוחות פיננסיים'],
+        en: ['Custom CRM', 'Digital Contracts', 'Analytics Dashboard', 'Maintenance Management', 'Financial Reports']
+      }
+    };
+    return features[slug]?.[lang] || [];
+  };
+
+function getStats(slug: string, lang: string) {
+    const stats: Record<string, Record<string, Array<{label: string, value: string}>>> = {
+      'e-commerce-platform': {
+        he: [
+          { label: 'מוצרים', value: '50,000+' },
+          { label: 'משתמשים פעילים', value: '25,000+' },
+          { label: 'עסקאות חודשיות', value: '100,000+' },
+          { label: 'זמן פיתוח', value: '8 חודשים' }
+        ],
+        en: [
+          { label: 'Products', value: '50,000+' },
+          { label: 'Active Users', value: '25,000+' },
+          { label: 'Monthly Transactions', value: '100,000+' },
+          { label: 'Development Time', value: '8 months' }
+        ]
+      },
+      'healthcare-application': {
+        he: [
+          { label: 'משתמשים פעילים', value: '10,000+' },
+          { label: 'ייעוצים חודשיים', value: '5,000+' },
+          { label: 'רופאים במערכת', value: '500+' },
+          { label: 'זמן פיתוח', value: '6 חודשים' }
+        ],
+        en: [
+          { label: 'Active Users', value: '10,000+' },
+          { label: 'Monthly Consultations', value: '5,000+' },
+          { label: 'Doctors in System', value: '500+' },
+          { label: 'Development Time', value: '6 months' }
+        ]
+      },
+      'real-estate-management': {
+        he: [
+          { label: 'שווי נכסים', value: '500M+ ₪' },
+          { label: 'נכסים במערכת', value: '2,000+' },
+          { label: 'משתמשים', value: '1,500+' },
+          { label: 'זמן פיתוח', value: '12 חודשים' }
+        ],
+        en: [
+          { label: 'Asset Value', value: '500M+ NIS' },
+          { label: 'Properties in System', value: '2,000+' },
+          { label: 'Users', value: '1,500+' },
+          { label: 'Development Time', value: '12 months' }
+        ]
+      }
+    };
+    return stats[slug]?.[lang] || [];
+  };
+
+function getProjectImages(slug: string): string[] {
+    return [
+      `./assets/images/project-${slug}.svg`,
+      `./assets/images/project-${slug}-2.svg`,
+      `./assets/images/project-${slug}-3.svg`
+    ].filter((_, index) => index < 3); // Limit to 3 images
+  };
+
+function getClient(id: number, lang: string): string {
+    const clients: Record<number, Record<string, string>> = {
+      1: { he: 'חברת קמעונאות מובילה', en: 'Leading Retail Company' },
+      2: { he: 'רשת מרפאות פרטיות', en: 'Private Clinic Network' },
+      3: { he: 'חברת ניהול נכסים', en: 'Property Management Company' }
+    };
+    return clients[id]?.[lang] || '';
+  };
+
+function getDuration(id: number, lang: string): string {
+    const durations: Record<number, Record<string, string>> = {
+      1: { he: '8 חודשים', en: '8 months' },
+      2: { he: '6 חודשים', en: '6 months' },
+      3: { he: '12 חודשים', en: '12 months' }
+    };
+    return durations[id]?.[lang] || '';
+  };
+
+function getCategory(id: number, lang: string): string {
+    const categories: Record<number, Record<string, string>> = {
+      1: { he: 'מסחר אלקטרוני', en: 'E-commerce' },
+      2: { he: 'בריאות דיגיטלית', en: 'Digital Health' },
+      3: { he: 'ניהול נדל"ן', en: 'Real Estate Management' }
+    };
+    return categories[id]?.[lang] || '';
+  };
+
+

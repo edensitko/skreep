@@ -16,7 +16,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {/* Column 1 - About */}
           <div>
-            <h3 className="text-xl font-bold mb-4 md:mb-6">{t('mainFooter.about.title')}</h3>
+            <Link href="/" className="inline-block mb-4 md:mb-6">
+              <img 
+                src="./assets/images/logo-1.png" 
+                alt="Skreep - פתרונות בינה מלאכותית" 
+                className="h-12 w-auto opacity-50"
+              />
+            </Link>
             <p className="mb-6 text-gray-400">
               {t('mainFooter.about.description')}
             </p>
