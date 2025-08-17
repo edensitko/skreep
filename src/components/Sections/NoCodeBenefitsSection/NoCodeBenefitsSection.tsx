@@ -57,7 +57,7 @@ function NoCodeBenefitsSection() {
   return (
     <section 
       ref={sectionRef}
-      className="relative w-full bg-black py-12 md:py-20 overflow-hidden"
+      className="relative w-full bg-black py-8 md:py-20 overflow-hidden"
       dir="rtl"
       role="region"
       aria-label="יתרונות פתרונות ללא קוד"
@@ -88,7 +88,7 @@ function NoCodeBenefitsSection() {
       {/* Main Content */}
       <div className="relative z-10 container mx-auto px-4 md:px-6">
         {/* Section Header */}
-        <div className="text-center mb-16 md:mb-24">
+        <div className="text-center mb-8 md:mb-16">
           <h1 
             ref={titleRef}
             className={`font-bold bg-gradient-to-br from-white via-white-60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out ${

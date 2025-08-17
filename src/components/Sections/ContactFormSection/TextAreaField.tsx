@@ -10,7 +10,8 @@ const TextAreaField = memo<TextAreaFieldProps>(({
   value, 
   onChange, 
   rows = 3,
-  'data-testid': testId
+  'data-testid': testId,
+  language
 }) => {
   const textareaId = `form-${name}`;
   
@@ -28,7 +29,7 @@ const TextAreaField = memo<TextAreaFieldProps>(({
         rows={rows}
         data-testid={testId}
         className="w-full px-6 py-4 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 hover:bg-white/10 resize-none"
-        dir="rtl"
+        dir={language === 'he' ? 'rtl' : 'ltr'}
         aria-label={placeholder}
       />
     </div>

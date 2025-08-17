@@ -3,13 +3,15 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FiArrowLeft } from 'react-icons/fi';
+import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
     setMounted(true);
@@ -44,7 +46,7 @@ export default function Header() {
   // Prevent hydration mismatch by not rendering until mounted
   if (!mounted) {
     return (
-      <header className="fixed w-[95%]  mx-[2.5%] z-[9999] mt-4 transition-all duration-300" dir="ltr">
+      <header className="fixed w-[95%]  mx-[2.5%] z-[9999] mt-4 transition-all duration-300" dir={language === 'he' ? 'rtl' : 'ltr'}>
         <div className="w-full h-[80px] flex justify-between items-center  md:px-[50px] border border-transparent bg-black/50 border-t-0 relative rounded-3xl mt-0">
           <div className="flex 2xl:space-x-[100px] xl:space-x-10 justify-center items-center w-full xl:w-auto">
             <div className="flex justify-center items-center">
@@ -60,7 +62,7 @@ export default function Header() {
 
   return (
     <header className="fixed w-[95%] mx-[2.5%] z-[9999] mt-4 transition-all duration-300">
-      <div className="w-full h-[60px] lg:h-[80px] flex justify-between items-center px-4 md:px-[50px] border border-transparent bg-black/50 border-t-0 relative rounded-3xl mt-0" dir={mounted ? (isLargeScreen ? 'ltr' : 'rtl') : 'rtl'}>
+      <div className="w-full h-[60px] lg:h-[80px] flex justify-between items-center px-4 md:px-[50px] border border-transparent bg-black/50 border-t-0 relative rounded-3xl mt-0" dir={isLargeScreen ? 'ltr' : (language === 'he' ? 'rtl' : 'ltr')}>
         
         {/* Mobile Menu Button */}
         <button 
@@ -69,7 +71,7 @@ export default function Header() {
           aria-label="Toggle menu"
           
         >
-          <div className="flex flex-col space-y-1" dir={mounted ? (isLargeScreen ? 'ltr' : 'rtl') : 'rtl'}>
+          <div className="flex flex-col space-y-1" dir={isLargeScreen ? 'ltr' : (language === 'he' ? 'rtl' : 'ltr')}>
             <span className={`block w-8 h-0.5 bg-white transition-transform duration-300 ${
               mobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''
             }`}></span>
@@ -95,16 +97,42 @@ export default function Header() {
         
         {/* Desktop Navigation */}
         <div className="hidden lg:flex justify-between items-center w-full " >
-          {/* Left side - Search and CTA */}
-          <div className="flex items-center gap-4" dir="rtl">
+          {/* Left side - Language Switcher, Search and CTA */}
+          <div className="flex items-center gap-4" dir="ltr">
+            {/* Language Switcher */}
+            <div className="flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full overflow-hidden">
+              <button
+                onClick={() => setLanguage('he')}
+                className={`px-3 py-1.5 text-sm font-medium transition-all duration-200 flex items-center gap-1.5 ${
+                  language === 'he' 
+                    ? 'bg-white text-black' 
+                    : 'text-white hover:bg-white/10'
+                }`}
+                title="עברית"
+              >
+                🇮🇱 עב
+              </button>
+              <button
+                onClick={() => setLanguage('en')}
+                className={`px-3 py-1.5 text-sm font-medium transition-all duration-200 flex items-center gap-1.5 ${
+                  language === 'en' 
+                    ? 'bg-white text-black' 
+                    : 'text-white hover:bg-white/10'
+                }`}
+                title="English"
+              >
+                🇺🇸 EN
+              </button>
+            </div>
+
             {/* Expandable Search Button */}
             <div className="relative group">
               <div className="flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full transition-all duration-300 group-hover:bg-white/15 overflow-hidden">
                 <input 
                   type="text" 
-                  placeholder="חיפוש..."
+                  placeholder={t('header.search')}
                   className="bg-transparent text-white placeholder-white/60 px-4 py-2 w-0 group-hover:w-48 transition-all duration-300 focus:outline-none focus:w-48 text-right"
-                  dir="rtl"
+                  dir="ltr"
                 />
                 <button className="text-white hover:text-cyan-400 transition-colors p-2 flex-shrink-0">
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -121,7 +149,7 @@ export default function Header() {
               dir="ltr"
             >
               <FiArrowLeft size={16} />
-              דברו איתנו
+              {t('header.talkToUs')}
             </Link>
           </div>
           
@@ -129,17 +157,17 @@ export default function Header() {
           <div dir="ltr">
             <ul className="flex items-center gap-8 xl:gap-12 flex-row-reverse" >
               <li className="font-semibold text-white hover:underline hover:text-cyan-400 transition-colors">
-                <Link href="/">דף הבית</Link>
+                <Link href="/">{t('header.home')}</Link>
               </li>
               <li className="font-semibold text-white hover:underline hover:text-cyan-400 transition-colors">
-                <Link href="/services">שירותים</Link>
+                <Link href="/services">{t('header.services')}</Link>
               </li>
               <li className="font-semibold text-white hover:underline hover:text-cyan-400 transition-colors">
-                <Link href="/blog-details">בלוג</Link>
+                <Link href="/blog-details">{t('header.blog')}</Link>
               </li>
               <li className="relative group">
                 <Link href="#" className="flex items-center gap-2 font-semibold text-white hover:underline hover:text-cyan-400 transition-colors">
-                  עמודים
+                  {t('header.pages')}
                   <svg className="transition-all duration-300 group-hover:rotate-180" width="10" height="10" viewBox="0 0 19 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2 2L9.5 8L17 2" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"></path>
                   </svg>
@@ -149,22 +177,17 @@ export default function Header() {
                   <ul className="min-w-[200px] bg-black/90 backdrop-blur-sm border border-white/20 mt-8 transition-all duration-300 overflow-hidden px-5 py-4 rounded-lg shadow-xl">
                     <li className="relative py-1">
                       <Link href="/about" className="relative font-medium leading-5 hover:text-cyan-400 text-white block py-2 transition-colors">
-                        אודות
-                      </Link>
-                    </li>
-                    <li className="relative py-1">
-                      <Link href="/team" className="relative font-medium leading-5 hover:text-cyan-400 text-white block py-2 transition-colors">
-                        הצוות
+                        {t('header.about')}
                       </Link>
                     </li>
                     <li className="relative py-1">
                       <Link href="/contact" className="relative font-medium leading-5 hover:text-cyan-400 text-white block py-2 transition-colors">
-                        צור קשר
+                        {t('header.contact')}
                       </Link>
                     </li>
                     <li className="relative py-1">
                       <Link href="/portfolio" className="relative font-medium leading-5 hover:text-cyan-400 text-white block py-2 transition-colors">
-                        תיק עבודות
+                        {t('header.portfolio')}
                       </Link>
                     </li>
                   </ul>
@@ -174,14 +197,18 @@ export default function Header() {
           </div>
         </div>
         
+        
         {/* Mobile CTA Button */}
         <Link 
           href="/contact" 
           className="lg:hidden bg-gradient-to-l from-cyan-400/10 via-cyan-400/30 to-cyan-400/60 border border-white/20 text-white px-2 py-2 rounded-full font-semibold hover:bg-cyan-500 transition-all flex items-center gap-2 text-xs" 
-          dir="ltr"
+          // english make ltr if hrbrew rtl 
+          dir={language === 'he' ? 'ltr' : 'rtl'}
         >
-          <FiArrowLeft size={14} />
-          דברו איתנו
+          {language === 'en' ? <FiArrowRight size={14} /> : <FiArrowLeft size={14} />}
+          {t('header.talkToUs')}
+          
+
         </Link>
       </div>
       
@@ -212,7 +239,33 @@ export default function Header() {
             </svg>
           </button>
           
-          <nav className="relative z-10 p-6 pt-16" dir="rtl">
+          <nav className="relative z-10 p-6 pt-16">
+              {/* Language Switcher for Mobile */}
+              <div className="flex items-center justify-center mb-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full overflow-hidden w-fit mx-auto">
+                <button
+                  onClick={() => setLanguage('he')}
+                  className={`px-4 py-2 text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
+                    language === 'he' 
+                      ? 'bg-white text-black' 
+                      : 'text-white hover:bg-white/10'
+                  }`}
+                  title="עברית"
+                >
+                  🇮🇱 עברית
+                </button>
+                <button
+                  onClick={() => setLanguage('en')}
+                  className={`px-4 py-2 text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
+                    language === 'en' 
+                      ? 'bg-white text-black' 
+                      : 'text-white hover:bg-white/10'
+                  }`}
+                  title="English"
+                >
+                  🇺🇸 English
+                </button>
+              </div>
+
               <ul className="space-y-6">
                 <li>
                   <Link 
@@ -220,7 +273,7 @@ export default function Header() {
                     className="block text-white text-lg font-semibold hover:text-cyan-400 transition-colors py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    דף הבית
+                    {t('header.home')}
                   </Link>
                 </li>
                 <li>
@@ -229,7 +282,7 @@ export default function Header() {
                     className="block text-white text-lg font-semibold hover:text-cyan-400 transition-colors py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    שירותים
+                    {t('header.services')}
                   </Link>
                 </li>
                 <li>
@@ -238,33 +291,33 @@ export default function Header() {
                     className="block text-white text-lg font-semibold hover:text-cyan-400 transition-colors py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    בלוג
+                    {t('header.blog')}
                   </Link>
                 </li>
                 <li>
                   <div className="space-y-4">
-                    <p className="text-white text-lg font-semibold">עמודים</p>
+                    <p className="text-white text-lg font-semibold">{t('header.pages')}</p>
                     <div className="pr-4 space-y-3">
                       <Link 
                         href="/about" 
                         className="block text-white/80 hover:text-cyan-400 transition-colors py-1"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        אודות
+                        {t('header.about')}
                       </Link>
                       <Link 
                         href="/contact" 
                         className="block text-white/80 hover:text-cyan-400 transition-colors py-1"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        צור קשר
+                        {t('header.contact')}
                       </Link>
                       <Link 
                         href="/portfolio" 
                         className="block text-white/80 hover:text-cyan-400 transition-colors py-1"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        תיק עבודות
+                        {t('header.portfolio')}
                       </Link>
                     </div>
                   </div>
@@ -275,12 +328,13 @@ export default function Header() {
               <div className="mt-8 pt-6 border-t border-white/20">
                 <Link 
                   href="/contact" 
-                  className="w-full bg-cyan-400 text-black px-6 py-4 rounded-full font-semibold hover:bg-cyan-500 transition-all flex items-center justify-center gap-2"
+                  key={`mobile-cta-${language}`}
+                  className="w-full bg-cyan-400 text-black px-6 py-4 rounded-full font-semibold hover:bg-cyan-500 transition-all flex items-center justify-center gap-2 flex-row"
                   onClick={() => setMobileMenuOpen(false)}
                   dir="ltr"
                 >
                   <FiArrowLeft size={16} />
-                  דברו איתנו
+                  {t('header.talkToUs')}
                 </Link>
               </div>
             </nav>

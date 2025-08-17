@@ -2,9 +2,10 @@
 
 import React, { useState, useRef, useEffect, memo } from 'react';
 import { useUserType } from '@/hooks/useGlobalUserType';
+import { useLanguage } from '@/contexts/LanguageContext';
 import AboutImage from './AboutImage';
 import AboutContent from './AboutContent';
-import { ABOUT_CONTENT, ABOUT_IMAGE } from './constants';
+import { ABOUT_IMAGE } from './constants';
 
 /**
  * About section with animated content and responsive layout
@@ -18,6 +19,7 @@ function AboutSection() {
   const [isVisible, setIsVisible] = useState(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const { userType } = useUserType();
+  const { language, t } = useLanguage();
 
   // ============================================================================
   // EFFECTS
@@ -53,7 +55,7 @@ function AboutSection() {
     <section 
       className="home-one-about-wrapper w-[95%] mt-8 lg:mt-20 mx-auto bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/30 rounded-2xl lg:rounded-4xl before:absolute before:inset-0 before:rounded-2xl lg:before:rounded-4xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl lg:after:rounded-4xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden transition-all duration-700 ease-out"
       role="region"
-      aria-label="אודותינו"
+      aria-label={t('about.sectionAriaLabel')}
     >
       <div className="mx-auto theme-container container px-4 py-6 lg:py-16">
         {/* Unified Layout */}
@@ -61,16 +63,20 @@ function AboutSection() {
           {/* Image Section */}
           <AboutImage 
             src={ABOUT_IMAGE.src}
-            alt={ABOUT_IMAGE.alt}
+            alt={t('about.imageAlt')}
             width={ABOUT_IMAGE.width}
             height={ABOUT_IMAGE.height}
           />
           
           {/* Content Section */}
-          <div ref={titleRef}>
+          <div ref={titleRef} dir={language === 'he' ? 'rtl' : 'ltr'}>
             <AboutContent 
-              content={ABOUT_CONTENT}
+              title={t('about.title')}
+              heading={t('about.heading')}
+              description={t('about.description')}
+              buttonText={t('about.buttonText')}
               isVisible={isVisible}
+              language={language}
             />
           </div>
         </div>

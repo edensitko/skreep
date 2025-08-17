@@ -10,16 +10,22 @@ import {
   PARTNERS_DATA, 
   SWIPER_CONFIG, 
   SWIPER_MODULES, 
-  SECTION_TITLE, 
   TAP_TIMEOUT_DURATION 
 } from './constants';
 import { handlePartnerInteraction, cleanupTimeout } from './utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 /**
  * Partners section with interactive slider showcasing company partnerships
  * Features responsive design and touch-friendly interactions
  */
 function PartnersSection() {
+  // ============================================================================
+  // HOOKS
+  // ============================================================================
+  
+  const { language, t } = useLanguage();
+  
   // ============================================================================
   // STATE MANAGEMENT
   // ============================================================================
@@ -83,7 +89,8 @@ function PartnersSection() {
     <section 
       className="relative overflow-hidden pt-10 w-[95%] mx-auto bg-gradient-to-br"
       role="region"
-      aria-label="שותפים עסקיים"
+      aria-label={t('partners.ariaLabel')}
+      dir={language === 'he' ? 'rtl' : 'ltr'}
     >
       <div className="mx-auto max-w-full px-0">
         {/* Header */}
@@ -95,7 +102,7 @@ function PartnersSection() {
               : 'opacity-0 translate-y-8'
           }`} 
         >
-          {SECTION_TITLE}
+          {t('partners.title')}
         </h1>
         
         {/* Partners Slider */}
@@ -103,7 +110,7 @@ function PartnersSection() {
           modules={SWIPER_MODULES}
           {...SWIPER_CONFIG}
           className="overflow-hidden"
-          aria-label="רשימת שותפים עסקיים"
+          aria-label={t('partners.listAriaLabel')}
         >
           {PARTNERS_DATA.map((partner) => (
             <SwiperSlide key={partner.id}>

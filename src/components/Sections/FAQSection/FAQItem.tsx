@@ -1,10 +1,19 @@
 import React, { memo } from 'react';
 import type { FAQItemProps } from './types';
 
+interface FAQItemPropsWithLanguage extends Omit<FAQItemProps, 'faq'> {
+  faq: {
+    id: number;
+    question: string;
+    answer: string;
+  };
+  language: string;
+}
+
 /**
  * Memoized FAQ item component with smooth expand/collapse animation
  */
-const FAQItem = memo<FAQItemProps>(({ faq, index, isOpen, onToggle }) => (
+const FAQItem = memo<FAQItemPropsWithLanguage>(({ faq, index, isOpen, onToggle, language }) => (
   <div 
     className={`group relative p-6 md:p-8 border border-white/10 rounded-2xl backdrop-blur-sm transition-all duration-500 hover:border-cyan-400/30 cursor-pointer animate-fadeInUp ${
       isOpen 
@@ -29,8 +38,10 @@ const FAQItem = memo<FAQItemProps>(({ faq, index, isOpen, onToggle }) => (
     {/* Question Header */}
     <div className="flex items-center justify-between w-full relative z-10">
       <h3 
-        className="font-semibold text-white text-lg md:text-xl pr-4 text-right flex-1 leading-relaxed" 
-        dir="rtl"
+        className={`font-semibold text-white text-lg md:text-xl flex-1 leading-relaxed ${
+          language === 'he' ? 'pr-4 text-right' : 'pl-4 text-left'
+        }`}
+        dir={language === 'he' ? 'rtl' : 'ltr'}
         id={`faq-question-${faq.id}`}
       >
         {faq.question}
@@ -71,7 +82,9 @@ const FAQItem = memo<FAQItemProps>(({ faq, index, isOpen, onToggle }) => (
       aria-labelledby={`faq-question-${faq.id}`}
       role="region"
     >
-      <p className="text-white/80 leading-relaxed text-right text-base md:text-lg" dir="rtl">
+      <p className={`text-white/80 leading-relaxed text-base md:text-lg ${
+        language === 'he' ? 'text-right' : 'text-left'
+      }`} dir={language === 'he' ? 'rtl' : 'ltr'}>
         {faq.answer}
       </p>
     </div>

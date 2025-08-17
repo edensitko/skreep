@@ -1,37 +1,43 @@
 'use client';
 
 import React, { memo } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import StatCard from './StatCard';
 import StatsInfo from './StatsInfo';
-import { STATS_DATA, STATS_INFO } from './constants';
 
 /**
  * Statistics section with performance metrics and company info
  * Features responsive grid layout and interactive cards
  */
 function StatsSection() {
+  const { language, t } = useLanguage();
+  const statsData = t('stats.data');
+
   return (
     <section 
       className="w-[95%] mt-5 mb-10 mx-auto relative"
       role="region"
-      aria-label="סטטיסטיקות החברה"
+      aria-label={t('stats.sectionAriaLabel')}
     >
       <div className="mx-0 theme-container container">
         <div className="grid xl:grid-cols-2 grid-cols-1">
           {/* Left side - Description and CTA */}
           <StatsInfo
-            description={STATS_INFO.description}
-            buttonText={STATS_INFO.buttonText}
-            buttonHref={STATS_INFO.buttonHref}
+            description={t('stats.description')}
+            buttonText={t('stats.buttonText')}
+            buttonHref={t('stats.buttonHref')}
+            language={language}
           />
           
           {/* Right side - Statistics Cards */}
           <div className="m-2 lg:mr-20"> 
             <div className="grid grid-cols-3 gap-2 lg:mt-0 mt-10">
-              {STATS_DATA.map((stat, index) => (
+              {Array.isArray(statsData) && statsData.map((stat, index) => (
                 <StatCard 
                   key={`${stat.number}-${stat.label}`}
-                  stat={stat} 
+                  stat={stat}
+                  language={language}
+                  cardAriaLabel={t('stats.cardAriaLabel')}
                 />
               ))}
             </div>

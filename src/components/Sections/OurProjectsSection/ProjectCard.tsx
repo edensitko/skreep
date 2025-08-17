@@ -8,7 +8,8 @@ import { HERO_IMAGE_PATH } from './constants';
  */
 const ProjectCard = memo<ProjectCardProps>(({ 
   section, 
-  index
+  index,
+  language
 }) => {
   const isEven = index % 2 === 0;
 
@@ -17,17 +18,17 @@ const ProjectCard = memo<ProjectCardProps>(({
       <div className={`bg-gradient-to-br ${section.gradient} border border-white/10 rounded-2xl p-6 sm:p-8 md:p-10 relative h-[450px] lg:h-[400px]`}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
           {/* Content */}
-          <div className={`${isEven ? 'order-1' : 'order-2'} space-y-4`}>
+          <div className={`${language === 'he' ? (isEven ? 'order-1' : 'order-2') : (isEven ? 'order-2' : 'order-1')} space-y-4`}>
             <div className="space-y-2">
-              <h2 className="text-white font-bold text-xl sm:text-2xl md:text-3xl" dir="rtl">
+              <h2 className="text-white font-bold text-xl sm:text-2xl md:text-3xl" dir={language === 'he' ? 'rtl' : 'ltr'}>
                 {section.title}
               </h2>
-              <h3 className={`text-${section.accentColor} font-semibold text-base sm:text-lg`} dir="rtl">
+              <h3 className={`text-${section.accentColor} font-semibold text-base sm:text-lg`} dir={language === 'he' ? 'rtl' : 'ltr'}>
                 {section.subtitle}
               </h3>
             </div>
             
-            <p className="text-white/70 text-sm sm:text-base leading-relaxed" dir="rtl">
+            <p className="text-white/70 text-sm sm:text-base leading-relaxed" dir={language === 'he' ? 'rtl' : 'ltr'}>
               {section.description}
             </p>
             
@@ -35,7 +36,7 @@ const ProjectCard = memo<ProjectCardProps>(({
           </div>
 
           {/* Image */}
-          <div className={`${isEven ? 'order-2' : 'order-1'} flex justify-center`}>
+          <div className={`${language === 'he' ? (isEven ? 'order-2' : 'order-1') : (isEven ? 'order-1' : 'order-2')} flex justify-center`}>
             <div className="w-[300px] h-[180px] rounded-lg overflow-hidden">
               <Image 
                 src={HERO_IMAGE_PATH}

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ServiceCard {
   id: string;
@@ -12,74 +13,36 @@ interface ServiceCard {
   imageBg: string;
 }
 
-const servicesData: ServiceCard[] = [
-  {
-    id: 'ai-solutions',
-    title: 'פתרונות בינה מלאכותית',
-    description: 'מערכות AI מתקדמות לעסקים',
-    longDescription: 'פיתוח פתרונות בינה מלאכותית מותאמים אישית שמשפרים את היעילות העסקית ומאפשרים קבלת החלטות מבוססות נתונים.',
-    features: ['למידת מכונה מתקדמת', 'עיבוד שפה טבעית', 'ניתוח נתונים חכם', 'אוטומציה חכמה'],
-    color: 'from-blue-500 to-purple-600',
-    imageBg: '/assets/images/img/6.png'
-  },
-  {
-    id: 'web-development',
-    title: 'פיתוח אתרים ואפליקציות',
-    description: 'פתרונות דיגיטליים מותאמים אישית',
-    longDescription: 'יצירת אתרים ואפליקציות מתקדמות עם עיצוב רספונסיבי, ביצועים מהירים וחוויית משתמש מעולה.',
-    features: ['עיצוב רספונסיבי', 'ביצועים מהירים', 'SEO מתקדם', 'אבטחה גבוהה'],
-    color: 'from-green-500 to-teal-600',
-    imageBg: '/assets/images/img/7.png'
-  },
-  {
-    id: 'automation',
-    title: 'אוטומציה ותהליכים',
-    description: 'חיסכון בזמן ומשאבים',
-    longDescription: 'יישום פתרונות אוטומציה מתקדמים שמייעלים תהליכים עסקיים ומפחיתים עלויות תפעול.',
-    features: ['אוטומציה של תהליכים', 'ניהול זרימת עבודה', 'דוחות אוטומטיים', 'אינטגרציות מתקדמות'],
-    color: 'from-orange-500 to-red-600',
-    imageBg: '/assets/images/img/8.png'
-  },
-  {
-    id: 'mobile-apps',
-    title: 'פיתוח אפליקציות',
-    description: 'פיתוח  מובייל  והיברידיות עם חוויית משתמש  וביצועים גבוהים.',
-    longDescription: 'פיתוח אפליקציות מובייל נטיביות והיברידיות עם חוויית משתמש  וביצועים גבוהים.',
-    features: ['פיתוח נטיבי', 'עיצוב UX/UI מתקדם', 'אינטגרציה עם API', 'פרסום בחנויות'],
-    color: 'from-pink-500 to-rose-600',
-    imageBg: '/assets/images/img/9.png'
-  },
-  {
-    id: 'cloud-solutions',
-    title: 'פתרונות ענן',
-    description: 'תשתיות ענן מתקדמות ומאובטחות',
-    longDescription: 'הקמה וניהול של תשתיות ענן מתקדמות עם זמינות גבוהה, אבטחה מקסימלית וגמישות מלאה.',
-    features: ['AWS & Azure', 'אבטחת מידע', 'גיבויים אוטומטיים', 'ניטור 24/7'],
-    color: 'from-cyan-500 to-blue-600',
-    imageBg: '/assets/images/img/10.png'
-  },
-  {
-    id: 'data-analytics',
-    title: 'ניתוח נתונים ו-BI',
-    description: 'תובנות עסקיות מבוססות נתונים',
-    longDescription: 'יצירת מערכות ניתוח נתונים מתקדמות ודשבורדים אינטראקטיביים לקבלת החלטות מבוססות נתונים.',
-    features: ['דשבורדים אינטראקטיביים', 'ניתוח נתונים מתקדם', 'דוחות אוטומטיים', 'תחזיות עסקיות'],
-    color: 'from-indigo-500 to-purple-600',
-    imageBg: '/assets/images/img/11.png'
-  },
-  {
-    id: 'ecommerce',
-    title: 'מסחר אלקטרוני',
-    description: 'חנויות אונליין מתקדמות ומניבות',
-    longDescription: 'פיתוח פלטפורמות מסחר אלקטרוני מתקדמות עם מערכות תשלום מאובטחות וניהול מלאי חכם.',
-    features: ['עגלת קניות מתקדמת', 'מערכות תשלום', 'ניהול מלאי', 'אנליטיקס מכירות'],
-    color: 'from-yellow-500 to-orange-600',
-    imageBg: '/assets/images/img/12.png'
-  }
-];
-
 function ServicesSection() {
-  const [selectedService, setSelectedService] = useState<ServiceCard | null>(servicesData[0]);
+  const { language, t } = useLanguage();
+  
+  // Get services data from translations
+  const [servicesData, setServicesData] = useState<ServiceCard[]>([]);
+  const [selectedService, setSelectedService] = useState<ServiceCard | null>(null);
+
+  // Update services data when language changes
+  useEffect(() => {
+    const getServicesData = async (): Promise<ServiceCard[]> => {
+      try {
+        // Dynamically import the translation file
+        const messages = await import(`../../messages/${language}.json`);
+        const servicesItems = messages.default?.interactiveServices?.items || messages.interactiveServices?.items;
+        if (Array.isArray(servicesItems)) {
+          return servicesItems;
+        }
+      } catch (error) {
+        console.warn('Failed to load services data:', error);
+      }
+      return [];
+    };
+
+    getServicesData().then((data) => {
+      setServicesData(data);
+      if (data.length > 0 && (!selectedService || !data.find(s => s.id === selectedService.id))) {
+        setSelectedService(data[0]);
+      }
+    });
+  }, [language]);
   const [isVisible, setIsVisible] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -206,10 +169,10 @@ function ServicesSection() {
                   ? 'opacity-100 translate-y-0' 
                   : 'opacity-0 translate-y-8'
               }`} 
-              dir="rtl"
+              dir={language === 'he' ? 'rtl' : 'ltr'}
               style={{ textAlign: 'center' }}
             >
-              שירותים שעושים הבדל
+              {t('interactiveServices.title')}
             </h1>
           </div>
 
@@ -257,7 +220,7 @@ function ServicesSection() {
                       backgroundPosition: 'center',
                       backgroundRepeat: 'no-repeat',
                     }}
-                    dir="rtl"
+                    dir={language === 'he' ? 'rtl' : 'ltr'}
                   >
                     {/* Background overlay for better text readability */}
                     <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-black/50 rounded-2xl"></div>
@@ -267,8 +230,8 @@ function ServicesSection() {
                       <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-3 group-hover:text-cyan-200 transition-colors">
                         {service.title}
                       </h3>
-                      <p className="text-white/80 text-xs md:text-sm leading-relaxed">
-                        {/* {service.description} */}
+                      <p className="text-white/80 text-xs md:text-sm leading-relaxed" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                        {service.description}
                       </p>
                     </div>
 
@@ -293,31 +256,33 @@ function ServicesSection() {
               <div key={selectedService.id}   
               style={{ backgroundImage: `url(${selectedService.imageBg})`,
                 backgroundSize: 'contain',
-                backgroundPosition: 'left',
+                backgroundPosition: language === 'he' ? 'left' : 'right',
                 backgroundRepeat: 'no-repeat' }}
               className="animate-fade-in relative z-10 ">
                 {/* Header */}
-                <div className="flex items-center gap-6 mb-8" dir="rtl">
+                <div className="flex items-center gap-6 mb-8" dir={language === 'he' ? 'rtl' : 'ltr'}>
                  
                   <div>
-                    <h2 className="text-3xl font-bold text-white mb-2">{selectedService.title}</h2>
+                    <h2 className="text-4xl font-bold text-white mb-4 text-center" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                      {t('interactiveServices.title')}
+                    </h2>
                     <p className="text-gray-300 text-lg">{selectedService.description}</p>
                   </div>
                 </div>
 
                 <div className="grid lg:grid-cols-2 gap-8">
                   {/* Left Side - Description */}
-                  <div className="space-y-6" dir="rtl">
+                  <div className="space-y-6" dir={language === 'he' ? 'rtl' : 'ltr'}>
                     <div>
-                      <h3 className="text-xl font-semibold text-white mb-4">תיאור מפורט</h3>
+                      <h3 className="text-xl font-semibold text-white mb-4">{t('interactiveServices.detailedDescription')}</h3>
                       <p className="text-gray-300 leading-relaxed text-lg">{selectedService.longDescription}</p>
                     </div>
                   </div>
 
                   {/* Right Side - Features */}
-                  <div className="space-y-6" dir="rtl">
+                  <div className="space-y-6" dir={language === 'he' ? 'rtl' : 'ltr'}>
                     <div>
-                      <h3 className="text-xl font-semibold text-white mb-4">תכונות עיקריות</h3>
+                      <h3 className="text-xl font-semibold text-white mb-4">{t('interactiveServices.keyFeatures')}</h3>
                       <div className="space-y-3">
                         {selectedService.features.map((feature, index) => (
                           <div key={index} className="flex items-center gap-3">

@@ -1,31 +1,41 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Rubik } from "next/font/google";
 import "./globals.css";
 
 import ClientLayout from '@/components/Layout/ClientLayout';
 import { UserTypeProvider } from '@/hooks/useGlobalUserType';
 import { ConditionalLayout } from '@/components/Layout/ConditionalLayout';
+import { LanguageProvider } from '@/contexts/LanguageContext';
+import { DynamicHtmlWrapper } from '@/components/Layout/DynamicHtmlWrapper';
+import DynamicMetadata from '@/components/Layout/DynamicMetadata';
+import StructuredData from '@/components/SEO/StructuredData';
+import Analytics from '@/components/SEO/Analytics';
+import { generateLocalBusinessSchema, generateOrganizationSchema, generateWebsiteSchema } from '@/lib/seo/utils';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-// Add a Hebrew font
-const hebrewFont = Rubik({
-  subsets: ['hebrew'],
-  variable: '--font-hebrew',
-  display: 'swap',
-});
+// Using system fonts to avoid Turbopack issues
+const fontVariables = '--font-inter --font-hebrew';
 
 export const metadata: Metadata = {
   title: "סקריפ | skreep - פתרונות בינה מלאכותית",
-  description: "פתרונות בינה מלאכותית מתקדמים לעסקים",
+  description: "פתרונות בינה מלאכותית מתקדמים לעסקים. אנחנו מספקים פתרונות טכנולוגיים חדשניים שיעזרו לעסק שלכם לחסוך עלויות ולהגדיל יעילות.",
+  keywords: "בינה מלאכותית, פתרונות טכנולוגיים, עסקים, חדשנות, אוטומציה",
+  openGraph: {
+    title: "סקריפ | skreep - פתרונות בינה מלאכותית",
+    description: "פתרונות בינה מלאכותית מתקדמים לעסקים",
+    type: "website",
+    locale: "he_IL",
+    alternateLocale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "סקריפ | skreep - פתרונות בינה מלאכותית",
+    description: "פתרונות בינה מלאכותית מתקדמים לעסקים",
+  },
+  alternates: {
+    languages: {
+      'he': '/',
+      'en': '/',
+    },
+  },
 };
 
 export default function RootLayout({
@@ -33,18 +43,34 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Generate structured data
+  const structuredData = [
+    generateLocalBusinessSchema(),
+    generateOrganizationSchema(),
+    generateWebsiteSchema()
+  ];
+
   return (
-    <html lang="he" dir="rtl">
+    <html lang="he" dir="rtl" suppressHydrationWarning>
+      <head>
+        <StructuredData data={structuredData} />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${hebrewFont.variable} antialiased bg-black min-h-screen relative loading`}
+        className="antialiased bg-black min-h-screen relative loading font-sans"
       >
-        <UserTypeProvider>
-          <ClientLayout>
-            <ConditionalLayout>
-              {children}
-            </ConditionalLayout>
-          </ClientLayout>
-        </UserTypeProvider>
+        <Analytics />
+        <LanguageProvider>
+          <DynamicMetadata />
+          <DynamicHtmlWrapper>
+            <UserTypeProvider>
+              <ClientLayout>
+                <ConditionalLayout>
+                  {children}
+                </ConditionalLayout>
+              </ClientLayout>
+            </UserTypeProvider>
+          </DynamicHtmlWrapper>
+        </LanguageProvider>
       </body>
     </html>
   );

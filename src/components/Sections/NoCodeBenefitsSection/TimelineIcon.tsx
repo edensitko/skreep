@@ -26,11 +26,11 @@ const TimelineIcon = memo<TimelineIconProps>(({
   return (
     <div className={`absolute left-6 md:left-1/2 md:transform md:-translate-x-1/2 flex flex-col items-center ${className}`}>
       {/* Timeline Line */}
-      <div className="absolute top-12 left-1/2 transform -translate-x-1/2 w-1 h-24 md:h-32 bg-gradient-to-b from-cyan-400/50 to-purple-400/30" />
+      <div className="hidden md:block absolute top-12 left-1/2 transform -translate-x-1/2 w-1 h-24 md:h-32 bg-gradient-to-b from-cyan-400/50 to-purple-400/30" />
       
       {/* Icon Circle */}
       <div 
-        className={getTimelineIconClasses(index, isVisible, isHydrated, benefit.gradient)}
+        className={`hidden md:flex ${getTimelineIconClasses(index, isVisible, isHydrated, benefit.gradient)}`}
         style={{
           transitionDelay: `${index * ANIMATION_CONFIG.itemDelay}ms`
         }}
@@ -40,7 +40,7 @@ const TimelineIcon = memo<TimelineIconProps>(({
       
       {/* Glow Effect */}
       <div 
-        className={`absolute inset-0 rounded-full bg-gradient-to-r ${benefit.gradient} opacity-20 blur-xl transition-all duration-1000 ${
+        className={`hidden md:block absolute inset-0 rounded-full bg-gradient-to-r ${benefit.gradient} opacity-20 blur-xl transition-all duration-1000 ${
           isHydrated && isVisible ? 'scale-150' : 'scale-0'
         }`}
         style={{

@@ -14,6 +14,7 @@ export interface ProjectSection {
 export interface ProjectCardProps {
   section: ProjectSection;
   index: number;
+  language: string;
 }
 
 export interface MouseAnimationProps {

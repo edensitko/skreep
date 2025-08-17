@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, memo, useCallback } from 'react';
-import CTAButton from './CTAButton';
+import { useLanguage } from '@/contexts/LanguageContext';
+import CubeButton from './CubeButton';
 import BackgroundEffects from './BackgroundEffects';
 import { LAYOUT_CONFIG, ANIMATION_CONFIG } from './constants';
 import { createAnimationTimer } from './utils';
@@ -16,6 +17,7 @@ function AIConsultantCTASection() {
   // STATE MANAGEMENT
   // ============================================================================
   
+  const { language, t } = useLanguage();
   const [animationState, setAnimationState] = useState<AnimationState>({
     isHovered: false,
     isVisible: false,
@@ -26,18 +28,19 @@ function AIConsultantCTASection() {
   // HANDLERS
   // ============================================================================
   
-  const handleCTAClick = useCallback(() => {
+  const handlePrimaryClick = useCallback(() => {
     // Navigate to AI consultant or trigger action
-    console.log('AI Consultant CTA clicked');
+    console.log('Primary CTA clicked - AI Consultant');
     // Add your navigation logic here
   }, []);
 
-  const handleHover = useCallback((hovered: boolean) => {
-    setAnimationState(prev => ({
-      ...prev,
-      isHovered: hovered
-    }));
+  const handleSecondaryClick = useCallback(() => {
+    // Navigate to consultation or trigger action
+    console.log('Secondary CTA clicked - Free Consultation');
+    // Add your navigation logic here
   }, []);
+
+
 
   // ============================================================================
   // EFFECTS
@@ -104,22 +107,42 @@ function AIConsultantCTASection() {
       `}</style>
       
       <section 
-        className="mx-auto theme-container container px-4 py-8 md:py-16"
+        className="mx-auto theme-container container px-4 py-8 md:py-6"
         role="region"
-        aria-label="קריאה לפעולה - יועץ בינה מלאכותית"
+        aria-label={t('aiConsultantCTA.sectionAriaLabel')}
       >
         <div 
-          className="relative flex items-center justify-center overflow-hidden min-h-[400px] md:min-h-[600px]"
+          className="relative flex items-center justify-center overflow-hidden min-h-[200px] md:min-h-[200px]"
         >
           <div 
-            className="w-full flex justify-center items-center flex-col relative z-10"
+            className="w-full flex justify-center items-center gap-6 md:gap-8 flex-col md:flex-row relative z-10 px-4"
             style={{ maxWidth: LAYOUT_CONFIG.maxWidth }}
           >
-            <CTAButton
-              onClick={handleCTAClick}
-              animationState={animationState}
-              onHover={handleHover}
-            />
+            {/* Primary Cube Button */}
+            <div 
+              className={`transition-all duration-800 ${animationState.mounted && animationState.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+              style={{ animationDelay: '0.1s' }}
+            >
+              <CubeButton
+                onClick={handlePrimaryClick}
+                variant="primary"
+                language={language}
+                className="min-w-[280px] md:min-w-[320px]"
+              />
+            </div>
+
+            {/* Secondary Cube Button */}
+            <div 
+              className={`transition-all duration-800 ${animationState.mounted && animationState.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+              style={{ animationDelay: '0.3s' }}
+            >
+              <CubeButton
+                onClick={handleSecondaryClick}
+                variant="secondary"
+                language={language}
+                className="min-w-[280px] md:min-w-[320px]"
+              />
+            </div>
           </div>
 
           <BackgroundEffects />
