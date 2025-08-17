@@ -8,6 +8,7 @@ export interface Benefit {
   readonly description: string;
   readonly gradient: string;
   readonly bgImage: string;
+  readonly image: string;
 }
 
 export interface BenefitCardProps {

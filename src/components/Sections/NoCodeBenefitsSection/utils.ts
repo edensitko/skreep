@@ -38,8 +38,9 @@ export const shouldItemBeVisible = (
   scrollProgress: number, 
   totalItems: number
 ): boolean => {
+  // Make items appear immediately when section is in view
   const itemThreshold = (index + 1) / totalItems;
-  return scrollProgress >= itemThreshold * 0.6;
+  return scrollProgress >= itemThreshold * 0.1 || scrollProgress > 0;
 };
 
 /**
