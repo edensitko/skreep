@@ -57,7 +57,7 @@ export const useSectionState = (benefits: readonly Benefit[]) => {
 };
 
 /**
- * Hook for handling scroll-based animations and visibility
+ * Hook for handling intersection observer-based animations
  */
 export const useScrollAnimations = (
   benefits: readonly Benefit[],
@@ -65,18 +65,50 @@ export const useScrollAnimations = (
   onScrollProgressChange: (progress: number) => void
 ) => {
   const sectionRef = useRef<HTMLElement>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  // Initialize refs array
+  useEffect(() => {
+    itemRefs.current = itemRefs.current.slice(0, benefits.length);
+  }, [benefits.length]);
+
+  // Intersection observer for individual items
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    const visibleItems = new Array(benefits.length).fill(false);
+
+    itemRefs.current.forEach((ref, index) => {
+      if (ref) {
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              visibleItems[index] = true;
+              onVisibleItemsChange([...visibleItems]);
+            }
+          },
+          { 
+            threshold: 0.2,
+            rootMargin: '-50px 0px'
+          }
+        );
+        
+        observer.observe(ref);
+        observers.push(observer);
+      }
+    });
+
+    return () => {
+      observers.forEach(observer => observer.disconnect());
+    };
+  }, [benefits.length, onVisibleItemsChange]);
+
+  // Scroll progress for timeline line
   const throttledScroll = useCallback(
     throttle(() => {
       const progress = calculateScrollProgress(sectionRef);
       onScrollProgressChange(progress);
-
-      const newVisibleItems = benefits.map((_, index) => 
-        shouldItemBeVisible(index, progress, benefits.length)
-      );
-      onVisibleItemsChange(newVisibleItems);
     }),
-    [benefits, onVisibleItemsChange, onScrollProgressChange]
+    [onScrollProgressChange]
   );
 
   useEffect(() => {
@@ -88,7 +120,13 @@ export const useScrollAnimations = (
     };
   }, [throttledScroll]);
 
-  return { sectionRef };
+  return { 
+    sectionRef,
+    itemRefs: itemRefs.current,
+    setItemRef: (index: number) => (ref: HTMLDivElement | null) => {
+      itemRefs.current[index] = ref;
+    }
+  };
 };
 
 /**

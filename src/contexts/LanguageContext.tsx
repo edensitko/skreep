@@ -23,6 +23,7 @@ const messages = {
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguage] = useState<Language>('he');
+  const [isInitialized, setIsInitialized] = useState(false);
 
   // Load language from localStorage on mount
   useEffect(() => {
@@ -30,15 +31,26 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     if (savedLanguage && (savedLanguage === 'he' || savedLanguage === 'en')) {
       setLanguage(savedLanguage);
     }
+    setIsInitialized(true);
   }, []);
 
   // Save language to localStorage when it changes
   useEffect(() => {
-    localStorage.setItem('language', language);
-    // Update document direction and lang
-    document.documentElement.dir = language === 'he' ? 'rtl' : 'ltr';
-    document.documentElement.lang = language;
-  }, [language]);
+    if (!isInitialized) return; // Don't run on initial load
+    
+    const savedLanguage = localStorage.getItem('language');
+    
+    // Only refresh if language actually changed
+    if (savedLanguage !== language) {
+      localStorage.setItem('language', language);
+      // Update document direction and lang
+      document.documentElement.dir = language === 'he' ? 'rtl' : 'ltr';
+      document.documentElement.lang = language;
+      
+      // Refresh the page to ensure all components reset properly
+      window.location.reload();
+    }
+  }, [language, isInitialized]);
 
   // Translation function
   const t = (key: string): string => {

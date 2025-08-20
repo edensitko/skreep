@@ -38,7 +38,14 @@ export const shouldItemBeVisible = (
   scrollProgress: number, 
   totalItems: number
 ): boolean => {
-  // Make items appear immediately when section is in view
+  // For mobile: sequential animation with staggered delays
+  if (window.innerWidth < 768) {
+    const itemThreshold = (index + 1) / totalItems;
+    const staggerDelay = 0.15; // Delay between items
+    return scrollProgress >= itemThreshold * staggerDelay;
+  }
+  
+  // For desktop: make items appear immediately when section is in view
   const itemThreshold = (index + 1) / totalItems;
   return scrollProgress >= itemThreshold * 0.1 || scrollProgress > 0;
 };

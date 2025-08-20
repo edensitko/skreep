@@ -9,6 +9,7 @@ export interface ChatState {
   messages: Message[];
   isActive: boolean;
   isTyping: boolean;
+  isLoading: boolean;
 }
 
 export type ChatMode = 'input' | 'chat';
