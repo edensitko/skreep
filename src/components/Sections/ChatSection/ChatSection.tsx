@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useCallback, useRef, useEffect } from 'react';
+import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 import ChatMessage from './ChatMessage';
 import TypingIndicator from './TypingIndicator';
@@ -14,7 +15,8 @@ const ChatSection: React.FC = () => {
   const [chatState, setChatState] = useState<ChatState>({
     messages: [],
     isActive: false,
-    isTyping: false
+    isTyping: false,
+    isLoading: false
   });
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -111,7 +113,8 @@ const ChatSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative py-18 lg:py-20 bg-black overflow-hidden">
+    <section className="w-full bg-black ">
+      <div className="relative pt-16 rounded-t-[100px] lg:py-20 bg-white/5 shadow-b-xl shadow-white/10 overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/5 via-transparent to-purple-600/5" />
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-400/10 rounded-full blur-3xl" />
@@ -145,28 +148,30 @@ const ChatSection: React.FC = () => {
             )}
 
             {/* Input Area */}
-            <div className={`p-6 lg:p-8 ${mode === 'chat' ? 'border-t border-white/10' : ''}`}>
-              <div className="flex gap-3 items-center">
+            <div className={`p-4 lg:p-6 ${mode === 'chat' ? 'border-t border-white/10' : ''}`}>
+              <div className="flex gap-2 items-center">
                 <input
                   ref={inputRef}
                   type="text"
                   value={inputValue}
-                  onChange={handleInputChange}
-                  onKeyPress={handleKeyPress}
-                  placeholder={t('chat.placeholder')}
-                  className="flex-1 bg-white/10 border border-white/20 rounded-full px-6 lg:px-8 py-3 lg:py-4 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300 text-base lg:text-lg"
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={handleKeyPress}
+                  placeholder={t('chatSection.placeholder')}
+                  className="flex-1 bg-white/10 border border-white/20 rounded-full px-4 lg:px-6 py-2 lg:py-3 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300 text-sm lg:text-base"
                   dir={language === 'he' ? 'rtl' : 'ltr'}
                 />
                 <button
                   onClick={handleSendMessage}
-                  disabled={!inputValue.trim()}
-                  className={`px-6 lg:px-8 py-3 lg:py-4 rounded-full font-medium transition-all duration-300 text-base lg:text-lg ${
-                    inputValue.trim()
-                      ? 'bg-gradient-to-l from-cyan-400/20 to-cyan-400/40 text-white border border-cyan-400/30 hover:from-cyan-400/30 hover:to-cyan-400/50 hover:scale-105 active:scale-95'
+                  disabled={!inputValue.trim() || chatState.isLoading}
+                  className={`px-4 lg:px-6 py-2 lg:py-3 rounded-full font-medium transition-all duration-300 text-sm lg:text-base ${
+                    inputValue.trim() && !chatState.isLoading
+                      ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-white hover:from-cyan-500 hover:to-blue-600 hover:scale-105'
                       : 'bg-white/10 text-white/50 border border-white/20 cursor-not-allowed'
                   }`}
                 >
-                  <span dir={language === 'he' ? 'rtl' : 'ltr'}>{t('chat.sendButton')}</span>
+                  <span dir={language === 'he' ? 'rtl' : 'ltr'}>
+                    {t('chatSection.sendButton')}
+                  </span>
                 </button>
               </div>
             </div>
@@ -178,7 +183,20 @@ const ChatSection: React.FC = () => {
               {t('chat.helperText')}
             </p>
           )}
+
+          {/* Image under chat */}
+          <div className="flex justify-center items-center ">
+            <Image
+              src="/assets/images/img/15.png"
+              alt="AI Chat Assistant"
+              width={800}
+              height={800}
+              className="w-full max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg mx-auto opacity-80 hover:opacity-100 transition-opacity duration-300"
+              priority={false}
+            />
+          </div>
         </div>
+      </div>
       </div>
     </section>
   );

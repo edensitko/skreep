@@ -87,23 +87,27 @@ function PartnersSection() {
 
   return (
     <section 
-      className="relative overflow-hidden pt-10 w-[95%] mx-auto bg-gradient-to-br"
+      className="relative overflow-hidden pt-10 w-[100%] mx-auto bg-gradient-to-br"
       role="region"
       aria-label={t('partners.ariaLabel')}
       dir={language === 'he' ? 'rtl' : 'ltr'}
     >
       <div className="mx-auto max-w-full px-0">
         {/* Header */}
-        <h1 
-          ref={titleRef}
-          className={`font-bold text-center bg-gradient-to-br from-white via-white-60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out ${
-            isVisible 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-8'
-          }`} 
-        >
-          {t('partners.title')}
-        </h1>
+        <div className="relative z-20 mb-8 md:mb-12">
+          <h1 
+            ref={titleRef}
+            className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight transition-all duration-1000 ease-out ${
+              isVisible 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-8'
+            }`}
+            style={{ textAlign: 'center' }}
+            dir={language === 'he' ? 'rtl' : 'ltr'}
+          >
+            {t('partners.title') || 'חלק מהצלחות שלנו'}
+          </h1>
+        </div>
         
         {/* Partners Slider */}
         <Swiper
@@ -125,8 +129,8 @@ function PartnersSection() {
       </div>
    
       {/* Background Shapes */}
-      <div className="w-full h-[250px] sm:h-[350px] md:h-[595px] overflow-hidden absolute left-0 -bottom-10 sm:-bottom-24 md:-bottom-[130px] opacity-20" aria-hidden="true">
-        <div className="line-shape w-full h-[1000px]"></div>
+      <div className="w-full h-[550px] sm:h-[350px] md:h-[595px] overflow-hidden absolute left-0 -bottom-10 sm:-bottom-24 md:-bottom-[130px]" aria-hidden="true">
+        <div className="line-shape w-full h-[1000px] bg-black "></div>
       </div>
       
       {/* Corner Shapes */}

@@ -182,23 +182,10 @@ function ContactFormSection() {
   return (
     <section 
       id="contact" 
-      className="w-full py-16 md:py-24 bg-black/30 relative overflow-hidden"
+      className="w-full py-16 md:py-24 relative overflow-hidden"
       role="region"
       aria-label={t('contactForm.sectionAriaLabel')}
     >
-      {/* Background Image with Opacity */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/images/contact-bg.jpg"
-          alt=""
-          fill
-          className="object-cover opacity-20"
-          priority={false}
-          aria-hidden="true"
-        />
-        <div className="absolute inset-0 bg-black/50"></div>
-      </div>
-
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-2xl mx-auto">
           {/* Header */}

@@ -4,14 +4,13 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
-import FooterSection from '@/components/Sections/FooterSection';
 
 export default function Footer() {
   const { language, t } = useLanguage();
   const textDirection = language === 'he' ? 'rtl' : 'ltr';
   
   return (
-    <footer className="bg-black text-white pt-8 md:pt-16 pb-4 md:pb-8" dir={textDirection}>
+    <footer className="bg-black rounded-t-4xl text-white pt-8 md:pt-16 pb-4 md:pb-8" dir={textDirection}>
       <div className="container mx-auto px-4  ">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {/* Column 1 - About */}
@@ -114,7 +113,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <FooterSection />
     </footer>
   );
 }

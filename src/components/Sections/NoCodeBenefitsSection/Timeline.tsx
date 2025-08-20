@@ -13,6 +13,7 @@ const Timeline = memo<TimelineProps>(({
   visibleItems, 
   isHydrated, 
   scrollProgress,
+  setItemRef,
   className = '' 
 }) => {
   return (
@@ -25,27 +26,15 @@ const Timeline = memo<TimelineProps>(({
         {/* Mobile Timeline Spine - Right positioned for RTL */}
         <div className="md:hidden absolute right-6 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-white/10 to-transparent" />
         
-        {/* Desktop Glowing Progress Line */}
+        {/* Desktop Progress Line */}
         <div 
-          className="hidden md:block absolute left-1/2 transform -translate-x-1/2 top-0 w-1 bg-gradient-to-b from-cyan-400/80 via-purple-400/60 to-cyan-400/80 transition-all duration-500 ease-out shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+          className="hidden md:block absolute left-1/2 transform -translate-x-1/2 top-0 w-1 bg-gradient-to-b from-cyan-400/80 via-purple-400/60 to-cyan-400/80 transition-all duration-500 ease-out"
           style={{ height: `${scrollProgress * 100}%` }}
         />
         
-        {/* Mobile Glowing Progress Line - Right positioned for RTL */}
+        {/* Mobile Progress Line - Right positioned for RTL */}
         <div 
-          className="md:hidden absolute right-6 top-0 w-1 bg-gradient-to-b from-cyan-400/80 via-purple-400/60 to-cyan-400/80 transition-all duration-500 ease-out shadow-[0_0_20px_rgba(34,211,238,0.3)]"
-          style={{ height: `${scrollProgress * 100}%` }}
-        />
-        
-        {/* Desktop Timeline Glow Effect */}
-        <div 
-          className="hidden md:block absolute left-1/2 transform -translate-x-1/2 top-0 w-8 bg-gradient-to-b from-cyan-400/20 via-purple-400/10 to-cyan-400/20 blur-xl transition-all duration-500 ease-out"
-          style={{ height: `${scrollProgress * 100}%` }}
-        />
-        
-        {/* Mobile Timeline Glow Effect - Right positioned for RTL */}
-        <div 
-          className="md:hidden absolute right-6 top-0 w-8 bg-gradient-to-b from-cyan-400/20 via-purple-400/10 to-cyan-400/20 blur-xl transition-all duration-500 ease-out"
+          className="md:hidden absolute right-6 top-0 w-1 bg-gradient-to-b from-cyan-400/80 via-purple-400/60 to-cyan-400/80 transition-all duration-500 ease-out"
           style={{ height: `${scrollProgress * 100}%` }}
         />
       </div>
@@ -59,6 +48,7 @@ const Timeline = memo<TimelineProps>(({
           return (
             <div 
               key={benefit.icon} 
+              ref={setItemRef(index)}
               className="relative group"
               style={{ 
                 transitionDelay: `${delay}ms` 
@@ -66,7 +56,7 @@ const Timeline = memo<TimelineProps>(({
             >
               {/* Desktop Timeline Node Connection */}
               <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 top-1/2 z-20">
-                <div className={`w-6 h-6 rounded-full border-4 border-black bg-gradient-to-r ${benefit.gradient || 'from-cyan-400 to-purple-400'} shadow-lg transition-all duration-700 scale-100 opacity-100 shadow-[0_0_30px_rgba(34,211,238,0.5)]`} />
+                <div className={`w-6 h-6 rounded-full border-4 border-black bg-gradient-to-r ${benefit.gradient || 'from-cyan-400 to-purple-400'} transition-all duration-700 scale-100 opacity-100`} />
                 
                 {/* Node Pulse Effect */}
                 <div className={`absolute inset-0 w-6 h-6 rounded-full bg-gradient-to-r ${benefit.gradient || 'from-cyan-400 to-purple-400'} transition-all duration-1000 ${
@@ -76,7 +66,7 @@ const Timeline = memo<TimelineProps>(({
               
               {/* Mobile Timeline Node Connection */}
               <div className="md:hidden absolute right-6 transform translate-x-1/2 top-6 z-20">
-                <div className={`w-4 h-4 rounded-full border-2 border-black bg-gradient-to-r ${benefit.gradient || 'from-cyan-400 to-purple-400'} shadow-lg transition-all duration-700 scale-100 opacity-100 shadow-[0_0_20px_rgba(34,211,238,0.4)]`} />
+                <div className={`w-4 h-4 rounded-full border-2 border-black bg-gradient-to-r ${benefit.gradient || 'from-cyan-400 to-purple-400'} transition-all duration-700 scale-100 opacity-100`} />
               </div>
 
               {/* Enhanced Desktop Layout */}
@@ -145,7 +135,9 @@ const Timeline = memo<TimelineProps>(({
                   
                   {/* Mobile Benefit Card */}
                   <div className="flex-1">
-                    <div className={`transform transition-all duration-1000 ease-out translate-x-0 opacity-100`}
+                    <div className={`transform transition-all duration-1000 ease-out ${
+                      visibleItems[index] ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
+                    }`}
                     style={{ transitionDelay: `${delay + 50}ms` }}
                     >
                       <BenefitCard
@@ -170,15 +162,8 @@ const Timeline = memo<TimelineProps>(({
           {/* Position at timeline spine location */}
           <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2">
             <div 
-              className={`w-12 h-12 rounded-full bg-gradient-to-r from-cyan-400 via-purple-400 to-cyan-400 shadow-2xl transition-all duration-1000 ${
-                isHydrated && scrollProgress > 0.8 ? 'scale-100 opacity-100 shadow-[0_0_40px_rgba(34,211,238,0.6)]' : 'scale-0 opacity-0'
-              }`}
-            />
-            
-            {/* End Node Glow */}
-            <div 
-              className={`absolute inset-0 w-12 h-12 rounded-full bg-gradient-to-r from-cyan-400 via-purple-400 to-cyan-400 blur-xl transition-all duration-1000 ${
-                isHydrated && scrollProgress > 0.8 ? 'scale-150 opacity-30' : 'scale-0 opacity-0'
+              className={`w-12 h-12 rounded-full bg-gradient-to-r from-cyan-400 via-purple-400 to-cyan-400 transition-all duration-1000 ${
+                isHydrated && scrollProgress > 0.8 ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
               }`}
             />
             
@@ -197,7 +182,7 @@ const Timeline = memo<TimelineProps>(({
           {/* Mobile version - positioned at right timeline */}
           <div className="md:hidden absolute right-6 transform translate-x-1/2">
             <div 
-              className={`w-8 h-8 rounded-full bg-gradient-to-r from-cyan-400 via-purple-400 to-cyan-400 shadow-xl transition-all duration-1000 ${
+              className={`w-8 h-8 rounded-full bg-gradient-to-r from-cyan-400 via-purple-400 to-cyan-400 transition-all duration-1000 ${
                 isHydrated && scrollProgress > 0.8 ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
               }`}
             />
@@ -216,14 +201,14 @@ const Timeline = memo<TimelineProps>(({
         </div>
         
         {/* CTA Button - Centered */}
-        <div className="flex justify-center mt-8 md:mt-12">
+        <div className="flex justify-center mt-8 md:mt-12 lg:mt-16">
           <div 
             className={`transition-all duration-1000 delay-500 ${
               isHydrated && scrollProgress > 0.8 ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
             }`}
           >
           <button 
-            className="group relative bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/20 rounded-2xl px-8 py-4 transition-all duration-500 hover:backdrop-blur-[10px] hover:bg-gradient-to-br hover:from-black/40 hover:via-black/25 hover:to-black/10 hover:border-cyan-400/30 hover:shadow-2xl hover:shadow-cyan-400/20 before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-br before:from-white/10 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 overflow-hidden"
+            className="group relative bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/20 rounded-2xl px-8 py-4 transition-all duration-500 hover:backdrop-blur-[10px] hover:bg-gradient-to-br hover:from-black/40 hover:via-black/25 hover:to-black/10 hover:border-cyan-400/30 hover:shadow-2xl hover:shadow-cyan-400/20 before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-br before:from-white/10 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 overflow-hidden lg:mt-16"
             onClick={() => {
               // Scroll to contact section or open contact form
               const contactSection = document.getElementById('contact');

@@ -18,63 +18,90 @@ const servicesData: ServiceCard[] = [
     title: 'פתרונות בינה מלאכותית',
     description: 'מערכות AI מתקדמות לעסקים',
     longDescription: 'פיתוח פתרונות בינה מלאכותית מותאמים אישית שמשפרים את היעילות העסקית ומאפשרים קבלת החלטות מבוססות נתונים.',
-    features: ['למידת מכונה מתקדמת', 'עיבוד שפה טבעית', 'ניתוח נתונים חכם', 'אוטומציה חכמה'],
+    features: ['למידת מכונה מתקדמת', 'עיבוד שפה טבעית', 'ניתוח נתונים חכם', 'אוטומציה חכמה', 'ראייה ממוחשבת', 'זיהוי דפוסים', 'חיזוי מגמות', 'אלגוריתמים מתקדמים', 'בינה עסקית', 'למידה עמוקה', 'עיבוד תמונות', 'ניתוח סנטימנט'],
     color: 'from-blue-500 to-purple-600',
-    imageBg: '/assets/images/img/6.png'
+    imageBg: '/assets/images/servicesimg/1.png'
   },
   {
     id: 'web-development',
     title: 'פיתוח אתרים ואפליקציות',
     description: 'פתרונות דיגיטליים מותאמים אישית',
     longDescription: 'יצירת אתרים ואפליקציות מתקדמות עם עיצוב רספונסיבי, ביצועים מהירים וחוויית משתמש מעולה.',
-    features: ['עיצוב רספונסיבי', 'ביצועים מהירים', 'SEO מתקדם', 'אבטחה גבוהה'],
+    features: ['עיצוב רספונסיבי', 'ביצועים מהירים', 'SEO מתקדם', 'אבטחה גבוהה', 'פיתוח React', 'Node.js Backend', 'מסדי נתונים', 'API Integration', 'Progressive Web Apps', 'TypeScript', 'GraphQL', 'Cloud Deployment'],
     color: 'from-green-500 to-teal-600',
-    imageBg: '/assets/images/img/7.png'
+    imageBg: '/assets/images/servicesimg/2.png'
   },
   {
     id: 'automation',
     title: 'אוטומציה ותהליכים',
     description: 'חיסכון בזמן ומשאבים',
     longDescription: 'יישום פתרונות אוטומציה מתקדמים שמייעלים תהליכים עסקיים ומפחיתים עלויות תפעול.',
-    features: ['אוטומציה של תהליכים', 'ניהול זרימת עבודה', 'דוחות אוטומטיים', 'אינטגרציות מתקדמות'],
+    features: ['אוטומציה של תהליכים', 'ניהול זרימת עבודה', 'דוחות אוטומטיים', 'אינטגרציות מתקדמות', 'RPA Solutions', 'Workflow Optimization', 'Task Scheduling', 'Email Automation', 'Data Processing', 'System Integration', 'Quality Assurance', 'Performance Monitoring'],
     color: 'from-orange-500 to-red-600',
-    imageBg: '/assets/images/img/8.png'
+    imageBg: '/assets/images/servicesimg/3.png'
   },
   {
     id: 'mobile-apps',
     title: 'פיתוח אפליקציות',
     description: 'פיתוח מובייל והיברידיות עם חוויית משתמש וביצועים גבוהים.',
     longDescription: 'פיתוח אפליקציות מובייל נטיביות והיברידיות עם חוויית משתמש וביצועים גבוהים.',
-    features: ['פיתוח נטיבי', 'עיצוב UX/UI מתקדם', 'אינטגרציה עם API', 'פרסום בחנויות'],
+    features: ['פיתוח נטיבי', 'עיצוב UX/UI מתקדם', 'אינטגרציה עם API', 'פרסום בחנויות', 'React Native', 'Flutter Development', 'iOS Development', 'Android Development', 'Cross-Platform', 'Push Notifications', 'In-App Purchases', 'Analytics Integration'],
     color: 'from-pink-500 to-rose-600',
-    imageBg: '/assets/images/img/9.png'
+    imageBg: '/assets/images/servicesimg/4.png'
   },
   {
     id: 'cloud-solutions',
     title: 'פתרונות ענן',
     description: 'תשתיות ענן מתקדמות ומאובטחות',
     longDescription: 'הקמה וניהול של תשתיות ענן מתקדמות עם זמינות גבוהה, אבטחה מקסימלית וגמישות מלאה.',
-    features: ['AWS & Azure', 'אבטחת מידע', 'גיבויים אוטומטיים', 'ניטור 24/7'],
+    features: ['AWS & Azure', 'אבטחת מידע', 'גיבויים אוטומטיים', 'ניטור 24/7', 'Docker Containers', 'Kubernetes', 'CI/CD Pipelines', 'Load Balancing', 'Auto Scaling', 'Database Management', 'Security Compliance', 'Disaster Recovery'],
     color: 'from-cyan-500 to-blue-600',
-    imageBg: '/assets/images/img/10.png'
+    imageBg: '/assets/images/servicesimg/5.png'
   },
   {
     id: 'data-analytics',
     title: 'ניתוח נתונים ו-BI',
     description: 'תובנות עסקיות מבוססות נתונים',
     longDescription: 'יצירת מערכות ניתוח נתונים מתקדמות ודשבורדים אינטראקטיביים לקבלת החלטות מבוססות נתונים.',
-    features: ['דשבורדים אינטראקטיביים', 'ניתוח נתונים מתקדם', 'דוחות אוטומטיים', 'תחזיות עסקיות'],
+    features: ['דשבורדים אינטראקטיביים', 'ניתוח נתונים מתקדם', 'דוחות אוטומטיים', 'תחזיות עסקיות', 'Power BI', 'Tableau Integration', 'Data Warehousing', 'ETL Processes', 'Real-time Analytics', 'Machine Learning Models', 'Statistical Analysis', 'Data Visualization'],
     color: 'from-indigo-500 to-purple-600',
-    imageBg: '/assets/images/img/11.png'
+    imageBg: '/assets/images/servicesimg/6.png'
   },
   {
     id: 'ecommerce',
     title: 'מסחר אלקטרוני',
     description: 'חנויות אונליין מתקדמות ומניבות',
     longDescription: 'פיתוח פלטפורמות מסחר אלקטרוני מתקדמות עם מערכות תשלום מאובטחות וניהול מלאי חכם.',
-    features: ['עגלת קניות מתקדמת', 'מערכות תשלום', 'ניהול מלאי', 'אנליטיקס מכירות'],
+    features: ['עגלת קניות מתקדמת', 'מערכות תשלום', 'ניהול מלאי', 'אנליטיקס מכירות', 'Multi-vendor Support', 'Product Catalog', 'Order Management', 'Customer Reviews', 'Discount Systems', 'Shipping Integration', 'Tax Calculation', 'Mobile Commerce'],
     color: 'from-yellow-500 to-orange-600',
-    imageBg: '/assets/images/img/12.png'
+    imageBg: '/assets/images/servicesimg/7.png'
+  },
+  {
+    id: 'cybersecurity',
+    title: 'אבטחת סייבר',
+    description: 'הגנה מתקדמת על נכסים דיגיטליים',
+    longDescription: 'פתרונות אבטחת סייבר מתקדמים להגנה על מידע רגיש ומערכות קריטיות מפני איומים דיגיטליים.',
+    features: ['ניטור אבטחה 24/7', 'זיהוי איומים', 'הצפנת נתונים', 'גיבוי מאובטח', 'Penetration Testing', 'Vulnerability Assessment', 'Security Audits', 'Incident Response', 'Compliance Management', 'Multi-Factor Authentication', 'Network Security', 'Endpoint Protection'],
+    color: 'from-red-500 to-pink-600',
+    imageBg: '/assets/images/servicesimg/8.png'
+  },
+  {
+    id: 'iot-solutions',
+    title: 'פתרונות IoT',
+    description: 'חיבור חכם של מכשירים ומערכות',
+    longDescription: 'פיתוח פתרונות אינטרנט של הדברים (IoT) מתקדמים לחיבור ובקרה של מכשירים חכמים.',
+    features: ['חיישנים חכמים', 'בקרה מרחוק', 'ניתוח נתונים בזמן אמת', 'אוטומציה חכמה', 'Device Management', 'Edge Computing', 'Sensor Networks', 'Smart Home Solutions', 'Industrial IoT', 'Predictive Maintenance', 'Energy Management', 'Asset Tracking'],
+    color: 'from-emerald-500 to-green-600',
+    imageBg: '/assets/images/servicesimg/9.png'
+  },
+  {
+    id: 'blockchain',
+    title: 'טכנולוגיית בלוקצ׳יין',
+    description: 'פתרונות מבוזרים ומאובטחים',
+    longDescription: 'פיתוח יישומים מבוססי בלוקצ׳יין לשקיפות, אבטחה ומהימנות מקסימלית.',
+    features: ['חוזים חכמים', 'מטבעות דיגיטליים', 'NFT פלטפורמות', 'DeFi פתרונות', 'Smart Contracts', 'Cryptocurrency', 'Decentralized Apps', 'Token Development', 'Wallet Integration', 'Consensus Mechanisms', 'Digital Identity', 'Supply Chain Tracking'],
+    color: 'from-violet-500 to-purple-600',
+    imageBg: '/assets/images/servicesimg/10.png'
   }
 ];
 
@@ -192,7 +219,7 @@ function InteractiveShowcaseSection() {
       <section className="relative overflow-hidden pt-10 w-[95%] mx-auto bg-gradient-to-br">
         <div className="mx-auto max-w-full px-0">
           {/* Header */}
-          <div className="text-center w-full">
+          <div className="text-center pt-16 pb-8 w-full">
             <h1 
               ref={titleRef}
               className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out ${
@@ -247,7 +274,7 @@ function InteractiveShowcaseSection() {
                     }`}
                     style={{
                       backgroundImage: `url(${service.imageBg})`,
-                      backgroundSize: 'contain',
+                      backgroundSize: 'cover',
                       backgroundPosition: 'center',
                       backgroundRepeat: 'no-repeat',
                     }}
@@ -293,53 +320,36 @@ function InteractiveShowcaseSection() {
             {/* Content Wrapper */}
             <div 
               key={selectedService.id}
-              className="relative z-10 p-8 lg:p-12"
+              className="relative z-10 p-6 lg:p-8"
             >
               {/* Header Section */}
-              <div className="text-center mb-10 lg:mb-12" dir="rtl">
-                <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold bg-gradient-to-br from-white via-white/90 to-white/70 bg-clip-text text-transparent mb-3 lg:mb-4 leading-tight">
+              <div className="text-center mb-8" dir="rtl">
+                <h2 className="text-2xl lg:text-3xl font-bold bg-gradient-to-br from-white via-white/90 to-white/70 bg-clip-text text-transparent mb-3 leading-tight">
                   {selectedService.title}
                 </h2>
-                <p className="text-white/80 text-lg lg:text-xl leading-relaxed max-w-3xl mx-auto">
-                  {selectedService.description}
+                <p className="text-white/80 text-base lg:text-lg leading-relaxed max-w-2xl mx-auto">
+                  {selectedService.longDescription}
                 </p>
               </div>
 
-              {/* Content Grid */}
-              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-                {/* Description Section */}
-                <div className="space-y-6" dir="rtl">
-                  <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 lg:p-8 hover:bg-white/10 hover:border-white/20 transition-all duration-300">
-                    <p className="text-white/80 leading-relaxed text-lg lg:text-xl">
-                      {selectedService.longDescription}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Features Section */}
-                <div className="space-y-6" dir="rtl">
-                  <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 lg:p-8 hover:bg-white/10 hover:border-white/20 transition-all duration-300">
-                    <div className="space-y-4">
-                      {selectedService.features.map((feature, index) => (
-                        <div 
-                          key={index} 
-                          className="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300 group"
-                        >
-                          <div className={`w-8 h-8 bg-gradient-to-r ${selectedService.color} rounded-full flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                            </svg>
-                          </div>
-                          <span className="text-white/90 text-lg font-medium group-hover:text-white transition-colors duration-300">
-                            {feature}
-                          </span>
-                        </div>
-                      ))}
+              {/* Features Grid - 2 Columns Mobile, 3 Columns Desktop */}
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-3" dir="rtl">
+                {selectedService.features.map((feature, index) => (
+                  <div 
+                    key={index} 
+                    className="flex items-center gap-2 lg:gap-4 p-2 lg:p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20"
+                  >
+                    <div className="w-5 h-5 lg:w-6 lg:h-6 bg-white/10 border border-white/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-2.5 h-2.5 lg:w-3 lg:h-3 text-white/80" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
                     </div>
+                    <span className="text-white/90 text-xs lg:text-sm font-medium">
+                      {feature}
+                    </span>
                   </div>
-                </div>
+                ))}
               </div>
-
 
             </div>
             

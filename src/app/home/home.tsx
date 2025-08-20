@@ -77,7 +77,6 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
       {/* <NoCodeBenefitsSection /> */}
       <OurProjectsSection />
       <FAQSection />
-      
       {/* <PricingSection /> */}
       {/* <PricingCarouselSection /> */}
       <AIConsultantCTASection />

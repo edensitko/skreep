@@ -24,6 +24,7 @@ export interface TimelineProps {
   visibleItems: readonly boolean[];
   isHydrated: boolean;
   scrollProgress: number;
+  setItemRef: (index: number) => (ref: HTMLDivElement | null) => void;
   className?: string;
 }
 

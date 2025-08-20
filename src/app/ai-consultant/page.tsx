@@ -211,21 +211,23 @@ export default function AIConsultantPage() {
           </div>
 
           {/* Chat Interface */}
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/30 rounded-2xl lg:rounded-4xl before:absolute before:inset-0 before:rounded-2xl lg:before:rounded-4xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl lg:after:rounded-4xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden">
-              
-              {/* Chat Messages */}
-              <div className="h-96 md:h-[500px] overflow-y-auto p-6 space-y-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-6xl mx-auto">
+            {/* Chat Container */}
+            <div className="order-1 lg:order-1">
+              <div className="">
+                
+                {/* Chat Messages */}
+                <div className="h-80 md:h-96 lg:h-[500px] overflow-y-auto p-4 md:p-6 space-y-4">
                 {messages.map((message) => (
                   <div
                     key={message.id}
                     className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
-                      className={`max-w-xs md:max-w-md lg:max-w-lg px-4 py-3 rounded-2xl ${
+                      className={`max-w-[280px] md:max-w-md lg:max-w-lg px-3 md:px-4 py-2 md:py-3 rounded-2xl ${
                         message.isUser
-                          ? 'bg-cyan-400/20 text-white ml-4'
-                          : 'bg-white/10 text-white/90 mr-4'
+                          ? 'bg-cyan-400/20 text-white ml-2 md:ml-4'
+                          : 'bg-white/10 text-white/90 mr-2 md:mr-4'
                       }`}
                       dir={language === 'he' ? 'rtl' : 'ltr'}
                     >
@@ -238,7 +240,7 @@ export default function AIConsultantPage() {
                 
                 {isLoading && (
                   <div className="flex justify-start">
-                    <div className="bg-white/10 text-white/90 px-4 py-3 rounded-2xl mr-4">
+                    <div className="bg-white/10 text-white/90 px-3 md:px-4 py-2 md:py-3 rounded-2xl mr-2 md:mr-4">
                       <div className="flex space-x-2">
                         <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce"></div>
                         <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
@@ -249,11 +251,11 @@ export default function AIConsultantPage() {
                 )}
                 
                 <div ref={messagesEndRef} />
-              </div>
+                </div>
 
-              {/* Chat Input */}
-              <div className="border-t border-white/20 p-6">
-                <div className="flex gap-4">
+                {/* Chat Input */}
+                <div className="border-t border-white/20 p-2 md:p-6">
+                  <div className="flex gap-1 md:gap-4">
                   {isMounted ? (
                     <textarea
                       key="chat-input"
@@ -265,13 +267,13 @@ export default function AIConsultantPage() {
                       }}
                       onKeyDown={handleKeyDown}
                       placeholder={language === 'he' ? 'כתוב את השאלה שלך כאן...' : 'Type your question here...'}
-                      className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:border-cyan-400/50 resize-none"
+                      className="flex-1 bg-white/10 border border-white/20 rounded-xl px-3 md:px-4 py-2 md:py-3 text-white placeholder-white/50 focus:outline-none focus:border-cyan-400/50 resize-none text-sm md:text-base"
                       rows={2}
                       dir={language === 'he' ? 'rtl' : 'ltr'}
                       autoComplete="off"
                     />
                   ) : (
-                    <div className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white/50 h-[68px] flex items-center">
+                    <div className="flex-1 bg-white/10 border border-white/20 rounded-xl px-3 md:px-4 py-2 md:py-3 text-white/50 h-[60px] md:h-[68px] flex items-center text-sm md:text-base">
                       Loading...
                     </div>
                   )}
@@ -281,18 +283,39 @@ export default function AIConsultantPage() {
                       handleSendMessage();
                     }}
                     disabled={!inputMessage.trim() || isLoading || !isMounted}
-                    className="bg-gradient-to-l from-cyan-400/10 via-cyan-400/30 to-cyan-400/60 text-white border border-white/20 px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-gradient-to-l from-cyan-400/10 via-cyan-400/30 to-cyan-400/60  text-white text-xs border border-white/20 px-2 md:px-4 py-2 rounded-xl  transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed md:text-sm"
                     type="button"
                   >
                     {language === 'he' ? 'שלח' : 'Send'}
                   </button>
+                  </div>
+                </div>
+
+                {/* Background decorative elements */}
+                <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+                  <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-cyan-400/5 rounded-full blur-3xl"></div>
+                  <div className="absolute bottom-1/4 left-1/4 w-24 h-24 bg-purple-400/5 rounded-full blur-3xl"></div>
                 </div>
               </div>
+            </div>
 
-              {/* Background decorative elements */}
-              <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-cyan-400/5 rounded-full blur-3xl"></div>
-                <div className="absolute bottom-1/4 left-1/4 w-24 h-24 bg-purple-400/5 rounded-full blur-3xl"></div>
+            {/* AI Consultant Image */}
+            <div className="order-2 lg:order-2 flex items-center justify-center">
+              <div className="relative">
+                <div className="bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/30 rounded-2xl lg:rounded-4xl before:absolute before:inset-0 before:rounded-2xl lg:before:rounded-4xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl lg:after:rounded-4xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden p-6">
+                  <div className="text-center">
+                    <div className="text-6xl md:text-8xl mb-4">🤖</div>
+                    <h3 className="text-lg md:text-xl font-bold mb-2 bg-gradient-to-br from-white via-white/80 to-white/60 bg-clip-text text-transparent">
+                      {language === 'he' ? 'יועץ AI חכם' : 'Smart AI Consultant'}
+                    </h3>
+                    <p className="text-white/70 text-sm md:text-base" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                      {language === 'he' 
+                        ? 'זמין 24/7 לייעוץ מקצועי'
+                        : 'Available 24/7 for professional advice'
+                      }
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

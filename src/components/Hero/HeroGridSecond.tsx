@@ -128,17 +128,17 @@ export default function HeroGridSecond() {
                   <span className="absolute top-0 left-0 block w-full h-full bg-gradient-to-r from-cyan-400"></span>
                 </span>
                 <br />
-                <span className="italic">{t(`hero.${userType}.subtitle`)}</span>
+                <span className="italic text-2xl md:text-3xl xl:text-4xl">{t(`hero.${userType}.subtitle`)}</span>
               </h2>
 
 
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4 animate-in" style={{ animationName: 'fade-up', animationDuration: '0.8s', animationDelay: '0.6s', animationFillMode: 'both' }}>
-              <p className={`text-white/60 bg-white/10 mb-10 border-cyan-400 p-3 rounded text-xs ${
+              <p className={`text-white/60 bg-white/10 mb-10 p-3 rounded text-xs ${
                 language === 'he' 
-                  ? 'pr-5 ml-20 rounded-l-2xl text-right' 
-                  : 'pl-5 mr-20 rounded-r-2xl text-left'
+                  ? 'border-r-4 border-blue-500 pr-5 ml-20 rounded-l-2xl text-right' 
+                  : 'border-l-4 border-blue-500 pl-5 mr-20 rounded-r-2xl text-left'
               }`} dir={language === 'he' ? 'rtl' : 'ltr'}>
                 {t(`hero.${userType}.description`)}
             </p>

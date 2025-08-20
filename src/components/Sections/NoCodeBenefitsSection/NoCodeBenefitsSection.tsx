@@ -32,7 +32,7 @@ function NoCodeBenefitsSection() {
     setIsVisible 
   } = useSectionState(benefits);
   
-  const { sectionRef } = useScrollAnimations(
+  const { sectionRef, setItemRef } = useScrollAnimations(
     benefits, 
     updateVisibleItems, 
     updateScrollProgress
@@ -57,7 +57,7 @@ function NoCodeBenefitsSection() {
   return (
     <section 
       ref={sectionRef}
-      className="relative w-full bg-black py-8 md:py-20 overflow-hidden"
+      className="relative w-full py-8 md:py-20 overflow-hidden"
       dir="rtl"
       role="region"
       aria-label="יתרונות פתרונות ללא קוד"
@@ -116,6 +116,7 @@ function NoCodeBenefitsSection() {
             visibleItems={state.visibleItems}
             isHydrated={state.isHydrated}
             scrollProgress={state.scrollProgress}
+            setItemRef={setItemRef}
           />
         </div>
       </div>
