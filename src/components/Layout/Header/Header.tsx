@@ -57,14 +57,13 @@ export default function Header() {
 
   return (
     <header className="fixed w-[95%] mx-[2.5%] z-[9999] mt-4 transition-all duration-300">
-      <div className="w-full h-[60px] lg:h-[80px] flex justify-between items-center px-4 md:px-[50px] border border-transparent bg-black/50 border-t-0 relative rounded-3xl mt-0" dir={isLargeScreen ? 'ltr' : (language === 'he' ? 'rtl' : 'ltr')}>
+      <div className="w-full h-[60px] lg:h-[80px] flex justify-between items-center px-4 md:px-[50px] bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-sm border border-white/30 rounded-3xl before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-3xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden transition-all duration-700 ease-out" dir={isLargeScreen ? 'ltr' : (language === 'he' ? 'rtl' : 'ltr')}>
         
         {/* Mobile Menu Button */}
         <button 
-          className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg transition-colors" 
+          className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-300 relative z-50 hover:bg-white/10 hover:scale-110 active:scale-110" 
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
-          
         >
           <div className="flex flex-col space-y-1" dir={isLargeScreen ? 'ltr' : (language === 'he' ? 'rtl' : 'ltr')}>
             <span className={`block w-6 h-0.5 bg-white transition-transform duration-300 ${
@@ -80,14 +79,14 @@ export default function Header() {
         </button>
         
         {/* Logo - Absolutely centered */}
-        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <Link href="/" aria-label="logo">
+        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+          <Link href="/" aria-label="logo" className="hover:scale-110 transition-all duration-300 block">
             <Image 
               src="/assets/images/logo-1.png" 
               alt="Skreep - פתרונות בינה מלאכותית" 
               width={100}
               height={33}
-              className="ml-8 w-[100px] md:w-[100px] pt-0 transition-all duration-300"
+              className="w-[100px] md:w-[100px] pt-0"
             />
           </Link>
         </div>
@@ -142,13 +141,14 @@ export default function Header() {
             
             {/* CTA Button */}
             <Link href="/contact" 
-              className="text-white hover:text-gray-300 transition-all flex items-center justify-center" 
+              className="text-white hover:scale-110 transition-all duration-300 flex items-center justify-center gap-2 relative z-20" 
               dir="ltr"
               title={t('header.talkToUs')}
             >
-              <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
+              <span className="hidden xl:inline text-white">{t('header.talkToUs')}</span>
             </Link>
           </div>
           
@@ -205,10 +205,10 @@ export default function Header() {
         {/* Mobile CTA Button */}
         <Link 
           href="/contact" 
-          className="lg:hidden text-white hover:text-gray-300 transition-all flex items-center justify-center" 
+          className="lg:hidden text-white hover:scale-110 transition-all duration-300 flex items-center justify-center relative z-50" 
           title={t('header.talkToUs')}
         >
-          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
           </svg>
         </Link>

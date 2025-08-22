@@ -233,23 +233,23 @@
       },
       {
         "id": 1,
-        "slug": "e-commerce-platform",
-        "title": "פלטפורמת E-commerce",
-        "subtitle": "50,000+ מוצרים",
-        "description": "פלטפורמת מסחר מלאה עם תשלומים מאובטחים, ניהול מלאי חכם ומערכת המלצות AI.",
+        "slug": "ai-task-organizer",
+        "title": "מארגן משימות חכם",
+        "subtitle": "מבוסס AI ו-NLP",
+        "description": "אפליקציה חכמה לארגון משימות עם עיבוד שפה טבעית, זיהוי דפוסים אוטומטי וסיווג משימות מתקדם בעברית ואנגלית.",
         "gradient": "from-cyan-400/20 to-blue-500/20",
         "accentColor": "cyan-400",
-        "image": "/assets/images/projects/1.png"
+        "image": "/assets/images/projects/3.png"
       },
       {
         "id": 2,
-        "slug": "healthcare-application",
-        "title": "אפליקציית בריאות",
-        "subtitle": "10,000+ משתמשים פעילים",
-        "description": "אפליקציה לבריאות דיגיטלית עם וידאו קונפרנס מאובטח ומערכת תורים חכמה.",
+        "slug": "ai-chatbot-builder",
+        "title": "בונה צ'אטבוטים חכם",
+        "subtitle": "יצירת סוכנים מותאמים אישית",
+        "description": "פלטפורמה מתקדמת ליצירת צ'אטבוטים וסוכני AI מותאמים אישית עם יכולות למידה מתקדמות ושילוב קל במערכות קיימות.",
         "gradient": "from-purple-400/20 to-pink-500/20",
         "accentColor": "purple-400",
-        "image": "/assets/images/projects/1.png"
+        "image": "/assets/images/projects/6.png"
       }
     ]
   },

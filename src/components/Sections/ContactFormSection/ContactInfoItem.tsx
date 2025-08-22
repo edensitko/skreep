@@ -10,13 +10,13 @@ const ContactInfoItem = memo<ContactInfoItemProps>(({ contact, language }) => {
   const { t } = useLanguage();
   
   return (
-    <div className="flex items-center gap-4" dir={language === 'he' ? 'rtl' : 'ltr'}>
+    <div className="flex items-center gap-2" dir={language === 'he' ? 'rtl' : 'ltr'}>
       <div 
-        className={`w-12 h-12 rounded-full bg-gradient-to-r ${gradient} flex items-center justify-center flex-shrink-0`}
+        className={`w-6 h-6 rounded-full bg-gradient-to-r ${gradient} flex items-center justify-center flex-shrink-0`}
         aria-hidden="true"
       >
         <svg 
-          className="w-6 h-6 text-white" 
+          className="w-4 h-4 text-white" 
           fill="currentColor" 
           viewBox={icon.viewBox}
           aria-hidden="true"
@@ -26,7 +26,7 @@ const ContactInfoItem = memo<ContactInfoItemProps>(({ contact, language }) => {
       </div>
       <a 
         href={href}
-        className="text-white/90 hover:text-white transition-colors duration-300 text-lg"
+        className="text-white/90 hover:text-white transition-colors duration-300 text-sm"
         aria-label={`${type === 'email' ? (language === 'he' ? 'שלח אימייל ל' : 'Send email to') : (language === 'he' ? 'התקשר ל' : 'Call')} ${value}`}
       >
         {value}

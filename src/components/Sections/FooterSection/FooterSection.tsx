@@ -85,23 +85,13 @@ function FooterSection() {
     <>
       {/* Main Footer */}
       <footer 
-        className="w-full md:h-[65px] min-h-[60px] mt-4 md:mt-10"
-        style={{
-          backgroundImage: 'linear-gradient(90deg, rgb(74, 231, 255) 0%, rgb(23, 23, 23) 63.23%)'
-        }}
+        className="w-full md:h-[65px] min-h-[60px] mt-4 md:mt-10 bg-black flex items-center justify-center"
         role="contentinfo"
         aria-label={t('footer.ariaLabels.footer')}
       >
-        <div className="h-full mx-auto px-4 md:px-6 max-w-7xl">
+        <div className="h-full mx-auto px-4 md:px-6 max-w-7xl flex items-center justify-center w-full">
           {/* Mobile Layout */}
           <div className="md:hidden py-2 space-y-2">
-            {/* Copyright Text */}
-            <div className="text-center" dir={textDirection}>
-              <span className="text-white text-sm">
-                {copyrightText}
-              </span>
-            </div>
-            
             {/* Navigation Links */}
             <nav 
               className={`flex justify-center items-center ${language === 'he' ? 'space-x-reverse space-x-4' : 'space-x-4'}`} 
@@ -109,25 +99,56 @@ function FooterSection() {
               aria-label={t('footer.ariaLabels.navigation')}
             >
               {footerLinks.map((link, index) => (
-                <React.Fragment key={link.text}>
-                  {index > 0 && <span className="text-white text-sm">|</span>}
+                <React.Fragment key={index}>
                   <a 
                     href={link.href} 
-                    className="text-white text-sm hover:text-cyan-400 hover:underline transition-colors"
+                    className="text-white text-sm hover:text-cyan-400 transition-colors"
                     aria-label={link.ariaLabel}
                   >
                     {link.text}
                   </a>
+                  {index < footerLinks.length - 1 && (
+                    <span className="text-white text-sm">|</span>
+                  )}
                 </React.Fragment>
               ))}
             </nav>
+            
+            {/* Copyright Text */}
+            <div className="text-center" dir={textDirection}>
+              <span className="text-white text-sm">
+                2025 © כל הזכויות שמורות ל-סקריפ מערכות
+              </span>
+            </div>
           </div>
 
           {/* Desktop Layout */}
-          <div className="hidden md:flex items-center justify-between w-full h-full text-base" dir={textDirection}>
+          <div className="hidden md:flex items-center justify-center w-full h-full text-base space-x-6" dir={textDirection}>
+            {/* Navigation Links */}
+            <nav 
+              className={`flex items-center ${language === 'he' ? 'space-x-reverse space-x-4' : 'space-x-4'}`} 
+              dir={textDirection} 
+              aria-label={t('footer.ariaLabels.navigation')}
+            >
+              {footerLinks.map((link, index) => (
+                <React.Fragment key={index}>
+                  <a 
+                    href={link.href} 
+                    className="text-white hover:text-cyan-400 transition-colors"
+                    aria-label={link.ariaLabel}
+                  >
+                    {link.text}
+                  </a>
+                  {index < footerLinks.length - 1 && (
+                    <span className="text-white">|</span>
+                  )}
+                </React.Fragment>
+              ))}
+            </nav>
+            
             {/* Copyright Text */}
             <span className="text-white">
-              {copyrightText}
+              2025 © כל הזכויות שמורות ל-סקריפ מערכות
             </span>
 
             {/* Scroll to Top Button */}

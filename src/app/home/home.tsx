@@ -36,9 +36,9 @@ const FAQSection = dynamic(() => import('@/components/Sections/FAQSection'), {
 //   loading: () => <div className="h-96 bg-black/20 animate-pulse" />
 // });
 
-const PricingCarouselSection = dynamic(() => import('@/components/Sections/PricingCarouselSection'), {
-  loading: () => <div className="h-96 bg-black/20 animate-pulse" />
-});
+// const PricingCarouselSection = dynamic(() => import('@/components/Sections/PricingCarouselSection'), {
+//   loading: () => <div className="h-96 bg-black/20 animate-pulse" />
+// });
 
 const TestimonialsSection = dynamic(() => import('@/components/Sections/TestimonialsSection'), {
   loading: () => <div className="h-64 bg-black/20 animate-pulse" />
@@ -80,7 +80,7 @@ export default function Home({ params: _ }: { params: Promise<{ locale: string }
       <AIConsultantCTASection />
       <TestimonialsSection />
       <ComparisonTableSection />
-      <PricingCarouselSection />
+      {/* <PricingCarouselSection /> */}
       <BlogSection />
       <InnovationSection2 />
       <ContactFormSection />
