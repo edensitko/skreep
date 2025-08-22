@@ -4,26 +4,42 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
+import FooterSection from '@/components/Sections/FooterSection';
 
 export default function Footer() {
   const { language, t } = useLanguage();
   const textDirection = language === 'he' ? 'rtl' : 'ltr';
   
   return (
-    <footer className="bg-black rounded-t-4xl text-white pt-8 md:pt-16 pb-4 md:pb-8" dir={textDirection}>
-      <div className="container mx-auto px-4  ">
+    <footer className="w-full bg-black relative" dir={textDirection}>
+      {/* Background Image - Small/Medium screens */}
+      <div 
+        className="lg:hidden absolute inset-0 w-full h-full bg-contain bg-center bg-no-repeat opacity-20 z-0"
+        style={{
+          backgroundImage: "url('/assets/images/logo-1.png')",
+          top: '-70px',
+          height: 'calc(10% + 10px)'
+        }}
+      />
+      
+      {/* Large screen background image */}
+      <div 
+        className="hidden lg:block absolute inset-0 w-full bg-contain bg-center bg-no-repeat opacity-20 z-0"
+        style={{
+          backgroundImage: "url('/assets/images/logo-1.png')",
+          top: '-120px',
+          height: 'calc(30% + 80px)'
+        }}
+      />
+      
+    <div 
+      className="w-[85%] mx-auto bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-sm border border-white/30 rounded-4xl before:absolute before:inset-0 before:rounded-t-4xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-t-4xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden transition-all duration-700 ease-out text-white pt-8 md:pt-16 pb-4 md:pb-8"
+    >
+      <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {/* Column 1 - About */}
           <div>
-            <Link href="/" className="inline-block mb-4 md:mb-6">
-              <Image 
-                src="/assets/images/logo-1.png" 
-                alt="Skreep - פתרונות בינה מלאכותית" 
-                width={120}
-                height={48}
-                className="h-12 w-auto opacity-50"
-              />
-            </Link>
+              
             <p className="mb-6 text-gray-400">
               {t('mainFooter.about.description')}
             </p>
@@ -115,8 +131,14 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      
+          
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-cyan-400/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 left-1/4 w-48 h-48 bg-purple-400/5 rounded-full blur-3xl"></div>
+      </div>
+    </div>
+   <FooterSection />
     </footer>
-    
   );
 }

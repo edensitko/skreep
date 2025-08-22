@@ -14,25 +14,59 @@ import { generateLocalBusinessSchema, generateOrganizationSchema, generateWebsit
 // Using system fonts to avoid Turbopack issues
 
 export const metadata: Metadata = {
-  title: "סקריפ | skreep - פתרונות בינה מלאכותית",
-  description: "פתרונות בינה מלאכותית מתקדמים לעסקים. אנחנו מספקים פתרונות טכנולוגיים חדשניים שיעזרו לעסק שלכם לחסוך עלויות ולהגדיל יעילות.",
-  keywords: "בינה מלאכותית, פתרונות טכנולוגיים, עסקים, חדשנות, אוטומציה",
+  title: "סקריפ | skreep - פתרונות בינה מלאכותית | AI Solutions Israel",
+  description: "פתרונות בינה מלאכותית מתקדמים לעסקים בישראל. אנחנו מספקים פתרונות טכנולוגיים חדשניים שיעזרו לעסק שלכם לחסוך עלויות ולהגדיל יעילות. AI consulting, automation, chatbots.",
+  keywords: "בינה מלאכותית, פתרונות טכנולוגיים, עסקים, חדשנות, אוטומציה, AI Israel, artificial intelligence, chatbots, automation, consulting, ישראל",
+  authors: [{ name: "Skreep AI Solutions" }],
+  creator: "Skreep",
+  publisher: "Skreep",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     title: "סקריפ | skreep - פתרונות בינה מלאכותית",
-    description: "פתרונות בינה מלאכותית מתקדמים לעסקים",
+    description: "פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
     type: "website",
     locale: "he_IL",
     alternateLocale: "en_US",
+    url: "https://skreep.com",
+    siteName: "Skreep AI Solutions",
+    images: [
+      {
+        url: "https://skreep.com/assets/images/logo-1.png",
+        width: 1200,
+        height: 630,
+        alt: "Skreep AI Solutions Logo",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "סקריפ | skreep - פתרונות בינה מלאכותית",
-    description: "פתרונות בינה מלאכותית מתקדמים לעסקים",
+    description: "פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
+    images: ["https://skreep.com/assets/images/logo-1.png"],
   },
   alternates: {
+    canonical: "https://skreep.com",
     languages: {
-      'he': '/',
-      'en': '/',
+      'he': 'https://skreep.com',
+      'en': 'https://skreep.com/en',
+      'x-default': 'https://skreep.com',
+    },
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
+    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || '',
+    other: {
+      'msvalidate.01': process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || '',
     },
   },
 };

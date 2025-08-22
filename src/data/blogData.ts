@@ -27,7 +27,7 @@ export const BLOG_DATA: BlogPost[] = [
     readTime: "8 min read",
     category: "Artificial Intelligence",
     tags: ["AI", "Business", "Technology", "Innovation"],
-    image: "/assets/images/blog/ai-transformation.jpg",
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop&crop=center",
     featured: true
   },
   {
@@ -42,7 +42,7 @@ export const BLOG_DATA: BlogPost[] = [
     readTime: "6 min read",
     category: "Chatbots",
     tags: ["Chatbots", "Customer Service", "Automation"],
-    image: "/assets/images/blog/chatbot-service.jpg",
+    image: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&h=600&fit=crop&crop=center",
     featured: true
   },
   {
@@ -57,7 +57,7 @@ export const BLOG_DATA: BlogPost[] = [
     readTime: "10 min read",
     category: "Data Analytics",
     tags: ["Data", "Analytics", "Business Intelligence", "Insights"],
-    image: "/assets/images/blog/data-analytics.jpg",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop&crop=center",
     featured: false
   },
   {
@@ -72,7 +72,7 @@ export const BLOG_DATA: BlogPost[] = [
     readTime: "7 min read",
     category: "Automation",
     tags: ["Automation", "Workflow", "Efficiency", "Productivity"],
-    image: "/assets/images/blog/smart-automation.jpg",
+    image: "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=800&h=600&fit=crop&crop=center",
     featured: false
   },
   {
@@ -87,7 +87,7 @@ export const BLOG_DATA: BlogPost[] = [
     readTime: "9 min read",
     category: "Integration",
     tags: ["AI Integration", "Systems", "Implementation", "Technology"],
-    image: "/assets/images/blog/ai-integration.jpg",
+    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop&crop=center",
     featured: true
   },
   {
@@ -102,7 +102,7 @@ export const BLOG_DATA: BlogPost[] = [
     readTime: "12 min read",
     category: "Consulting",
     tags: ["AI Consulting", "Future", "Trends", "Strategy"],
-    image: "/assets/images/blog/future-consulting.jpg",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop&crop=center",
     featured: false
   }
 ];

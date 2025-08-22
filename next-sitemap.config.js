@@ -45,6 +45,22 @@ module.exports = {
         userAgent: 'Google-Extended',
         allow: '/',
       },
+      {
+        userAgent: 'ChatGPT-User',
+        allow: '/',
+      },
+      {
+        userAgent: 'CCBot',
+        allow: '/',
+      },
+      {
+        userAgent: 'anthropic-ai',
+        allow: '/',
+      },
+      {
+        userAgent: 'Claude-Web',
+        allow: '/',
+      },
     ],
     additionalSitemaps: [
       'https://skreep.com/sitemap.xml',

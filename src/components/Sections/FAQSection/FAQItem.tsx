@@ -15,9 +15,9 @@ interface FAQItemPropsWithLanguage extends Omit<FAQItemProps, 'faq'> {
  */
 const FAQItem = memo<FAQItemPropsWithLanguage>(({ faq, index, isOpen, onToggle, language }) => (
   <div 
-    className={`group relative p-6 md:p-8 border border-white/10 rounded-2xl backdrop-blur-sm transition-all duration-500 hover:border-cyan-400/30 cursor-pointer animate-fadeInUp ${
+    className={`group relative p-6 md:p-8 border border-white/20 rounded-2xl backdrop-blur-md bg-white/5 transition-all duration-500 hover:border-cyan-400/40 hover:bg-white/10 cursor-pointer animate-fadeInUp shadow-lg ${
       isOpen 
-        ? 'border-cyan-400/40 bg-gradient-to-br from-black/30 via-black/10 to-white/5 before:opacity-70 after:opacity-40' 
+        ? 'border-cyan-400/50 bg-white/15 backdrop-blur-lg shadow-xl' 
         : ''
     }`}
     onClick={() => onToggle(faq.id)}

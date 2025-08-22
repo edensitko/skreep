@@ -81,7 +81,7 @@ const AnimatedStatCard = ({ stat, index, language }: {
       ref={countRef}
     >
       {/* Glass Card */}
-      <div className="bg-gradient-to-br from-black/40 via-black/20 to-black/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4 md:p-6 text-center hover:border-cyan-400/50 transition-all duration-300 hover:backdrop-blur-2xl hover:bg-gradient-to-br hover:from-black/30 hover:via-black/10 hover:to-white/5 relative overflow-hidden group-hover:scale-105 transform h-32 md:h-36 flex flex-col justify-center">
+      <div className="bg-gradient-to-br from-black/40 via-black/20 to-black/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4 md:p-6 text-center hover:border-cyan-400/50 transition-all duration-300 hover:backdrop-blur-2xl hover:bg-gradient-to-br hover:from-black/30 hover:via-black/10 hover:to-white/5 relative overflow-hidden group-hover:scale-95 transform h-32 md:h-36 flex flex-col justify-center">
         
         {/* Glow Effect */}
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/5 via-transparent to-purple-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
@@ -129,22 +129,10 @@ function StatsSection() {
 
   return (
     <section className="w-full bg-black ">
-      <div className="w-[100%] my-6 lg:my-12 mx-auto  ">
+      <div className="w-[100%] my-12 lg:my-12 mx-auto  ">
         <div className="container mx-auto px-4 relative z-10 ">
           {/* Title Section */}
-          <div className="text-center mb-8" >
-            <p className="text-white/60 text-xs md:text-sm mb-4 font-light">
-              {language === 'he' 
-                ? 'מוגדרים על ידי דינמיות דיגיטלית, סוכנות השיווק הדיגיטלית שלנו מתבלטת של ד ויכולת אסטרטגית'
-                : 'Defined by digital dynamics, our digital marketing agency stands out with strategic capability'
-              }
-            </p>
-            <p className="text-white/70 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-              {t('stats.description') || (language === 'he' 
-                ? 'אנחנו גאים בהישגים שלנו ובשביעות הרצון של הלקוחות שלנו' 
-                : 'We are proud of our achievements and the satisfaction of our clients')}
-            </p>
-          </div>
+          
 
           {/* Statistics Grid - Desktop / Carousel - Mobile */}
           <div className="relative">

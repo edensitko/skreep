@@ -170,7 +170,7 @@ function ContactFormSection() {
   // Don't render until mounted to prevent hydration issues
   if (!mounted) {
     return (
-      <section className="w-full py-16 md:py-24 bg-black/30 relative overflow-hidden">
+      <section className="w-full py-10 md:py-24 bg-black/30 relative overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="animate-pulse bg-white/10 h-8 w-64 rounded mb-4 mx-auto"></div>
           <div className="animate-pulse bg-white/5 h-4 w-96 rounded mx-auto"></div>
@@ -182,14 +182,12 @@ function ContactFormSection() {
   return (
     <section 
       id="contact" 
-      className="w-full py-16 md:py-24 relative overflow-hidden"
+      className="w-[85%] mx-auto py-26 md:py-16 relative overflow-hidden"
       role="region"
       aria-label={t('contactForm.sectionAriaLabel')}
     >
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-2xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
+      {/* Glass-morphism container matching About section */}
+      <div className="text-center mb-6">
             <h2 className="font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out" >
               {t('contactForm.title')}
             </h2>
@@ -197,6 +195,11 @@ function ContactFormSection() {
               {t('contactForm.subtitle')}
             </p>
           </div>
+      <div className="bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/30 rounded-2xl lg:rounded-4xl before:absolute before:inset-0 before:rounded-2xl lg:before:rounded-4xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl lg:after:rounded-4xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden transition-all duration-700 ease-out text-white pt-8 md:pt-16 pb-4 md:pb-8">
+        <div className="container mx-auto px-4 md:px-8 py-8 md:py-16 relative z-10">
+          <div className="max-w-2xl mx-auto">
+          {/* Header */}
+       
 
           {/* Success Message */}
           {submissionStatus === 'success' && (
@@ -226,11 +229,11 @@ function ContactFormSection() {
           )}
 
           {/* Contact Form */}
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+          <div className="px-4">
             <form 
               ref={formRef}
               onSubmit={handleSubmit} 
-              className="space-y-6"
+              className="space-y-4 "
               noValidate
               aria-label={t('contactForm.formAriaLabel')}
             >
@@ -288,10 +291,10 @@ function ContactFormSection() {
               />
 
               {/* Business Type */}
-              <div className="space-y-3 pt-2">
+              <div className="space-y-1 pt-2">
                 <fieldset>
-                  <legend className="text-white/70 text-sm mb-3" dir={language === 'he' ? 'rtl' : 'ltr'}>{t('contactForm.businessType.legend')}</legend>
-                  <div className="flex flex-col space-y-2" role="radiogroup" aria-required="true">
+                  <legend className="text-white/70 text-sm mb-2" dir={language === 'he' ? 'rtl' : 'ltr'}>{t('contactForm.businessType.legend')}</legend>
+                  <div className="flex flex-col-1 space-y-2" role="radiogroup" aria-required="true">
                     {BUSINESS_TYPES.map((businessType) => (
                       <label 
                         key={businessType.value}
@@ -328,7 +331,7 @@ function ContactFormSection() {
               </div>
 
               {/* Submit Button */}
-              <div className="pt-4">
+              <div className="pt-2">
                 <button
                   type="submit"
                   disabled={isSubmitting || hasErrors}
@@ -350,7 +353,7 @@ function ContactFormSection() {
             </form>
           
             {/* Contact Info */}
-            <div className="mt-12 space-y-4">
+            <div className="mt-6 space-x-10 flex">
               {CONTACT_INFO.map((contact, index) => (
                 <ContactInfoItem
                   key={index}
@@ -361,7 +364,14 @@ function ContactFormSection() {
             </div>
           </div>
         </div>
+        
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-cyan-400/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 left-1/4 w-48 h-48 bg-purple-400/5 rounded-full blur-3xl"></div>
+        </div>
       </div>
+    </div>
     </section>
   );
 }

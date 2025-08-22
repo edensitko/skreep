@@ -212,134 +212,124 @@ export default function PricingCarouselSection() {
   return (
     <section 
       ref={sectionRef}
-      className="py-16 px-4"
+      className="relative overflow-hidden pt-10 w-[95%] mx-auto bg-gradient-to-br"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      <div className="container mx-auto">
-        <div className="bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/30 rounded-2xl lg:rounded-4xl before:absolute before:inset-0 before:rounded-2xl lg:before:rounded-4xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl lg:after:rounded-4xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden p-8">
-          
-          {/* Background decorative elements */}
-          <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-            <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-cyan-400/5 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-1/4 left-1/4 w-48 h-48 bg-purple-400/5 rounded-full blur-3xl"></div>
-          </div>
-          {/* Header */}
-          <div className="text-center mb-12 relative z-10">
-            <h2 
-              ref={titleRef}
-              className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out ${
-                isVisible 
-                  ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-8'
-              }`}
-            >
-              {isRTL ? 'תוכניות מחיר גמישות' : 'Flexible Pricing Plans'}
-            </h2>
-          </div>
+      <div className="mx-auto max-w-full px-0">
+        {/* Header */}
+        <div className="text-center pt-16 pb-8 w-full">
+          <h2 
+            ref={titleRef}
+            className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out ${
+              isVisible 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-8'
+            }`}
+            style={{ textAlign: 'center' }}
+          >
+            {isRTL ? 'תוכניות מחיר גמישות' : 'Flexible Pricing Plans'}
+          </h2>
+        </div>
 
-          {/* Carousel */}
-          <div className="relative">
-            {/* Navigation Arrows */}
-            <button
-              onClick={scrollLeft}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-            
-            <button
-              onClick={scrollRight}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
+        {/* Carousel */}
+        <div className="relative">
+          {/* Navigation Arrows */}
+          <button
+            onClick={scrollLeft}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+          
+          <button
+            onClick={scrollRight}
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
 
             {/* Cards Container */}
-            <div 
-              ref={scrollContainerRef}
-              className="overflow-x-auto scrollbar-hide"
-              style={{ scrollBehavior: 'smooth' }}
-            >
-              <div className="flex gap-4 md:gap-6 p-2 pl-[calc(50vw-12rem)] md:pl-2 pr-[calc(50vw-12rem)] md:pr-2 min-w-max">
-                {pricingPlans.map((plan, index) => (
-                  <div
-                    key={`${plan.id}-${index}`}
-                    data-plan-id={plan.id}
-                    onClick={() => setSelectedPlan(plan)}
-                    className={`flex-shrink-0 w-72 lg:w-80 h-96 backdrop-blur-sm border rounded-2xl p-6 cursor-pointer group transition-all duration-300 hover:scale-105 relative overflow-hidden ${
-                      selectedPlan?.id === plan.id
-                        ? 'opacity-100 border-cyan-400/50 shadow-lg shadow-cyan-400/20 scale-105'
-                        : 'opacity-70 border-white/20 hover:border-white/30 hover:opacity-90'
-                    }`}
-                    dir={isRTL ? 'rtl' : 'ltr'}
-                  >
-                    {/* Background gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl rounded-2xl"></div>
-                    
-                    {/* Popular Badge */}
-                    {plan.popular && (
-                      <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-20">
-                        <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-4 py-1 rounded-full text-sm font-bold">
-                          {isRTL ? 'הכי פופולרי' : 'Most Popular'}
-                        </div>
+          <div 
+            ref={scrollContainerRef}
+            className="overflow-x-auto scrollbar-hide"
+            style={{ scrollBehavior: 'smooth' }}
+          >
+            <div className="flex gap-4 md:gap-6 p-2 pl-[calc(50vw-12rem)] md:pl-2 pr-[calc(50vw-12rem)] md:pr-2 min-w-max">
+              {pricingPlans.map((plan, index) => (
+                <div
+                  key={`${plan.id}-${index}`}
+                  data-plan-id={plan.id}
+                  onClick={() => setSelectedPlan(plan)}
+                  className={`flex-shrink-0 w-72 lg:w-80 h-96 backdrop-blur-sm border rounded-2xl p-6 cursor-pointer group transition-all duration-300 hover:scale-90 relative overflow-hidden ${
+                    selectedPlan?.id === plan.id
+                      ? 'opacity-100 border-white/80 shadow-lg'
+                      : 'opacity-70 border-white/20 hover:border-white/30 hover:opacity-90'
+                  }`}
+                  dir={isRTL ? 'rtl' : 'ltr'}
+                >
+                  {/* Background gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-black/50 rounded-2xl"></div>
+                  
+                  {/* Popular Badge */}
+                  {plan.popular && (
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-20">
+                      <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-4 py-1 rounded-full text-sm font-bold">
+                        {isRTL ? 'הכי פופולרי' : 'Most Popular'}
                       </div>
-                    )}
+                    </div>
+                  )}
 
-                    {/* Content */}
-                    <div className="relative z-10 h-full flex flex-col">
-                      {/* Plan Name */}
-                      <div className="text-center mb-4">
-                        <h3 className="text-xl lg:text-2xl font-bold bg-gradient-to-br from-white via-white/80 to-white/60 bg-clip-text text-transparent mb-2">
-                          {isRTL ? plan.name : plan.nameEn}
-                        </h3>
-                        <p className="text-white/70 text-sm">
-                          {isRTL ? plan.subtitle : plan.subtitleEn}
-                        </p>
+                  {/* Content */}
+                  <div className="relative z-10 h-full flex flex-col">
+                    {/* Plan Name */}
+                    <div className="text-center mb-4">
+                      <h3 className="text-xl lg:text-2xl font-bold text-white mb-2 group-hover:text-cyan-200 transition-colors">
+                        {isRTL ? plan.name : plan.nameEn}
+                      </h3>
+                      <p className="text-white/70 text-sm">
+                        {isRTL ? plan.subtitle : plan.subtitleEn}
+                      </p>
+                    </div>
+
+                    {/* Price */}
+                    <div className="text-center mb-6">
+                      <div className="text-2xl lg:text-3xl font-bold text-white mb-1">
+                        {plan.price}
                       </div>
-
-                      {/* Price */}
-                      <div className="text-center mb-6">
-                        <div className="text-2xl lg:text-3xl font-bold bg-gradient-to-br from-white via-white/80 to-white/60 bg-clip-text text-transparent mb-1">
-                          {plan.price}
-                        </div>
-                        <div className="text-white/60 text-sm">
-                          {isRTL ? plan.period : plan.periodEn}
-                        </div>
-                      </div>
-
-                      {/* Features */}
-                      <div className="flex-1 mb-6">
-                        <ul className="space-y-2">
-                          {plan.features.slice(0, 4).map((feature, featureIndex) => (
-                            <li key={featureIndex} className="flex items-start gap-2">
-                              <svg className="w-4 h-4 text-cyan-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                              </svg>
-                              <span className="text-white/80 text-sm leading-relaxed">
-                                {feature}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* CTA Button */}
-                      <div className="mt-auto">
-                        <button className="w-full bg-gradient-to-l from-cyan-400/10 via-cyan-400/30 to-cyan-400/60 text-white border border-white/20 py-3 px-4 rounded-full font-semibold transition-all duration-300 hover:scale-105 text-sm">
-                          {isRTL ? plan.buttonText : plan.buttonTextEn}
-                        </button>
+                      <div className="text-white/60 text-sm">
+                        {isRTL ? plan.period : plan.periodEn}
                       </div>
                     </div>
 
-                    {/* Hover Effect Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/5 to-purple-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                    {/* Features */}
+                    <div className="flex-1 mb-6">
+                      <ul className="space-y-2">
+                        {plan.features.slice(0, 4).map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-start gap-2">
+                            <svg className="w-4 h-4 text-cyan-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span className="text-white/80 text-sm leading-relaxed">
+                              {feature}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* CTA Button */}
+                    <div className="mt-auto">
+                      <button className="w-full bg-gradient-to-l from-cyan-400/10 via-cyan-400/30 to-cyan-400/60 text-white border border-white/20 py-3 px-4 rounded-full font-semibold transition-all duration-300 hover:scale-105 text-sm">
+                        {isRTL ? plan.buttonText : plan.buttonTextEn}
+                      </button>
+                    </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
