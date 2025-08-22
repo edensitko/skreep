@@ -3,7 +3,6 @@
 import Home from './home/home';
 import { Metadata } from 'next';
 import { seoConfig, businessInfo } from '@/lib/seo/config';
-import { MetadataRoute } from 'next';
 
 export const metadata: Metadata = {
   title: seoConfig.defaultTitle,

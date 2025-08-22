@@ -8,6 +8,8 @@ import PageSEO from '@/components/SEO/PageSEO';
 import LocalSEO from '@/components/SEO/LocalSEO';
 import SEOMeta from '@/components/SEO/SEOMeta';
 import { SERVICES_DATA } from '@/components/Sections/InteractiveShowcaseSection/constants';
+import ContactFormSection from '@/components/Sections/ContactFormSection';
+import InnovationSection from '@/components/Sections/InnovationSection/InnovationSection';
 
 export default function ServicesPage() {
   const [isVisible, setIsVisible] = useState(false);
@@ -138,138 +140,148 @@ export default function ServicesPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4">
-        <div className="container mx-auto text-center">
+      <section className="relative h-[300px] pt-44 pb-20 px-4 overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="./assets/images/img/1.png"
+            alt=""
+            className="w-full h-full object-fill "
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80"></div>
+        </div>
+        
+        <div className="container mx-auto text-center relative z-10">
           <h1 
             ref={titleRef}
-            className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-br from-white via-cyan-100 to-white bg-clip-text text-transparent transition-all duration-1000 ${
+            className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-4xl md:text-4xl lg:text-5xl mb-4 leading-tight transition-all duration-1000 ease-out ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
-            dir={language === 'he' ? 'rtl' : 'ltr'}
+            style={{ textAlign: 'center' }}
+            dir="ltr"
           >
-            {language === 'he' ? 'כל השירותים שלנו' : 'All Our Services'}
+            {language === 'he' ? 'כל השירותים ' : ' Our Services'}
           </h1>
-          <p 
-            className={`text-lg md:text-xl text-white/70 max-w-4xl mx-auto leading-relaxed transition-all duration-1000 delay-200 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-            dir={language === 'he' ? 'rtl' : 'ltr'}
-          >
-            {t('services.subtitle')}
-          </p>
+          
         </div>
       </section>
 
-      {/* Services Grid Section */}
-      <section className="py-16 px-4">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+      {/* Enhanced Services Grid Section */}
+      <section className="relative py-20 px-4 overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-10 left-10 w-72 h-72 bg-gradient-to-r from-cyan-400/8 to-blue-400/8 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-10 right-10 w-80 h-80 bg-gradient-to-r from-purple-400/8 to-pink-400/8 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        </div>
+
+        <div className="container mx-auto relative z-10">
+          {/* Section Header */}
+       
+
+          {/* Enhanced Services Grid - Mobile 2 Columns */}
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-8 lg:gap-12 max-w-6xl mx-auto">
             {servicesData.map((service, index) => {
               const originalService = SERVICES_DATA[index];
               return (
                 <div
                   key={service.id}
-                  className={`group relative bg-gradient-to-br ${originalService.color}/10 backdrop-blur-3xl border border-white/30 rounded-2xl lg:rounded-4xl before:absolute before:inset-0 before:rounded-2xl lg:before:rounded-4xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl lg:after:rounded-4xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 overflow-hidden hover:scale-105 transition-all duration-500 cursor-pointer`}
+                  className="relative bg-gradient-to-br from-black/40 via-black/20 to-black/10 backdrop-blur-2xl border border-white/20 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer"
                   style={{
                     animationDelay: `${service.delay}ms`
                   }}
                 >
-                  {/* Image Section */}
-                  <div className="relative h-48 md:h-56 overflow-hidden rounded-t-2xl lg:rounded-t-4xl">
+                  {/* Enhanced Image Section - Mobile Optimized */}
+                  <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden">
                     <img
-                      src={service.image}
+                      src={originalService.imageBg}
                       alt={service.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full object-cover"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-                  </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                    
+                    {/* Enhanced Overlay Content - Mobile Optimized */}
+                    <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4 md:p-6 lg:p-8">
+                      {/* Service Title */}
+                      <h3 
+                        className="text-md sm:text-lg md:text-xl lg:text-2xl font-bold mb-1 sm:mb-2 md:mb-3 text-white drop-shadow-2xl"
+                        dir="ltr"
+                      >
+                        {service.title}
+                      </h3>
 
-                  {/* Content Section */}
-                  <div className="px-6 pb-6">
-                    {/* Service Title */}
-                    <h3 
-                      className="text-lg md:text-xl font-bold mb-2 bg-gradient-to-br from-white via-white/80 to-white/60 bg-clip-text text-transparent text-center"
-                      dir={language === 'he' ? 'rtl' : 'ltr'}
-                    >
-                      {service.title}
-                    </h3>
+                      {/* Service Subtitle with Badge - Mobile Optimized */}
+                      <div className="flex justify-center mb-2 sm:mb-3 md:mb-4">
+                        <span className="inline-flex items-center bg-gradient-to-r from-cyan-400/20 to-purple-400/20 backdrop-blur-xl border border-cyan-400/30 text-cyan-300 px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 rounded-full text-xs sm:text-sm font-semibold">
+                          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-cyan-400 rounded-full mr-1 sm:mr-2 animate-pulse"></div>
+                          <span dir={language === 'he' ? 'rtl' : 'ltr'}>{service.subtitle}</span>
+                        </span>
+                      </div>
 
-                    {/* Service Subtitle */}
-                    <h4 
-                      className="text-sm text-cyan-400 font-semibold mb-3 text-center"
-                      dir={language === 'he' ? 'rtl' : 'ltr'}
-                    >
-                      {service.subtitle}
-                    </h4>
-
-                    {/* Service Description */}
-                    <p 
-                      className="text-white/80 leading-relaxed text-center text-xs md:text-sm"
-                      dir={language === 'he' ? 'rtl' : 'ltr'}
-                    >
-                      {service.description}
-                    </p>
-
-                    {/* Features List */}
-                    <div className="mt-4">
-                      <ul className="text-xs text-white/60 space-y-1">
-                        {originalService.features.map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-center justify-center gap-2">
-                            <span className="w-1 h-1 bg-cyan-400 rounded-full"></span>
-                            <span dir={language === 'he' ? 'rtl' : 'ltr'}>{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
+                      {/* Service Description - Mobile Optimized */}
+                      <p 
+                        className="text-white/90 leading-relaxed text-center text-xs sm:text-sm md:text-base drop-shadow-lg"
+                        dir={language === 'he' ? 'rtl' : 'ltr'}
+                      >
+                        {service.description}
+                      </p>
                     </div>
                   </div>
 
-                  {/* Hover Effect Overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${originalService.color}/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl lg:rounded-4xl`}></div>
-                </div>
+                  {/* Enhanced Features Section - Mobile Optimized */}
+                  <div className="p-3 sm:p-4 md:p-6 lg:p-8 bg-gradient-to-t from-black/60 via-black/30 to-transparent relative">
+                    <div className="grid grid-cols-1 gap-2 sm:gap-3 md:gap-4">
+                      {originalService.features.slice(0, 4).map((feature, featureIndex) => (
+                        <div key={featureIndex} className="flex items-center gap-2 sm:gap-3">
+                          <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-cyan-400/20 to-purple-400/20 rounded-full flex items-center justify-center flex-shrink-0">
+                            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full"></div>
+                          </div>
+                          <span 
+                            className="text-xs sm:text-sm lg:text-base text-white/90 font-medium"
+                            dir={language === 'he' ? 'rtl' : 'ltr'}
+                          >
+                            {feature}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                      </div>
+                      </div>
+
               );
             })}
           </div>
-        </div>
-      </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto">
-          <div className="bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/30 rounded-2xl lg:rounded-4xl before:absolute before:inset-0 before:rounded-2xl lg:before:rounded-4xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl lg:after:rounded-4xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden p-12 text-center">
-            <h2 
-              className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-br from-white via-white/80 to-white/60 bg-clip-text text-transparent"
-              dir={language === 'he' ? 'rtl' : 'ltr'}
-            >
-              {language === 'he' ? 'מוכנים להתחיל?' : 'Ready to Get Started?'}
-            </h2>
-            <p 
-              className="text-xl text-white/70 mb-8 max-w-2xl mx-auto"
-              dir={language === 'he' ? 'rtl' : 'ltr'}
-            >
-              {language === 'he' 
-                ? 'בואו נדבר על הפרויקט שלכם ונראה איך סקריפ יכול לעזור לכם להגשים אותו'
-                : "Let's talk about your project and see how Skreep can help you bring it to life"
-              }
-            </p>
-            <button 
-              className="bg-gradient-to-l from-cyan-400/10 via-cyan-400/30 to-cyan-400/60 text-white border border-white/20 px-8 py-4 rounded-full font-semibold hover:bg-cyan-500 hover:scale-105 transition-all duration-300 text-lg"
-              onClick={() => window.location.href = '/contact'}
-              dir={language === 'he' ? 'rtl' : 'ltr'}
-            >
-              {language === 'he' ? 'בואו נדבר' : "Let's Talk"}
-            </button>
-
-            {/* Background decorative elements */}
-            <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-              <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-cyan-400/5 rounded-full blur-3xl"></div>
-              <div className="absolute bottom-1/4 left-1/4 w-48 h-48 bg-purple-400/5 rounded-full blur-3xl"></div>
+          {/* Call to Action */}
+          <div className="text-center mt-20">
+            <div className="bg-gradient-to-br from-black/40 via-black/20 to-black/10 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 lg:p-12">
+              <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">
+                {language === 'he' ? 'מוכנים להתחיל?' : 'Ready to Get Started?'}
+              </h3>
+              <p className="text-white/70 text-lg mb-8 max-w-2xl mx-auto" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                {language === 'he' 
+                  ? 'צרו איתנו קשר עוד היום ונתחיל לעבוד על הפתרון המושלם עבורכם'
+                  : 'Contact us today and let\'s start working on the perfect solution for you'
+                }
+              </p>
+              <button className="bg-gradient-to-r from-cyan-400/30 to-purple-400/30 text-white border border-cyan-400/50 px-8 py-4 rounded-full font-semibold text-lg hover:scale-105 hover:shadow-xl hover:shadow-cyan-400/30 transition-all duration-300 flex items-center space-x-3 mx-auto">
+                <span>{language === 'he' ? 'בואו נתחיל' : 'Let\'s Start'}</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
       </section>
 
-      <Footer />
+   
+       <InnovationSection/>  
+<ContactFormSection/>
+    
+      
+
     </div>
   );
 }

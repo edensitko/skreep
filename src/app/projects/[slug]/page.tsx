@@ -27,7 +27,7 @@ interface ProjectData {
 // Generate static params for all project slugs
 export async function generateStaticParams() {
   // Define the project slugs that exist in your system
-  const projectSlugs = ['real-estate-management', 'e-commerce-platform', 'healthcare-application'];
+  const projectSlugs = ['whatsapp-chatbot-ai', 'e-commerce-platform', 'healthcare-application'];
   
   return projectSlugs.map((slug) => ({
     slug: slug,
@@ -116,6 +116,10 @@ async function getAllProjects(language: string): Promise<ProjectData[]> {
 // Enhanced project data functions
 function getFullDescription(slug: string, lang: string): string {
     const descriptions: Record<string, Record<string, string>> = {
+      'whatsapp-chatbot-ai': {
+        he: 'צ\'אטבוט חכם ומתקדם המשולב בוואטסאפ עם יכולות בינה מלאכותית מתקדמות. המערכת מספקת שירות לקוחות אוטומטי 24/7, מטפלת בפניות מורכבות, ומספקת תשובות מדויקות ומותאמות אישית. הצ\'אטבוט לומד מכל אינטראקציה ומשתפר עם הזמן.',
+        en: 'Smart and advanced chatbot integrated with WhatsApp featuring advanced AI capabilities. The system provides 24/7 automated customer service, handles complex inquiries, and provides accurate and personalized responses. The chatbot learns from every interaction and improves over time.'
+      },
       'e-commerce-platform': {
         he: 'פלטפורמת מסחר אלקטרוני מתקדמת שפותחה עבור חברה מובילה בתחום הקמעונאות. המערכת כוללת ניהול מלאי חכם, מערכת תשלומים מאובטחת, והמלצות מותאמות אישית באמצעות בינה מלאכותית. הפלטפורמה מטפלת ביותר מ-50,000 מוצרים ומשרתת אלפי לקוחות מדי יום.',
         en: 'Advanced e-commerce platform developed for a leading retail company. The system includes smart inventory management, secure payment system, and personalized recommendations using artificial intelligence. The platform handles over 50,000 products and serves thousands of customers daily.'
@@ -123,10 +127,6 @@ function getFullDescription(slug: string, lang: string): string {
       'healthcare-application': {
         he: 'אפליקציית בריאות דיגיטלית חדשנית המאפשרת למטופלים לקבל טיפול רפואי מרחוק. המערכת כוללת וידאו קונפרנס מאובטח, מערכת תורים חכמה, וניהול רשומות רפואיות. האפליקציה משרתת יותר מ-10,000 משתמשים פעילים ומאפשרת גישה לטיפול רפואי איכותי מכל מקום.',
         en: 'Innovative digital health application that enables patients to receive remote medical care. The system includes secure video conferencing, smart appointment system, and medical records management. The application serves over 10,000 active users and enables access to quality medical care from anywhere.'
-      },
-      'real-estate-management': {
-        he: 'מערכת ניהול נדל"ן מקיפה המיועדת לחברות ניהול נכסים גדולות. המערכת כוללת CRM מותאם, חוזים דיגיטליים, דשבורד אנליטיקה מתקדם, וניהול תחזוקה אוטומטי. המערכת מנהלת נכסים בשווי של יותר מ-500 מיליון שקל ומשרתת מאות בעלי נכסים ושוכרים.',
-        en: 'Comprehensive real estate management system designed for large property management companies. The system includes custom CRM, digital contracts, advanced analytics dashboard, and automated maintenance management. The system manages assets worth over 500 million NIS and serves hundreds of property owners and tenants.'
       }
     };
     return descriptions[slug]?.[lang] || '';
@@ -134,15 +134,19 @@ function getFullDescription(slug: string, lang: string): string {
 
 function getTechnologies(slug: string): string[] {
     const tech: Record<string, string[]> = {
+      'whatsapp-chatbot-ai': ['Node.js', 'OpenAI GPT', 'WhatsApp API', 'MongoDB', 'Redis', 'Docker', 'AWS', 'Webhook'],
       'e-commerce-platform': ['Next.js', 'React', 'TypeScript', 'Node.js', 'PostgreSQL', 'Stripe', 'AWS', 'Docker'],
-      'healthcare-application': ['React Native', 'Node.js', 'MongoDB', 'WebRTC', 'Socket.io', 'AWS', 'Firebase'],
-      'real-estate-management': ['Vue.js', 'Laravel', 'MySQL', 'Redis', 'Docker', 'AWS', 'Elasticsearch']
+      'healthcare-application': ['React Native', 'Node.js', 'MongoDB', 'WebRTC', 'Socket.io', 'AWS', 'Firebase']
     };
     return tech[slug] || [];
   };
 
 function getFeatures(slug: string, lang: string): string[] {
     const features: Record<string, Record<string, string[]>> = {
+      'whatsapp-chatbot-ai': {
+        he: ['שירות לקוחות 24/7', 'עיבוד שפה טבעית', 'למידה מתמשכת', 'אינטגרציה עם וואטסאפ', 'ניתוח סנטימנט'],
+        en: ['24/7 Customer Service', 'Natural Language Processing', 'Continuous Learning', 'WhatsApp Integration', 'Sentiment Analysis']
+      },
       'e-commerce-platform': {
         he: ['ניהול מלאי חכם', 'מערכת תשלומים מאובטחת', 'המלצות AI', 'דשבורד ניהול', 'אינטגרציה עם ספקים'],
         en: ['Smart Inventory Management', 'Secure Payment System', 'AI Recommendations', 'Management Dashboard', 'Supplier Integration']
@@ -150,10 +154,6 @@ function getFeatures(slug: string, lang: string): string[] {
       'healthcare-application': {
         he: ['וידאו קונפרנס מאובטח', 'מערכת תורים חכמה', 'ניהול רשומות רפואיות', 'התראות אוטומטיות', 'אינטגרציה עם מעבדות'],
         en: ['Secure Video Conferencing', 'Smart Appointment System', 'Medical Records Management', 'Automatic Notifications', 'Lab Integration']
-      },
-      'real-estate-management': {
-        he: ['CRM מותאם', 'חוזים דיגיטליים', 'דשבורד אנליטיקה', 'ניהול תחזוקה', 'דוחות פיננסיים'],
-        en: ['Custom CRM', 'Digital Contracts', 'Analytics Dashboard', 'Maintenance Management', 'Financial Reports']
       }
     };
     return features[slug]?.[lang] || [];
@@ -161,6 +161,20 @@ function getFeatures(slug: string, lang: string): string[] {
 
 function getStats(slug: string, lang: string) {
     const stats: Record<string, Record<string, Array<{label: string, value: string}>>> = {
+      'whatsapp-chatbot-ai': {
+        he: [
+          { label: 'הודעות יומיות', value: '10,000+' },
+          { label: 'דיוק תשובות', value: '95%' },
+          { label: 'זמן תגובה', value: '<2 שניות' },
+          { label: 'זמן פיתוח', value: '4 חודשים' }
+        ],
+        en: [
+          { label: 'Daily Messages', value: '10,000+' },
+          { label: 'Response Accuracy', value: '95%' },
+          { label: 'Response Time', value: '<2 seconds' },
+          { label: 'Development Time', value: '4 months' }
+        ]
+      },
       'e-commerce-platform': {
         he: [
           { label: 'מוצרים', value: '50,000+' },
@@ -188,20 +202,6 @@ function getStats(slug: string, lang: string) {
           { label: 'Doctors in System', value: '500+' },
           { label: 'Development Time', value: '6 months' }
         ]
-      },
-      'real-estate-management': {
-        he: [
-          { label: 'שווי נכסים', value: '500M+ ₪' },
-          { label: 'נכסים במערכת', value: '2,000+' },
-          { label: 'משתמשים', value: '1,500+' },
-          { label: 'זמן פיתוח', value: '12 חודשים' }
-        ],
-        en: [
-          { label: 'Asset Value', value: '500M+ NIS' },
-          { label: 'Properties in System', value: '2,000+' },
-          { label: 'Users', value: '1,500+' },
-          { label: 'Development Time', value: '12 months' }
-        ]
       }
     };
     return stats[slug]?.[lang] || [];
@@ -209,9 +209,9 @@ function getStats(slug: string, lang: string) {
 
 function getProjectImages(slug: string): string[] {
     return [
-      `./assets/images/project-${slug}.svg`,
-      `./assets/images/project-${slug}-2.svg`,
-      `./assets/images/project-${slug}-3.svg`
+      `/assets/images/projects/1.png`,
+      `/assets/images/projects/2.png`,
+      `/assets/images/projects/3.png`
     ].filter((_, index) => index < 3); // Limit to 3 images
   };
 
@@ -219,7 +219,7 @@ function getClient(id: number, lang: string): string {
     const clients: Record<number, Record<string, string>> = {
       1: { he: 'חברת קמעונאות מובילה', en: 'Leading Retail Company' },
       2: { he: 'רשת מרפאות פרטיות', en: 'Private Clinic Network' },
-      3: { he: 'חברת ניהול נכסים', en: 'Property Management Company' }
+      3: { he: 'חברת טכנולוגיה מתקדמת', en: 'Advanced Technology Company' }
     };
     return clients[id]?.[lang] || '';
   };
@@ -228,7 +228,7 @@ function getDuration(id: number, lang: string): string {
     const durations: Record<number, Record<string, string>> = {
       1: { he: '8 חודשים', en: '8 months' },
       2: { he: '6 חודשים', en: '6 months' },
-      3: { he: '12 חודשים', en: '12 months' }
+      3: { he: '4 חודשים', en: '4 months' }
     };
     return durations[id]?.[lang] || '';
   };
@@ -237,7 +237,7 @@ function getCategory(id: number, lang: string): string {
     const categories: Record<number, Record<string, string>> = {
       1: { he: 'מסחר אלקטרוני', en: 'E-commerce' },
       2: { he: 'בריאות דיגיטלית', en: 'Digital Health' },
-      3: { he: 'ניהול נדל"ן', en: 'Real Estate Management' }
+      3: { he: 'בינה מלאכותית', en: 'Artificial Intelligence' }
     };
     return categories[id]?.[lang] || '';
   };

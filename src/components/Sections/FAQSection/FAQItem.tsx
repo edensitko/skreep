@@ -38,7 +38,7 @@ const FAQItem = memo<FAQItemPropsWithLanguage>(({ faq, index, isOpen, onToggle, 
     {/* Question Header */}
     <div className="flex items-center justify-between w-full relative z-10">
       <h3 
-        className={`font-semibold text-white text-lg md:text-xl flex-1 leading-relaxed ${
+        className={`font-semibold text-white text-md md:text-lg flex-1 leading-relaxed ${
           language === 'he' ? 'pr-4 text-right' : 'pl-4 text-left'
         }`}
         dir={language === 'he' ? 'rtl' : 'ltr'}

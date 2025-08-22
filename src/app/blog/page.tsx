@@ -7,6 +7,8 @@ import Footer from '@/components/Layout/Footer/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
 import LocalSEO from '@/components/SEO/LocalSEO';
 import SEOMeta from '@/components/SEO/SEOMeta';
+import ContactFormSection from '@/components/Sections/ContactFormSection';
+import InnovationSection from '@/components/Sections/InnovationSection/InnovationSection';
 
 export default function Blog() {
   const [isVisible, setIsVisible] = useState(false);
@@ -144,22 +146,32 @@ export default function Blog() {
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4">
-        <div className="container mx-auto text-center">
+      <section className="relative h-[400px] pt-40 pb-20 px-4 overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="./assets/images/img/1.png"
+            alt=""
+            className="w-full h-full object-fill "
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80"></div>
+        </div>
+        
+        <div className="container mx-auto text-center relative z-10">
           <h1 
             ref={titleRef}
-            className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/40 bg-clip-text text-transparent text-2xl md:text-3xl lg:text-4xl mb-4 leading-tight tracking-wide text-center transition-all duration-1000 ease-out ${
+            className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-3xl md:text-4xl lg:text-5xl mb-4 leading-tight transition-all duration-1000 ease-out ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
-            dir={language === 'he' ? 'rtl' : 'ltr'}
+            style={{ textAlign: 'center' }}
+            dir="ltr"
           >
             {language === 'he' ? 'בלוג טכנולוגיה ובינה מלאכותית' : 'Technology & AI Blog'}
           </h1>
           <p 
-            className={`text-lg md:text-xl text-white/70 max-w-4xl mx-auto leading-relaxed transition-all duration-1000 delay-200 ${
+            className={`text-base md:text-xl text-white/70 max-w-4xl mx-auto leading-relaxed transition-all duration-1000 delay-200 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
-            dir={language === 'he' ? 'rtl' : 'ltr'}
           >
             {language === 'he' 
               ? 'מאמרים מעמיקים, תובנות מקצועיות וחדשנות בעולם הטכנולוגיה'
@@ -220,116 +232,105 @@ export default function Blog() {
           <h2 className="text-2xl md:text-3xl font-bold mb-12 bg-gradient-to-br from-white via-white/80 to-white/60 bg-clip-text text-transparent text-center">
             {language === 'he' ? 'מאמרים נוספים' : 'More Articles'}
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
             {blogPosts.filter(post => !post.featured).map((post, index) => (
               <div
                 key={post.id}
-                className="group bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/30 rounded-2xl lg:rounded-4xl before:absolute before:inset-0 before:rounded-2xl lg:before:rounded-4xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl lg:after:rounded-4xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden transition-all duration-700 ease-out hover:backdrop-blur-[10px] hover:bg-gradient-to-br hover:from-black/40 hover:via-black/25 hover:to-black/10 hover:before:opacity-80 hover:after:opacity-70 hover:scale-105"
+                className="group relative bg-black/20 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden hover:scale-[1.02] hover:border-white/20 transition-all duration-500 cursor-pointer"
                 style={{
                   animationDelay: `${index * 100}ms`
                 }}
               >
-                {/* Blog Post Image - Full Width Top */}
-                <div className="relative w-full h-48 md:h-56 mb-6 rounded-t-2xl lg:rounded-t-4xl overflow-hidden">
-                  <img 
-                    src={post.image} 
+                {/* Image Section */}
+                <div className="relative h-64 md:h-72 overflow-hidden">
+                  <img
+                    src={post.image}
                     alt={post.title}
-                    className="w-full h-full object-cover filter brightness-110 hover:brightness-125 hover:scale-110 transition-all duration-500"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-black/60 text-white px-2 py-1 rounded-full text-xs font-medium">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/50 to-black/20"></div>
+                  
+                  {/* Overlay Content */}
+                  <div className="absolute inset-0 flex flex-col justify-end p-6">
+                    {/* Blog Post Title */}
+                    <h3 
+                      className="text-xl md:text-2xl font-bold mb-2 text-white drop-shadow-lg text-center"
+                      dir="ltr"
+                    >
+                      {post.title}
+                    </h3>
+
+                    {/* Blog Post Category */}
+                    <h4 
+                      className="text-sm text-cyan-300 font-semibold mb-3 text-center drop-shadow-md"
+                      dir={language === 'he' ? 'rtl' : 'ltr'}
+                    >
                       {post.category}
-                    </span>
+                    </h4>
+
+                    {/* Blog Post Excerpt */}
+                    <p 
+                      className="text-white/90 leading-relaxed text-center text-sm drop-shadow-md"
+                      dir={language === 'he' ? 'rtl' : 'ltr'}
+                    >
+                      {post.excerpt}
+                    </p>
                   </div>
                 </div>
 
-                {/* Content Section */}
-                <div className="px-6 pb-6">
-                  {/* Blog Post Meta */}
-                  <div className="flex flex-wrap gap-2 text-xs text-white/60 mb-3" dir={language === 'he' ? 'rtl' : 'ltr'}>
-                    <span>{post.date}</span>
-                    <span>•</span>
-                    <span>{post.readTime}</span>
-                  </div>
-
-                  {/* Blog Post Title */}
-                  <h3 
-                    className="text-lg md:text-xl font-bold mb-2 bg-gradient-to-br from-white via-white/80 to-white/60 bg-clip-text text-transparent text-center"
-                    dir={language === 'he' ? 'rtl' : 'ltr'}
-                  >
-                    {post.title}
-                  </h3>
-
-                  {/* Blog Post Excerpt */}
-                  <p 
-                    className="text-white/80 leading-relaxed text-center text-xs md:text-sm mb-4"
-                    dir={language === 'he' ? 'rtl' : 'ltr'}
-                  >
-                    {post.excerpt}
-                  </p>
-
-                  {/* Author and Read More */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-cyan-400 font-semibold text-sm">{post.author}</span>
-                    <button className="text-white hover:text-cyan-400 transition-colors text-sm">
-                      {language === 'he' ? 'קרא עוד' : 'Read More'} →
-                    </button>
+                {/* Meta Section */}
+                <div className="p-6 bg-gradient-to-t from-black/40 to-transparent">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0"></span>
+                      <span 
+                        className="text-xs text-white/80"
+                        dir={language === 'he' ? 'rtl' : 'ltr'}
+                      >
+                        {post.author}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0"></span>
+                      <span 
+                        className="text-xs text-white/80"
+                        dir={language === 'he' ? 'rtl' : 'ltr'}
+                      >
+                        {post.readTime}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0"></span>
+                      <span 
+                        className="text-xs text-white/80"
+                        dir={language === 'he' ? 'rtl' : 'ltr'}
+                      >
+                        {post.date}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0"></span>
+                      <span 
+                        className="text-xs text-cyan-400"
+                        dir={language === 'he' ? 'rtl' : 'ltr'}
+                      >
+                        {language === 'he' ? 'קרא עוד' : 'Read More'}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
                 {/* Hover Effect Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/5 to-purple-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl lg:rounded-4xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Newsletter CTA Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto">
-          <div className="bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/30 rounded-2xl lg:rounded-4xl before:absolute before:inset-0 before:rounded-2xl lg:before:rounded-4xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl lg:after:rounded-4xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden p-12 text-center">
-            <h2 
-              className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-br from-white via-white/80 to-white/60 bg-clip-text text-transparent"
-              dir={language === 'he' ? 'rtl' : 'ltr'}
-            >
-              {language === 'he' ? 'הישארו מעודכנים' : 'Stay Updated'}
-            </h2>
-            <p 
-              className="text-xl text-white/70 mb-8 max-w-2xl mx-auto"
-              dir={language === 'he' ? 'rtl' : 'ltr'}
-            >
-              {language === 'he' 
-                ? 'קבלו את המאמרים החדשים ישירות למייל ותהיו הראשונים לדעת על חדשנות בעולם הטכנולוגיה'
-                : "Get the latest articles directly to your email and be the first to know about innovation in the world of technology"
-              }
-            </p>
-            <div className="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
-              <input 
-                type="email" 
-                placeholder={language === 'he' ? 'הכניסו את כתובת המייל' : 'Enter your email'}
-                className="flex-1 bg-white/10 border border-white/20 rounded-full px-6 py-3 text-white placeholder-white/60 focus:outline-none focus:border-cyan-400"
-                dir={language === 'he' ? 'rtl' : 'ltr'}
-              />
-              <button 
-                className="bg-gradient-to-l from-cyan-400/10 via-cyan-400/30 to-cyan-400/60 text-white border border-white/20 px-8 py-3 rounded-full font-semibold hover:bg-cyan-500 hover:scale-105 transition-all duration-300"
-                dir={language === 'he' ? 'rtl' : 'ltr'}
-              >
-                {language === 'he' ? 'הרשמה' : 'Subscribe'}
-              </button>
-            </div>
-
-            {/* Background decorative elements */}
-            <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-              <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-cyan-400/5 rounded-full blur-3xl"></div>
-              <div className="absolute bottom-1/4 left-1/4 w-48 h-48 bg-purple-400/5 rounded-full blur-3xl"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <Footer />
+      <InnovationSection/>
+      <ContactFormSection/>
     </div>
   );
 }

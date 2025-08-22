@@ -297,7 +297,7 @@ function InteractiveShowcaseSection() {
 
       {/* Enhanced Content Box */}
       {selectedService && (
-        <div className="mt-16 w-[95%] mx-auto relative">
+        <div className="mt-6 w-[85%] mx-auto relative">
           {/* Main Content Container */}
           <div className="bg-gradient-to-br from-black/30 via-black/20 to-black/10 backdrop-blur-3xl border border-white/20 rounded-3xl lg:rounded-4xl shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-700 ease-out hover:backdrop-blur-[12px] hover:border-white/30 hover:shadow-cyan-400/10 hover:shadow-2xl">
             

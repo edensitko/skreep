@@ -12,7 +12,6 @@ import Analytics from '@/components/SEO/Analytics';
 import { generateLocalBusinessSchema, generateOrganizationSchema, generateWebsiteSchema } from '@/lib/seo/utils';
 
 // Using system fonts to avoid Turbopack issues
-const fontVariables = '--font-inter --font-hebrew';
 
 export const metadata: Metadata = {
   title: "סקריפ | skreep - פתרונות בינה מלאכותית",

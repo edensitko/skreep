@@ -16,9 +16,11 @@ export default function Footer() {
           {/* Column 1 - About */}
           <div>
             <Link href="/" className="inline-block mb-4 md:mb-6">
-              <img 
-                src="./assets/images/logo-1.png" 
+              <Image 
+                src="/assets/images/logo-1.png" 
                 alt="Skreep - פתרונות בינה מלאכותית" 
+                width={120}
+                height={48}
                 className="h-12 w-auto opacity-50"
               />
             </Link>
@@ -113,6 +115,8 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      
     </footer>
+    
   );
 }
