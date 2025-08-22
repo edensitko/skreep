@@ -27,6 +27,7 @@ function FAQSection() {
   const { language, t } = useLanguage();
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
   // ============================================================================
   // EFFECTS
@@ -145,8 +146,12 @@ function FAQSection() {
     setOpenFAQ(prev => prev === id ? null : id);
   }, []);
 
-  // Intersection Observer for title animation
+  // Intersection Observer for title animation and scroll tracking
   useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -161,16 +166,19 @@ function FAQSection() {
       observer.observe(currentTitleRef);
     }
 
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     return () => {
       if (currentTitleRef) {
         observer.unobserve(currentTitleRef);
       }
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
   return (
     <section 
-      className="w-full rounded-b-2xl pt-16 md:pt-24 relative overflow-hidden bg-black/20"
+      className="w-[90%] mx-auto rounded-b-2xl pt-16 md:pt-24 relative overflow-hidden "
       role="region"
       aria-label={t('faq.title')}
     >
@@ -180,7 +188,7 @@ function FAQSection() {
           <div className="text-center mb-16">
             <h2 
               ref={titleRef}
-              className={`font-bold bg-gradient-to-br from-white via-white-60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out ${
+              className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               dir={language === 'he' ? 'rtl' : 'ltr'}
@@ -189,10 +197,10 @@ function FAQSection() {
               {t('faq.title')}
             </h2>
             <p 
-              className={`text-lg md:text-xl text-white/70 leading-relaxed transition-all duration-1000 delay-200 text-center ${
+              className={`text-md md:text-xl text-white/70 leading-relaxed transition-all duration-1000 delay-200 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
-              dir={language === 'he' ? 'rtl' : 'ltr'}
+              style={{ textAlign: 'center' }}
             >
               {userType === 'entrepreneurs' 
                 ? t('faq.entrepreneursSubtitle')
@@ -202,7 +210,7 @@ function FAQSection() {
           </div>
 
           {/* FAQ Items */}
-          <div className="space-y-4 md:space-y-6">
+          <div className="space-y-4 md:space-y-6 ">
             {currentFaqs.map((faq, index) => (
               <FAQItem
                 key={faq.id}
@@ -217,7 +225,7 @@ function FAQSection() {
         </div>
 
         {/* Background Decorative Elements */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-99" aria-hidden="true">
           {/* Floating shapes */}
           <div className="absolute top-20 left-10 w-40 h-40 bg-cyan-400/5 rounded-full blur-3xl animate-pulse"></div>
           <div 
@@ -228,6 +236,11 @@ function FAQSection() {
             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-r from-cyan-400/3 to-purple-400/3 rounded-full blur-3xl animate-pulse" 
             style={{ animationDelay: '4s' }}
           ></div>
+          
+          {/* Mobile-Optimized Floating Question Marks */}
+          <div className="absolute top-8 left-2 text-6xl sm:text-6xl md:text-8xl text-cyan-400/8 sm:text-cyan-400/10 z-0" style={{ rotate: '10deg', transform: `translateY(${Math.sin(scrollY * 0.01) * 10}px)` }}>?</div>
+          <div className="absolute top-40 right-4 text-7xl sm:text-5xl md:text-6xl text-cyan-400/8 sm:text-cyan-400/10 z-0" style={{ rotate: '15deg', transform: `translateY(${Math.cos(scrollY * 0.01) * 8}px)` }}>?</div>
+          <div className="absolute top-25 right-1/3 text-4xl sm:text-5xl md:text-6xl text-cyan-400/8 sm:text-cyan-400/10 z-0" style={{ rotate: '5deg', transform: `translateY(${Math.sin(scrollY * 0.008) * 12}px)` }}>?</div>
           
           {/* Subtle grid pattern */}
           <div className="absolute inset-0 opacity-[0.02]">

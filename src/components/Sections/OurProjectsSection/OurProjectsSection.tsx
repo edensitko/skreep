@@ -3,16 +3,7 @@
 import React, { memo, useState, useRef, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import ProjectCard from './ProjectCard';
-
-interface ProjectSection {
-  id: number;
-  title: string;
-  slug: string;
-  subtitle: string;
-  description: string;
-  gradient: string;
-  accentColor: string;
-}
+import type { ProjectSection } from './types';
 
 /**
  * Our Projects section with vertical carousel
@@ -41,14 +32,15 @@ function OurProjectsSection() {
       return [
         {
           id: 3,
-          slug: 'real-estate-management',
-          title: language === 'he' ? 'מערכת ניהול נדל״ן' : 'Real Estate Management System',
-          subtitle: language === 'he' ? '500M+ שקל בנכסים' : '500M+ NIS in Assets',
+          slug: 'whatsapp-chatbot-ai',
+          title: language === 'he' ? 'צ\'אטבוט AI לוואטסאפ' : 'WhatsApp AI Chatbot',
+          subtitle: language === 'he' ? '24/7 שירות לקוחות אוטומטי' : '24/7 Automated Customer Service',
           description: language === 'he' 
-            ? 'מערכת ניהול מקיפה עם CRM מותאם, חוזים דיגיטליים ודשבורד אנליטיקה.'
-            : 'Comprehensive management system with custom CRM, digital contracts and analytics dashboard.',
-          gradient: 'from-green-400/20 to-emerald-500/20',
-          accentColor: 'green-400'
+            ? 'צ\'אטבוט חכם המשולב בוואטסאפ עם בינה מלאכותית מתקדמת לטיפול בפניות לקוחות.'
+            : 'Smart chatbot integrated with WhatsApp featuring advanced AI for handling customer inquiries.',
+          gradient: 'from-blue-400/20 to-purple-500/20',
+          accentColor: 'blue-400',
+          image: '/assets/images/projects/1.png'
         },
         {
           id: 1,
@@ -59,7 +51,8 @@ function OurProjectsSection() {
             ? 'פלטפורמת מסחר מלאה עם תשלומים מאובטחים, ניהול מלאי חכם ומערכת המלצות AI.'
             : 'Complete commerce platform with secure payments, smart inventory management and AI recommendation system.',
           gradient: 'from-cyan-400/20 to-blue-500/20',
-          accentColor: 'cyan-400'
+          accentColor: 'cyan-400',
+          image: '/assets/images/projects/1.png'
         },
         {
           id: 2,
@@ -70,7 +63,8 @@ function OurProjectsSection() {
             ? 'אפליקציה לבריאות דיגיטלית עם וידאו קונפרנס מאובטח ומערכת תורים חכמה.'
             : 'Digital health application with secure video conferencing and smart appointment system.',
           gradient: 'from-purple-400/20 to-pink-500/20',
-          accentColor: 'purple-400'
+          accentColor: 'purple-400',
+          image: '/assets/images/projects/1.png'
         }
       ];
     };
@@ -105,7 +99,7 @@ function OurProjectsSection() {
 
   return (
     <section 
-      className="w-full py-16 md:py-24 relative overflow-hidden"
+      className="w-[90%] mx-auto py-16 md:py-24 relative overflow-hidden"
       role="region"
       aria-label={t('ourProjects.title')}
     >
@@ -114,14 +108,14 @@ function OurProjectsSection() {
           {/* Header */}
           <div className="text-center mb-2">
             <h1 
-              className="font-bold bg-gradient-to-br from-white via-white-60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide"
+              className="font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out"
               dir={language === 'he' ? 'rtl' : 'ltr'}
               style={{ textAlign: 'center' }}
             >
               {t('ourProjects.title')}
             </h1>
             <p 
-              className="text-lg md:text-xl text-white/70 leading-relaxed max-w-3xl mx-auto"
+              className="text-lg md:text-xl text-white/70 leading-relaxed max-w-3xl mx-auto text-center"
               dir={language === 'he' ? 'rtl' : 'ltr'}
             >
               {t('ourProjects.subtitle')}
@@ -143,9 +137,9 @@ function OurProjectsSection() {
                 {projectsData.map((section, index) => (
                   <div key={section.id} className="min-h-[400px] lg:min-h-[400px]  items-center">
                     <ProjectCard
-                      section={section}
                       index={index}
                       language={language}
+                      section={section}
                     />
                   </div>
                 ))}

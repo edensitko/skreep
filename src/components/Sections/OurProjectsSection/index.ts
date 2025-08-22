@@ -16,7 +16,6 @@ export {
   SECTION_SUBTITLE, 
   VIEW_MORE_TEXT, 
   VIEW_MORE_PROJECTS_TEXT, 
-  HERO_IMAGE_PATH 
 } from './constants';
 export { 
   useScrollProgress, 

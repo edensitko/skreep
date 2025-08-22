@@ -190,7 +190,7 @@ function ContactFormSection() {
         <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-white via-white/80 to-white/60 bg-clip-text text-transparent leading-tight" >
+            <h2 className="font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out" >
               {t('contactForm.title')}
             </h2>
             <p className="text-xl text-white/70 max-w-2xl mx-auto leading-relaxed text-center">

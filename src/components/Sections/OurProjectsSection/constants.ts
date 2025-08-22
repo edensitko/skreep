@@ -10,9 +10,10 @@ export const PROJECT_SECTIONS: ReadonlyArray<ProjectSection> = [
     title: "מערכת ניהול נדל״ן",
     subtitle: "500M+ שקל בנכסים",
     description: "מערכת ניהול מקיפה עם CRM מותאם, חוזים דיגיטליים ודשבורד אנליטיקה.",
-    gradient: "from-green-400/20 to-emerald-500/20",
-    accentColor: "green-400",
-    slug: "property-management-system"
+    gradient: "from-blue-400/20 to-purple-500/20",
+    accentColor: "blue-400",
+    slug: "property-management-system",
+    image: "/assets/images/projects/1.png"
   },
   {
     id: 1,
@@ -21,16 +22,18 @@ export const PROJECT_SECTIONS: ReadonlyArray<ProjectSection> = [
     description: "פלטפורמת מסחר מלאה עם תשלומים מאובטחים, ניהול מלאי חכם ומערכת המלצות AI.",
     gradient: "from-cyan-400/20 to-blue-500/20",
     accentColor: "cyan-400",
-    slug: "ecommerce-platform"
+    slug: "ecommerce-platform",
+    image: "/assets/images/projects/1.png"
   },
   {
     id: 2,
     title: "apl",
     subtitle: "10,000+ משתמשים פעילים",
     description: "אפליקציה לבריאות דיגיטלית עם וידאו קונפרנס מאובטח ומערכת תורים חכמה.",
-    gradient: "from-purple-400/20 to-pink-500/20",
-    accentColor: "purple-400",
-    slug: "health-app"
+    gradient: "from-gray-400/20 to-pink-500/20",
+    accentColor: "gray-400",
+    slug: "health-app",
+    image: "/assets/images/projects/1.png"
   }
 ] as const;
 
@@ -42,4 +45,3 @@ export const VIEW_MORE_TEXT = "ראה עוד" as const;
 
 export const VIEW_MORE_PROJECTS_TEXT = "ראה עוד פרויקטים" as const;
 
-export const HERO_IMAGE_PATH = "/assets/images/hero/hero1.png" as const;

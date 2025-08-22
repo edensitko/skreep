@@ -32,6 +32,22 @@
     "talkToUs": "Talk to Us",
     "search": "Search"
   },
+  "blog": {
+    "title": "Our Blog",
+    "subtitle": "Insights, tips, and articles about advanced technologies and artificial intelligence",
+    "featured": "Featured",
+    "readMore": "Read More",
+    "viewAll": "View All Articles",
+    "categories": {
+      "all": "All",
+      "ai": "Artificial Intelligence",
+      "chatbots": "Chatbots",
+      "analytics": "Data Analytics",
+      "automation": "Automation",
+      "integration": "Integration",
+      "consulting": "Consulting"
+    }
+  },
   "partners": {
     "title": "Part of Our Success",
     "ariaLabel": "Business Partners",
@@ -204,12 +220,13 @@
     "projects": [
       {
         "id": 3,
-        "slug": "real-estate-management",
-        "title": "Real Estate Management System",
-        "subtitle": "500M+ NIS in Assets",
-        "description": "Comprehensive management system with custom CRM, digital contracts and analytics dashboard.",
-        "gradient": "from-green-400/20 to-emerald-500/20",
-        "accentColor": "green-400"
+        "slug": "whatsapp-chatbot-ai",
+        "title": "WhatsApp AI Chatbot",
+        "subtitle": "24/7 Automated Customer Service",
+        "description": "Smart chatbot integrated with WhatsApp featuring advanced AI for handling customer inquiries.",
+        "gradient": "from-blue-400/20 to-purple-500/20",
+        "accentColor": "blue-400",
+        "image": "/assets/images/projects/1.png"
       },
       {
         "id": 1,
@@ -218,7 +235,8 @@
         "subtitle": "50,000+ Products",
         "description": "Complete commerce platform with secure payments, smart inventory management and AI recommendation system.",
         "gradient": "from-cyan-400/20 to-blue-500/20",
-        "accentColor": "cyan-400"
+        "accentColor": "cyan-400",
+        "image": "/assets/images/projects/1.png"
       },
       {
         "id": 2,
@@ -227,7 +245,8 @@
         "subtitle": "10,000+ Active Users",
         "description": "Digital health application with secure video conferencing and smart appointment system.",
         "gradient": "from-purple-400/20 to-pink-500/20",
-        "accentColor": "purple-400"
+        "accentColor": "purple-400",
+        "image": "/assets/images/projects/1.png"
       }
     ]
   },

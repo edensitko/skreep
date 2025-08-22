@@ -7,7 +7,6 @@ import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
@@ -17,11 +16,7 @@ export default function Header() {
     setMounted(true);
     
     const handleScroll = () => {
-      if (typeof window !== 'undefined' && window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      // Scroll handling logic removed as scrolled state is unused
     };
 
     const handleResize = () => {
@@ -51,7 +46,7 @@ export default function Header() {
           <div className="flex 2xl:space-x-[100px] xl:space-x-10 justify-center items-center w-full xl:w-auto">
             <div className="flex justify-center items-center">
               <Link href="/" aria-label="logo">
-                <img src="./assets/images/logo-1.png" alt="Skreep - פתרונות בינה מלאכותית" className="w-[150px] md:w-[150px] pt-3 mr-" />
+                <Image src="/assets/images/logo-1.png" alt="Skreep - פתרונות בינה מלאכותית" width={150} height={50} className="w-[150px] md:w-[150px] pt-3 mr-" />
               </Link>
             </div>
           </div>
@@ -72,7 +67,7 @@ export default function Header() {
           
         >
           <div className="flex flex-col space-y-1" dir={isLargeScreen ? 'ltr' : (language === 'he' ? 'rtl' : 'ltr')}>
-            <span className={`block w-8 h-0.5 bg-white transition-transform duration-300 ${
+            <span className={`block w-6 h-0.5 bg-white transition-transform duration-300 ${
               mobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''
             }`}></span>
             <span className={`block w-7 h-0.5 bg-white transition-opacity duration-300 ${
@@ -87,9 +82,11 @@ export default function Header() {
         {/* Logo - Absolutely centered */}
         <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <Link href="/" aria-label="logo">
-            <img 
-              src={"./assets/images/logo-1.png"} 
+            <Image 
+              src="/assets/images/logo-1.png" 
               alt="Skreep - פתרונות בינה מלאכותית" 
+              width={100}
+              height={33}
               className="ml-8 w-[100px] md:w-[100px] pt-0 transition-all duration-300"
             />
           </Link>
@@ -145,11 +142,13 @@ export default function Header() {
             
             {/* CTA Button */}
             <Link href="/contact" 
-              className="bg-gradient-to-l from-cyan-400/10 via-cyan-400/30 to-cyan-400/60 text-white border border-white/20 px-6 py-3 rounded-full font-semibold hover:bg-cyan-500 transition-all flex items-center gap-2" 
+              className="text-white hover:text-gray-300 transition-all flex items-center justify-center" 
               dir="ltr"
+              title={t('header.talkToUs')}
             >
-              <FiArrowLeft size={16} />
-              {t('header.talkToUs')}
+              <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
             </Link>
           </div>
           
@@ -206,14 +205,12 @@ export default function Header() {
         {/* Mobile CTA Button */}
         <Link 
           href="/contact" 
-          className="lg:hidden bg-gradient-to-l from-cyan-400/10 via-cyan-400/30 to-cyan-400/60 border border-white/20 text-white px-2 py-2 rounded-full font-semibold hover:bg-cyan-500 transition-all flex items-center gap-2 text-xs" 
-          // english make ltr if hrbrew rtl 
-          dir={language === 'he' ? 'ltr' : 'rtl'}
+          className="lg:hidden text-white hover:text-gray-300 transition-all flex items-center justify-center" 
+          title={t('header.talkToUs')}
         >
-          {language === 'en' ? <FiArrowRight size={14} /> : <FiArrowLeft size={14} />}
-          {t('header.talkToUs')}
-          
-
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          </svg>
         </Link>
       </div>
       
@@ -346,7 +343,9 @@ export default function Header() {
                   onClick={() => setMobileMenuOpen(false)}
                   dir="ltr"
                 >
-                  <FiArrowLeft size={16} />
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
                   {t('header.talkToUs')}
                 </Link>
               </div>

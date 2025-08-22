@@ -32,6 +32,22 @@
     "talkToUs": "דברו איתנו",
     "search": "חיפוש"
   },
+  "blog": {
+    "title": "הבלוג שלנו",
+    "subtitle": "תובנות, טיפים ומאמרים על טכנולוגיות מתקדמות ובינה מלאכותית",
+    "featured": "מומלץ",
+    "readMore": "קרא עוד",
+    "viewAll": "צפה בכל המאמרים",
+    "categories": {
+      "all": "הכל",
+      "ai": "בינה מלאכותית",
+      "chatbots": "צ'אטבוטים",
+      "analytics": "ניתוח נתונים",
+      "automation": "אוטומציה",
+      "integration": "אינטגרציה",
+      "consulting": "ייעוץ"
+    }
+  },
   "partners": {
     "title": "חלק מהצלחות שלנו",
     "ariaLabel": "שותפים עסקיים",
@@ -200,19 +216,20 @@
     ]
   },
   "ourProjects": {
-    "title": " פרוייקטים",
+    "title": " חלק מהעבודות שלנו",
     "subtitle": "פתרונות דיגיטליים מתקדמים שיצרנו עבור לקוחותינו",
     "viewMore": "ראה עוד",
     "viewMoreProjects": "ראה עוד פרוייקטים",
     "projects": [
       {
         "id": 3,
-        "slug": "real-estate-management",
-        "title": "מערכת ניהול נדל״ן",
-        "subtitle": "500M+ שקל בנכסים",
-        "description": "מערכת ניהול מקיפה עם CRM מותאם, חוזים דיגיטליים ודשבורד אנליטיקה.",
-        "gradient": "from-green-400/20 to-emerald-500/20",
-        "accentColor": "green-400"
+        "slug": "whatsapp-chatbot-ai",
+        "title": "צ'אטבוט AI לוואטסאפ",
+        "subtitle": "24/7 שירות לקוחות אוטומטי",
+        "description": "צ'אטבוט חכם המשולב בוואטסאפ עם בינה מלאכותית מתקדמת לטיפול בפניות לקוחות.",
+        "gradient": "from-blue-400/20 to-purple-500/20",
+        "accentColor": "blue-400",
+        "image": "/assets/images/projects/1.png"
       },
       {
         "id": 1,
@@ -221,7 +238,8 @@
         "subtitle": "50,000+ מוצרים",
         "description": "פלטפורמת מסחר מלאה עם תשלומים מאובטחים, ניהול מלאי חכם ומערכת המלצות AI.",
         "gradient": "from-cyan-400/20 to-blue-500/20",
-        "accentColor": "cyan-400"
+        "accentColor": "cyan-400",
+        "image": "/assets/images/projects/1.png"
       },
       {
         "id": 2,
@@ -230,7 +248,8 @@
         "subtitle": "10,000+ משתמשים פעילים",
         "description": "אפליקציה לבריאות דיגיטלית עם וידאו קונפרנס מאובטח ומערכת תורים חכמה.",
         "gradient": "from-purple-400/20 to-pink-500/20",
-        "accentColor": "purple-400"
+        "accentColor": "purple-400",
+        "image": "/assets/images/projects/1.png"
       }
     ]
   },

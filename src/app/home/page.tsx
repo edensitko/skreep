@@ -4,9 +4,7 @@ import HeroGrid from '@/components/Hero/HeroGrid';
 import PartnersSection from '@/components/Sections/PartnersSection';
 import AboutSection from '@/components/Sections/AboutSection';
 import OurProjectsSection from '@/components/Sections/OurProjectsSection';
-import ServicesSection from '@/components/Sections/InteractiveShowcaseSection';
 import StatsSection from '@/components/Sections/StatsSection';
-import HeroFour from '@/components/Hero/HeroFour';
 import { PageSEO, AEO, LocalSEO } from '@/components/SEO';
 import InnovationSection from '@/components/Sections/InnovationSection/InnovationSection';
 // Lazy load heavy components to reduce initial memory usage
@@ -35,9 +33,6 @@ const ContactFormSection = dynamic(() => import('@/components/Sections/ContactFo
   loading: () => <div className="h-96 bg-black/20 animate-pulse" />
 });
 
-const PricingCarouselSection = dynamic(() => import('@/components/Sections/PricingCarouselSection'), {
-  loading: () => <div className="h-96 bg-black/20 animate-pulse" />
-});
 
 const InteractiveShowcaseSection = dynamic(() => import('@/components/Sections/InteractiveShowcaseSection'), {
   loading: () => <div className="h-96 bg-black/20 animate-pulse" />
@@ -93,7 +88,6 @@ export default function HomePage() {
       <FAQSection />
       
       {/* <PricingSection /> */}
-      <PricingCarouselSection />
       <AIConsultantCTASection />
       <InnovationSection />
 

@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-const InnovationSection = () => {
+const InnovationSection2 = () => {
   const { language } = useLanguage();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
@@ -95,7 +95,7 @@ const InnovationSection = () => {
               }}
             >
               <h1 className="text-6xl md:text-8xl lg:text-9xl font-black bg-gradient-to-r from-cyan-400 via-white to-cyan-400 bg-clip-text text-transparent">
-                {language === 'he' ? 'חדשנות דרך אינטואיציה' : 'INNOVATION THROUGH INTUITIVE'}
+                {language === 'he' ? '  הדור הבא' : 'NEXT GENERATION IN DEVELOPMENT'}
               </h1>
             </div>
 
@@ -108,7 +108,7 @@ const InnovationSection = () => {
                 transition: isMobile ? 'transform 0.1s ease-out' : 'transform 0.15s ease-out'
               }}
             >
-              {language === 'he' ? 'חדשנות דרך אינטואיציה' : 'INNOVATION THROUGH INTUITIVE'}
+              {language === 'he' ? ' חדשנות דרך  ' : 'INNOVATION THROUGH  '}
             </h1>
 
             {/* Duplicate text with opposite direction */}
@@ -120,7 +120,7 @@ const InnovationSection = () => {
                 transition: isMobile ? 'transform 0.1s ease-out' : 'transform 0.15s ease-out'
               }}
             >
-              {language === 'he' ? 'חדשנות דרך אינטואיציה' : 'INNOVATION THROUGH INTUITIVE'}
+              {language === 'he' ? 'דרך חכמה ויעילה' : ' INTELLIGENCE AND EFFICIENCY'}
             </h1>
           </div>
         </div>
@@ -131,4 +131,4 @@ const InnovationSection = () => {
   );
 };
 
-export default InnovationSection;
+export default InnovationSection2;

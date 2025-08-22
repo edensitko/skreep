@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, memo, useRef } from 'react';
+import Image from 'next/image';
 
 interface LoadingScreenProps {
   isLoading: boolean;
@@ -8,7 +9,6 @@ interface LoadingScreenProps {
 }
 
 function LoadingScreen({ isLoading, onLoadingComplete }: LoadingScreenProps) {
-  const [progress, setProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(isLoading);
   const animationRef = useRef<NodeJS.Timeout | null>(null);
   const hasStarted = useRef(false);
@@ -17,32 +17,12 @@ function LoadingScreen({ isLoading, onLoadingComplete }: LoadingScreenProps) {
     if (isLoading && !hasStarted.current) {
       hasStarted.current = true;
       setIsVisible(true);
-      setProgress(0);
-      
-      // Clear any existing animation
-      if (animationRef.current) {
-        clearInterval(animationRef.current);
-      }
-      
-      // Simulate loading progress - faster animation
-      animationRef.current = setInterval(() => {
-        setProgress(prev => {
-          if (prev >= 100) {
-            if (animationRef.current) {
-              clearInterval(animationRef.current);
-              animationRef.current = null;
-            }
-            // Reduced delay before hiding
-            setTimeout(() => {
-              setIsVisible(false);
-              hasStarted.current = false;
-              onLoadingComplete?.();
-            }, 200); // Reduced from 500ms to 200ms
-            return 100;
-          }
-          return prev + Math.random() * 20 + 10; // Faster increment
-        });
-      }, 60); // Faster interval: 60ms instead of 100ms
+      // Simplified loading without progress tracking
+      setTimeout(() => {
+        setIsVisible(false);
+        hasStarted.current = false;
+        onLoadingComplete?.();
+      }, 1000); // Simple 1 second delay
 
       return () => {
         if (animationRef.current) {
@@ -76,7 +56,7 @@ function LoadingScreen({ isLoading, onLoadingComplete }: LoadingScreenProps) {
           
           {/* Logo Container */}
         
-            <img src="./assets/images/logo-2.png" alt="Logo" className=" h-32"/>
+            <Image src="/assets/images/logo-2.png" alt="Logo" width={128} height={128} className=" h-32"/>
         </div>
       </div>
     </div>

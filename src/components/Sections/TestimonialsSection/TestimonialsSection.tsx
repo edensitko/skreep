@@ -291,7 +291,7 @@ function TestimonialsSection() {
         <div className="text-center mb-16 flex flex-col items-center justify-center">
           <h2 
             ref={titleRef}
-            className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/40 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out text-center ${
+            className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out text-center ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             dir={language === 'he' ? 'rtl' : 'ltr'}

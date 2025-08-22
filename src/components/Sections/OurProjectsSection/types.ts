@@ -10,6 +10,7 @@ export interface ProjectSection {
   readonly description: string;
   readonly gradient: string;
   readonly accentColor: string;
+  readonly image: string;
 }
 
 export interface ProjectCardProps {

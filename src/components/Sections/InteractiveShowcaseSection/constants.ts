@@ -12,7 +12,7 @@ export const SERVICES_DATA: readonly ServiceCard[] = [
     longDescription: 'פיתוח פתרונות בינה מלאכותית מותאמים אישית שמשפרים את היעילות העסקית ומאפשרים קבלת החלטות מבוססות נתונים.',
     features: ['למידת מכונה מתקדמת', 'עיבוד שפה טבעית', 'ניתוח נתונים חכם', 'אוטומציה חכמה'],
     color: 'from-blue-500 to-purple-600',
-    imageBg: '/assets/images/img/6.png'
+    imageBg: '/assets/images/servicesimg/1.png'
   },
   {
     id: 'web-development',
@@ -21,7 +21,7 @@ export const SERVICES_DATA: readonly ServiceCard[] = [
     longDescription: 'יצירת אתרים ואפליקציות מתקדמות עם עיצוב רספונסיבי, ביצועים מהירים וחוויית משתמש מעולה.',
     features: ['עיצוב רספונסיבי', 'ביצועים מהירים', 'SEO מתקדם', 'אבטחה גבוהה'],
     color: 'from-green-500 to-teal-600',
-    imageBg: '/assets/images/img/7.png'
+    imageBg: '/assets/images/servicesimg/2.png'
   },
   {
     id: 'automation',
@@ -30,7 +30,7 @@ export const SERVICES_DATA: readonly ServiceCard[] = [
     longDescription: 'יישום פתרונות אוטומציה מתקדמים שמייעלים תהליכים עסקיים ומפחיתים עלויות תפעול.',
     features: ['אוטומציה של תהליכים', 'ניהול זרימת עבודה', 'דוחות אוטומטיים', 'אינטגרציות מתקדמות'],
     color: 'from-orange-500 to-red-600',
-    imageBg: '/assets/images/img/8.png'
+    imageBg: '/assets/images/servicesimg/3.png'
   },
   {
     id: 'mobile-apps',
@@ -39,7 +39,7 @@ export const SERVICES_DATA: readonly ServiceCard[] = [
     longDescription: 'פיתוח אפליקציות מובייל נטיביות והיברידיות עם חוויית משתמש וביצועים גבוהים.',
     features: ['פיתוח נטיבי', 'עיצוב UX/UI מתקדם', 'אינטגרציה עם API', 'פרסום בחנויות'],
     color: 'from-pink-500 to-rose-600',
-    imageBg: '/assets/images/img/9.png'
+    imageBg: '/assets/images/servicesimg/4.png'
   },
   {
     id: 'cloud-solutions',
@@ -48,7 +48,7 @@ export const SERVICES_DATA: readonly ServiceCard[] = [
     longDescription: 'הקמה וניהול של תשתיות ענן מתקדמות עם זמינות גבוהה, אבטחה מקסימלית וגמישות מלאה.',
     features: ['AWS & Azure', 'אבטחת מידע', 'גיבויים אוטומטיים', 'ניטור 24/7'],
     color: 'from-cyan-500 to-blue-600',
-    imageBg: '/assets/images/img/10.png'
+    imageBg: '/assets/images/servicesimg/5.png'
   },
   {
     id: 'data-analytics',
@@ -57,7 +57,7 @@ export const SERVICES_DATA: readonly ServiceCard[] = [
     longDescription: 'יצירת מערכות ניתוח נתונים מתקדמות ודשבורדים אינטראקטיביים לקבלת החלטות מבוססות נתונים.',
     features: ['דשבורדים אינטראקטיביים', 'ניתוח נתונים מתקדם', 'דוחות אוטומטיים', 'תחזיות עסקיות'],
     color: 'from-indigo-500 to-purple-600',
-    imageBg: '/assets/images/img/11.png'
+    imageBg: '/assets/images/servicesimg/6.png'
   },
   {
     id: 'ecommerce',
@@ -66,7 +66,7 @@ export const SERVICES_DATA: readonly ServiceCard[] = [
     longDescription: 'פיתוח פלטפורמות מסחר אלקטרוני מתקדמות עם מערכות תשלום מאובטחות וניהול מלאי חכם.',
     features: ['עיצוב חנות מותאם', 'מערכות תשלום מאובטחות', 'ניהול מלאי חכם', 'אנליטיקס מתקדמת'],
     color: 'from-emerald-500 to-green-600',
-    imageBg: '/assets/images/img/12.png'
+    imageBg: './assets/images/servicesimg/7.png'
   }
 ] as const;
 
