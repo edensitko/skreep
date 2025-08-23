@@ -41,7 +41,7 @@ export default function Header() {
   // Prevent hydration mismatch by not rendering until mounted
   if (!mounted) {
     return (
-      <header className="fixed w-[95%]  mx-[2.5%] z-[9999] mt-4 transition-all duration-300" dir={language === 'he' ? 'rtl' : 'ltr'}>
+      <header className="fixed w-[95%]  mx-[2.5%] z-[90] mt-4 transition-all duration-300" dir={language === 'he' ? 'rtl' : 'ltr'}>
         <div className="w-full h-[80px] flex justify-between items-center  md:px-[50px] border border-transparent bg-black/50 border-t-0 relative rounded-3xl mt-0">
           <div className="flex 2xl:space-x-[100px] xl:space-x-10 justify-center items-center w-full xl:w-auto">
             <div className="flex justify-center items-center">
@@ -57,7 +57,7 @@ export default function Header() {
 
   return (
     <header className="fixed w-[95%] mx-[2.5%] z-[9999] mt-4 transition-all duration-300">
-      <div className="w-full h-[60px] lg:h-[80px] flex justify-between items-center px-4 md:px-[50px] bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-sm border border-white/30 rounded-3xl before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-3xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden transition-all duration-700 ease-out" dir={isLargeScreen ? 'ltr' : (language === 'he' ? 'rtl' : 'ltr')}>
+      <div className="w-full h-[60px] lg:h-[80px] flex justify-between items-center px-4 md:px-[50px] bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-sm border border-white/30 rounded-3xl before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 before:pointer-events-none after:absolute after:inset-0 after:rounded-3xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 after:pointer-events-none relative overflow-visible transition-all duration-700 ease-out" dir={isLargeScreen ? 'ltr' : (language === 'he' ? 'rtl' : 'ltr')}>
         
         {/* Mobile Menu Button */}
         <button 
@@ -172,8 +172,8 @@ export default function Header() {
                   </svg>
                 </Link>
                 
-                <div className="absolute px-2 -right-7 h-0 group-hover:h-auto overflow-hidden top-5 transition-all duration-500">
-                  <ul className="min-w-[200px] bg-black/90 backdrop-blur-sm border border-white/20 mt-8 transition-all duration-300 overflow-hidden px-5 py-4 rounded-lg shadow-xl">
+                <div className="absolute right-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[999]">
+                  <ul className="min-w-[200px] bg-black/95 backdrop-blur-md border border-white/30 transition-all duration-300 px-6 py-5 rounded-xl shadow-2xl">
                     <li className="relative py-1">
                       <Link href="/about" className="relative font-medium leading-5 hover:text-cyan-400 text-white block py-2 transition-colors">
                         {t('header.about')}

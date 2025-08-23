@@ -5,7 +5,7 @@
 'use client';
 
 import Script from 'next/script';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface AnalyticsProps {
   googleAnalyticsId?: string;
@@ -23,6 +23,12 @@ export default function Analytics({
   facebookPixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID,
   linkedInPartnerId = process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID
 }: AnalyticsProps) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   // Track page views
   useEffect(() => {
     if (typeof window !== 'undefined' && window.gtag) {
@@ -71,14 +77,16 @@ export default function Analytics({
               })(window,document,'script','dataLayer','${googleTagManagerId}');
             `}
           </Script>
-          <noscript>
-            <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${googleTagManagerId}`}
-              height="0"
-              width="0"
-              style={{ display: 'none', visibility: 'hidden' }}
-            />
-          </noscript>
+          {isMounted && (
+            <noscript>
+              <iframe
+                src={`https://www.googletagmanager.com/ns.html?id=${googleTagManagerId}`}
+                height="0"
+                width="0"
+                style={{ display: 'none', visibility: 'hidden' }}
+              />
+            </noscript>
+          )}
         </>
       )}
 

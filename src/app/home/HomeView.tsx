@@ -19,7 +19,7 @@ const ContactFormSection     = dynamic(() => import('@/components/Sections/Conta
 const ChatSection            = dynamic(() => import('@/components/Sections/ChatSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
 const BlogSection            = dynamic(() => import('@/components/Sections/BlogSection/BlogSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
 
-export default function HomeView({ locale }: { locale: 'he' | 'en' }) {
+export default function HomeView() {
   return (
     <main className="flex min-h-screen flex-col bg-black">
       <Header />
