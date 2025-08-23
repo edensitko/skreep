@@ -90,4 +90,20 @@ module.exports = {
       alternateRefs: config.alternateRefs ?? [],
     };
   },
+  formatSitemap: (xml) => {
+    // Format XML with proper indentation
+    return xml
+      .replace(/<url>/g, '\n  <url>')
+      .replace(/<\/url>/g, '\n  </url>')
+      .replace(/<loc>/g, '\n    <loc>')
+      .replace(/<\/loc>/g, '</loc>')
+      .replace(/<lastmod>/g, '\n    <lastmod>')
+      .replace(/<\/lastmod>/g, '</lastmod>')
+      .replace(/<changefreq>/g, '\n    <changefreq>')
+      .replace(/<\/changefreq>/g, '</changefreq>')
+      .replace(/<priority>/g, '\n    <priority>')
+      .replace(/<\/priority>/g, '</priority>')
+      .replace(/<xhtml:link/g, '\n    <xhtml:link')
+      .replace(/<\/urlset>/g, '\n</urlset>');
+  },
 };
