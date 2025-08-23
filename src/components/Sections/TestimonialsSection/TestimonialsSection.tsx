@@ -1,24 +1,12 @@
 'use client';
 
-import React, { useMemo, memo, useEffect, useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/free-mode';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-
-// TypeScript interface for testimonial data
-interface TestimonialData {
-  id: number;
-  name: string;
-  title: string;
-  company: string;
-  rating: number;
-  text: string;
-}
+import TestimonialCard from './TestimonialCard';
+import { TESTIMONIALS_DATA } from './constants';
 
 /**
- * Testimonials section with infinite carousel
+ * Testimonials section with continuous carousels
  * Features glass-morphism cards in smooth sliding animation
  */
 function TestimonialsSection() {
@@ -29,151 +17,8 @@ function TestimonialsSection() {
   const [isVisible, setIsVisible] = useState(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
   
-  // Get testimonials data from translations with fallback
-  const testimonialsData = useMemo((): TestimonialData[] => {
-    try {
-      const data = t('testimonials.data');
-      // Ensure data is an array and has the correct structure
-      if (Array.isArray(data) && data.length > 0 && typeof data[0] === 'object') {
-        return (data as TestimonialData[]);
-      }
-      // If not an array or empty, use fallback
-      throw new Error('Invalid testimonials data format');
-    } catch {
-      // Fallback data if translation fails
-      return language === 'he' ? [
-        {
-          id: 1,
-          name: "מתיו ב. לאו",
-          title: "מנהל ומייסד",
-          company: "טכנולוגיות חדשניות",
-          rating: 5,
-          text: "העבודה עם \"סקריפ\" הייתה פריצת דרך עבור המותג שלנו. הגישה החדשנית שלהם ותשומת הלב לפרטים עזרו לנו לשדרג את השיווק שלנו באופן משמעותי."
-        },
-        {
-          id: 2,
-          name: "שרה כהן",
-          title: "מנהלת מוצר",
-          company: "סטארט-אפ טק",
-          rating: 5,
-          text: "הפתרונות של סקריפ חסכו לנו חודשים של פיתוח. הצוות המקצועי והמסור שלהם הפך את החלום שלנו למציאות."
-        },
-        {
-          id: 3,
-          name: "דוד לוי",
-          title: "מייסד",
-          company: "חברת ייעוץ",
-          rating: 5,
-          text: "התוצאות מדברות בעד עצמן - עלייה של 300% בהמרות ושיפור משמעותי בחוויית המשתמש. מומלץ בחום!"
-        },
-        {
-          id: 4,
-          name: "רחל אברהם",
-          title: "מנכ\"לית",
-          company: "חברת פיננסים",
-          rating: 5,
-          text: "סקריפ הביאו לנו פתרונות יצירתיים שלא חשבנו עליהם. הם הצליחו להגדיל את המכירות שלנו ב-250% תוך 6 חודשים."
-        },
-        {
-          id: 5,
-          name: "אמיר שלום",
-          title: "מנהל שיווק",
-          company: "חברת אי-קומרס",
-          rating: 5,
-          text: "הגישה המקצועית והיצירתית של הצוות הפכה את האתר שלנו לכלי מכירות חזק. ממליץ מאוד!"
-        },
-        {
-          id: 6,
-          name: "מיכל רוזן",
-          title: "מייסדת",
-          company: "סטודיו עיצוב",
-          rating: 5,
-          text: "עבודה מעולה! סקריפ הבינו בדיוק מה אנחנו צריכים והביאו תוצאות מעבר לציפיות."
-        },
-        {
-          id: 7,
-          name: "יוסי גולד",
-          title: "מנהל פרויקטים",
-          company: "חברת הייטק",
-          rating: 5,
-          text: "הפתרונות הטכנולוגיים שלהם חסכו לנו זמן יקר ועזרו לנו להשיק מוצרים מהר יותר לשוק."
-        },
-        {
-          id: 8,
-          name: "נועה בן דוד",
-          title: "מנהלת פיתוח עסקי",
-          company: "סטארט-אפ פינטק",
-          rating: 5,
-          text: "שירות מעולה ותוצאות מרשימות. הצוות של סקריפ באמת מבין את הצרכים של עסקים מודרניים."
-        }
-      ] : [
-        {
-          id: 1,
-          name: "Matthew B. Law",
-          title: "Manager & Founder",
-          company: "Innovative Technologies",
-          rating: 5,
-          text: "Working with Skreep was a breakthrough for our brand. Their innovative approach and attention to detail helped us significantly upgrade our marketing."
-        },
-        {
-          id: 2,
-          name: "Sarah Cohen",
-          title: "Product Manager",
-          company: "Tech Startup",
-          rating: 5,
-          text: "Skreep's solutions saved us months of development. Their professional and dedicated team turned our dream into reality."
-        },
-        {
-          id: 3,
-          name: "David Levy",
-          title: "Founder",
-          company: "Consulting Company",
-          rating: 5,
-          text: "The results speak for themselves - a 300% increase in conversions and significant improvement in user experience. Highly recommended!"
-        },
-        {
-          id: 4,
-          name: "Rachel Abraham",
-          title: "CEO",
-          company: "Financial Services",
-          rating: 5,
-          text: "Skreep brought us creative solutions we hadn't thought of. They managed to increase our sales by 250% within 6 months."
-        },
-        {
-          id: 5,
-          name: "Amir Shalom",
-          title: "Marketing Manager",
-          company: "E-commerce Company",
-          rating: 5,
-          text: "The team's professional and creative approach turned our website into a powerful sales tool. Highly recommend!"
-        },
-        {
-          id: 6,
-          name: "Michelle Rosen",
-          title: "Founder",
-          company: "Design Studio",
-          rating: 5,
-          text: "Excellent work! Skreep understood exactly what we needed and delivered results beyond expectations."
-        },
-        {
-          id: 7,
-          name: "Joseph Gold",
-          title: "Project Manager",
-          company: "Tech Company",
-          rating: 5,
-          text: "Their technological solutions saved us valuable time and helped us launch products faster to market."
-        },
-        {
-          id: 8,
-          name: "Noa Ben David",
-          title: "Business Development Manager",
-          company: "Fintech Startup",
-          rating: 5,
-          text: "Excellent service and impressive results. The Skreep team truly understands the needs of modern businesses."
-        }
-      ];
-    }
-  }, [language, t]);
+  // Use testimonials data from constants
+  const testimonialsData = TESTIMONIALS_DATA;
 
   // Intersection Observer for title animation
   useEffect(() => {
@@ -186,103 +31,18 @@ function TestimonialsSection() {
       { threshold: 0.1 }
     );
 
-    const currentTitleRef = titleRef.current;
-    if (currentTitleRef) {
-      observer.observe(currentTitleRef);
+    if (titleRef.current) {
+      observer.observe(titleRef.current);
     }
 
-    return () => {
-      if (currentTitleRef) {
-        observer.unobserve(currentTitleRef);
-      }
-    };
+    return () => observer.disconnect();
   }, []);
-
-  // Swiper configuration for testimonials carousel (LTR)
-  const swiperConfigLTR = {
-    modules: [Autoplay],
-    spaceBetween: 20,
-    slidesPerView: 3,
-    loop: true,
-    autoplay: {
-      delay: 10,
-      disableOnInteraction: true,
-      pauseOnMouseEnter: true,
-      reverseDirection: false,
-    },
-    speed: 2000,
-    grabCursor: true,
-    centeredSlides: false,
-    allowTouchMove: false,
-    breakpoints: {
-      480: {
-        slidesPerView: 3,
-        spaceBetween: 24,
-      },
-      640: {
-        slidesPerView: 3,
-        spaceBetween: 28,
-      },
-      768: {
-        slidesPerView: 3,
-        spaceBetween: 32,
-      },
-      1024: {
-        slidesPerView: 3,
-        spaceBetween: 36,
-      },
-      1280: {
-        slidesPerView: 3,
-        spaceBetween: 40,
-      },
-    },
-  };
-
-  // Swiper configuration for testimonials carousel (RTL)
-  const swiperConfigRTL = {
-    modules: [Autoplay],
-    spaceBetween: 20,
-    slidesPerView: 3,
-    loop: true,
-    autoplay: {
-      delay: 10,
-      disableOnInteraction: true,
-      pauseOnMouseEnter: true,
-      reverseDirection: true,
-    },
-    speed: 5000,
-    grabCursor: true,
-    centeredSlides: false,
-    allowTouchMove: false,
-    breakpoints: {
-      480: {
-        slidesPerView: 3,
-        spaceBetween: 24,
-      },
-      640: {
-        slidesPerView: 3,
-        spaceBetween: 28,
-      },
-      768: {
-        slidesPerView: 3,
-        spaceBetween: 32,
-      },
-      1024: {
-        slidesPerView: 3,
-        spaceBetween: 36,
-      },
-      1280: {
-        slidesPerView: 3,
-        spaceBetween: 40,
-      },
-    },
-  };
 
   return (
     <section 
       id="testimonials" 
-      className="w-full py-16 md:py-24 relative overflow-hidden bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border-y border-white/10"
-      dir={language === 'he' ? 'rtl' : 'ltr'}
+      className="w-full py-16 md:py-24 relative overflow-hidden bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl"
+      dir="rtl"
       role="region"
       aria-label={t('testimonials.sectionAriaLabel')}
     >
@@ -294,82 +54,51 @@ function TestimonialsSection() {
             className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out text-center ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
-            dir={language === 'he' ? 'rtl' : 'ltr'}
+            dir="rtl"
           >
             {t('testimonials.title')}
           </h2>
-          <p className="text-lg text-white/70 text-center max-w-2xl mx-auto" dir={language === 'he' ? 'rtl' : 'ltr'}>
-            {t('testimonials.subtitle')}
-          </p>
         </div>
 
-        {/* First Testimonials Carousel (LTR) */}
-        <Swiper
-          {...swiperConfigLTR}
-          className="testimonials-swiper overflow-visible "
-          aria-label={t('testimonials.sectionAriaLabel')}
-        >
-          {testimonialsData.map((testimonial) => (
-            <SwiperSlide key={testimonial.id}>
-              <div 
-                className="bg-black/20 backdrop-blur-sm border border-white/10 rounded-xl p-4 md:p-5 hover:border-cyan-400/30 transition-all duration-300 hover:bg-black/30 h-full flex flex-col"
-                dir={language === 'he' ? 'rtl' : 'ltr'}
-              >
-            
-                {/* Testimonial Text */}
-                <blockquote className="text-white/90 text-xs leading-relaxed mb-4 flex-grow">
-                  {testimonial.text}
-                </blockquote>
-
-                {/* Author Info */}
-                <div className="flex items-center gap-3 mt-auto">
-                  <div className="w-10 h-10 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 rounded-full flex items-center justify-center text-cyan-400 font-bold text-sm">
-                    {testimonial.name.charAt(0)}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h4 className="text-white font-semibold text-sm truncate">{testimonial.name}</h4>
-                    <p className="text-white/60 text-xs truncate">{testimonial.title}</p>
-                    <p className="text-cyan-400/80 text-xs truncate">{testimonial.company}</p>
-                  </div>
-                </div>
+        {/* First Continuous Testimonials Carousel */}
+        <div className="relative overflow-hidden mb-8">
+          {/* Left shadow */}
+          <div className="absolute left-0 top-0 w-10 h-full bg-gradient-to-r from-black/90 to-transparent z-10 pointer-events-none"></div>
+          {/* Right shadow */}
+          <div className="absolute right-0 top-0 w-10 h-full bg-gradient-to-l from-black/90 to-transparent z-10 pointer-events-none"></div>
+          
+          <div className="flex animate-scroll-ltr gap-6" style={{animationDelay: '0s'}}>
+            {[...testimonialsData, ...testimonialsData].map((testimonial, index) => (
+              <div key={`ltr-${testimonial.id}-${index}`} className="flex-shrink-0">
+                <TestimonialCard 
+                  testimonial={testimonial}
+                  language="he"
+                  index={index}
+                />
               </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+            ))}
+          </div>
+        </div>
 
-        {/* Second Testimonials Carousel (RTL) */}
-        <Swiper
-          {...swiperConfigRTL}
-          className="testimonials-swiper overflow-visible"
-          aria-label={t('testimonials.sectionAriaLabel')}
-        >
-          {testimonialsData.map((testimonial) => (
-            <SwiperSlide key={`rtl-${testimonial.id}`}>
-              <div 
-                className="bg-black/20 backdrop-blur-sm border border-white/10 rounded-xl p-4 md:p-5 hover:border-cyan-400/30 transition-all duration-300 hover:bg-black/30 h-full flex flex-col"
-                dir={language === 'he' ? 'rtl' : 'ltr'}
-              >
-            
-                {/* Testimonial Text */}
-                <blockquote className="text-white/90 text-xs leading-relaxed mb-4 flex-grow">
-                  {testimonial.text}
-                </blockquote>
-
-                {/* Author Info */}
-                <div className="flex items-center gap-3 mt-auto">
-                  <div className="w-10 h-10 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 rounded-full flex items-center justify-center text-cyan-400 font-bold text-sm">
-                    {testimonial.name.charAt(0)}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h4 className="text-white font-semibold text-sm truncate">{testimonial.name}</h4>
-                    <p className="text-white/60 text-xs truncate">{testimonial.title}</p>
-                    <p className="text-cyan-400/80 text-xs truncate">{testimonial.company}</p>
-                  </div>
-                </div>
+        {/* Second Continuous Testimonials Carousel (Reverse Direction) */}
+        <div className="relative overflow-hidden">
+          {/* Left shadow */}
+          <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-black/60 to-transparent z-10 pointer-events-none"></div>
+          {/* Right shadow */}
+          <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-black/60 to-transparent z-10 pointer-events-none"></div>
+          
+          <div className="flex animate-scroll-rtl gap-6" style={{animationDelay: '0s'}}>
+            {[...testimonialsData.slice().reverse(), ...testimonialsData.slice().reverse()].map((testimonial, index) => (
+              <div key={`rtl-${testimonial.id}-${index}`} className="flex-shrink-0">
+                <TestimonialCard 
+                  testimonial={testimonial}
+                  language="he"
+                  index={index}
+                />
               </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Background Decorative Elements */}
@@ -382,3 +111,4 @@ function TestimonialsSection() {
 }
 
 export default memo(TestimonialsSection);
+      

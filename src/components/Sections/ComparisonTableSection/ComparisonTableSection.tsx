@@ -101,22 +101,24 @@ function ComparisonTableSection() {
   }, [t, language]);
   
   return (
-    <section 
-      className="home-one-comparison-wrapper w-[85%] mt-15 lg:mt-20 mx-auto bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/30 rounded-4xl before:absolute before:inset-0 before:rounded-4xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-4xl after:bg-gradient-to-tl after:from-white/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden transition-all duration-700 ease-out hover:backdrop-blur-[10px] hover:bg-gradient-to-br hover:from-black/40 hover:via-black/25 hover:to-black/10 hover:before:opacity-80 hover:after:opacity-70 active:backdrop-blur-[80px] group cursor-pointer"
-      role="region"
-      aria-label={t('comparisonTable.sectionAriaLabel')}
-      dir={language === 'he' ? 'rtl' : 'ltr'}
-    >
-      <div className="mx-auto container px-2 py-6">
-        {/* Header Section */}
-        <div className="text-center mb-8">
-          <h1 
-            className="w-full font-bold text-center bg-gradient-to-r from-white/90 via-white-50 to-white/10 bg-clip-text text-transparent text-3xl md:text-3xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out opacity-100 translate-y-0"
-            dir='ltr'
-          >
-            {t('comparisonTable.title')} <span className="bg-gradient-to-r from-white/30 to-white/10 bg-clip-text text-transparent font-extrabold">{t('comparisonTable.titleHighlight')}</span>?
-          </h1>
-        </div>
+    <div className="w-full">
+      {/* Title Outside the Box */}
+      <div className="text-center w-[85%] mx-auto">
+        <h1 
+          className="w-full font-bold text-center bg-gradient-to-r from-white/90 via-white-50 to-white/10 bg-clip-text text-transparent text-3xl md:text-3xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out opacity-100 translate-y-0"
+          dir='ltr'
+        >
+          {t('comparisonTable.title')} <span className="bg-gradient-to-r from-white/30 to-white/10 bg-clip-text text-transparent font-extrabold">{t('comparisonTable.titleHighlight')}</span>
+        </h1>
+      </div>
+      
+      <section 
+        className="w-[90%] mx-auto"
+        role="region"
+        aria-label={t('comparisonTable.sectionAriaLabel')}
+        dir={language === 'he' ? 'rtl' : 'ltr'}
+      >
+        <div className="mx-auto container px-2 py-6">
         
         {/* Comparison Table */}
         <div 
@@ -172,14 +174,15 @@ function ComparisonTableSection() {
           </div>
         </div>
 
-      </div>
-      
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-cyan-400/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 left-1/4 w-48 h-48 bg-purple-400/5 rounded-full blur-3xl"></div>
-      </div>
-    </section>
+        </div>
+        
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-cyan-400/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 left-1/4 w-48 h-48 bg-purple-400/5 rounded-full blur-3xl"></div>
+        </div>
+      </section>
+    </div>
   );
 }
 

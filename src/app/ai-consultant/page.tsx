@@ -66,52 +66,38 @@ export default function AIConsultantPage() {
     setMessages([welcomeMessage]);
   }, [language]);
 
-  const getAIResponse = (userInput: string): string => {
-    const input = userInput.toLowerCase();
-    
-    // Hebrew responses
-    if (language === 'he') {
-      if (input.includes('מחיר') || input.includes('עלות') || input.includes('כמה')) {
-        return 'המחירים שלנו משתנים בהתאם לסוג הפרויקט ולמורכבות. אנחנו מציעים ייעוץ ראשוני חינם כדי להבין את הצרכים שלכם ולהציע הצעת מחיר מותאמת. האם תרצה לקבוע פגישת ייעוץ?';
+  // Generate bot response using OpenAI API
+  const generateBotResponse = async (userMessage: string): Promise<string> => {
+    try {
+      const response = await fetch('/api/ai-consultation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          businessQuery: userMessage,
+          language: language
+        })
+      });
+
+      const data = await response.json();
+      
+      if (!response.ok) {
+        console.error('API Error:', data);
+        return data.error || (language === 'he' ? 'מצטער, אירעה שגיאה. אנא נסה שוב.' : 'Sorry, an error occurred. Please try again.');
       }
-      if (input.includes('שירות') || input.includes('מה אתם')) {
-        return 'אנחנו מתמחים בפיתוח פתרונות בינה מלאכותית: צ\'אטבוטים חכמים, מערכות אוטומציה, ניתוח נתונים, חיזוי עסקי, ואינטגרציה של מערכות. איזה תחום מעניין אותך?';
+      
+      if (data.message) {
+        return data.message;
+      } else {
+        return data.error || (language === 'he' ? 'מצטער, אירעה שגיאה. אנא נסה שוב.' : 'Sorry, an error occurred. Please try again.');
       }
-      if (input.includes('צ\'אטבוט') || input.includes('chatbot')) {
-        return 'אנחנו בונים צ\'אטבוטים מתקדמים עם יכולות NLP שיכולים לטפל בפניות לקוחות, לספק מידע, ולבצע משימות אוטומטיות. הצ\'אטבוטים שלנו תומכים בעברית ובאנגלית ויכולים להשתלב עם המערכות הקיימות שלכם.';
-      }
-      if (input.includes('אוטומציה') || input.includes('automation')) {
-        return 'פתרונות האוטומציה שלנו יכולים לחסוך לכם זמן ועלויות משמעותיים. אנחנו מפתחים מערכות שמאטמטות תהליכים עסקיים, ניהול מלאי, עיבוד מסמכים, ועוד. איזה תהליך תרצו לאטמט?';
-      }
-      if (input.includes('נתונים') || input.includes('ניתוח') || input.includes('data')) {
-        return 'אנחנו מספקים פתרונות ניתוח נתונים מתקדמים שיעזרו לכם להבין את הלקוחות שלכם, לחזות מגמות, ולקבל החלטות עסקיות מבוססות נתונים. האם יש לכם נתונים שתרצו לנתח?';
-      }
-      if (input.includes('זמן') || input.includes('כמה זמן')) {
-        return 'זמני הפיתוח תלויים במורכבות הפרויקט. פרויקט צ\'אטבוט פשוט יכול להימשך 2-4 שבועות, בעוד מערכת מורכבת יכולה לקחת 2-6 חודשים. נוכל לתת הערכה מדויקת יותר לאחר הבנת הדרישות שלכם.';
-      }
-      return 'שאלה מעניינת! אני כאן לעזור לך עם כל נושא הקשור לבינה מלאכותית ופתרונות טכנולוגיים. תוכל לשאול אותי על השירותים שלנו, מחירים, זמני פיתוח, או כל שאלה טכנית אחרת.';
+    } catch (error) {
+      console.error('AI Consultation API Error:', error);
+      return language === 'he' 
+        ? 'מצטער, לא הצלחתי להתחבר לשרת. אנא בדוק את החיבור לאינטרנט ונסה שוב.'
+        : 'Sorry, I couldn\'t connect to the server. Please check your internet connection and try again.';
     }
-    
-    // English responses
-    if (input.includes('price') || input.includes('cost') || input.includes('how much')) {
-      return 'Our pricing varies based on project type and complexity. We offer a free initial consultation to understand your needs and provide a customized quote. Would you like to schedule a consultation?';
-    }
-    if (input.includes('service') || input.includes('what do you')) {
-      return 'We specialize in AI solutions: smart chatbots, automation systems, data analysis, business forecasting, and system integration. Which area interests you most?';
-    }
-    if (input.includes('chatbot') || input.includes('bot')) {
-      return 'We build advanced chatbots with NLP capabilities that can handle customer inquiries, provide information, and perform automated tasks. Our chatbots support multiple languages and can integrate with your existing systems.';
-    }
-    if (input.includes('automation') || input.includes('automate')) {
-      return 'Our automation solutions can save you significant time and costs. We develop systems that automate business processes, inventory management, document processing, and more. What process would you like to automate?';
-    }
-    if (input.includes('data') || input.includes('analytics') || input.includes('analysis')) {
-      return 'We provide advanced data analysis solutions that help you understand your customers, predict trends, and make data-driven business decisions. Do you have data you\'d like to analyze?';
-    }
-    if (input.includes('time') || input.includes('how long')) {
-      return 'Development timelines depend on project complexity. A simple chatbot might take 2-4 weeks, while a complex system could take 2-6 months. We can provide a more accurate estimate after understanding your requirements.';
-    }
-    return 'Great question! I\'m here to help you with anything related to artificial intelligence and technology solutions. You can ask me about our services, pricing, development timelines, or any technical questions.';
   };
 
   const handleSendMessage = async () => {
@@ -131,17 +117,30 @@ export default function AIConsultantPage() {
     setInputMessage('');
     setIsLoading(true);
 
-    // Generate AI response after a delay
-    setTimeout(() => {
+    // Get AI response from OpenAI API
+    try {
+      const botResponseText = await generateBotResponse(currentInput);
+      
       const aiResponse = {
         id: Date.now() + Math.random(), // Ensure unique ID
-        text: getAIResponse(currentInput),
+        text: botResponseText,
         isUser: false
       };
       
       setMessages(prev => [...prev, aiResponse]);
       setIsLoading(false);
-    }, 800 + Math.random() * 800); // Shorter delay for better UX
+    } catch (error) {
+      console.error('Error getting AI response:', error);
+      
+      const errorMessage = {
+        id: Date.now() + Math.random(),
+        text: language === 'he' ? 'מצטער, אירעה שגיאה. אנא נסה שוב.' : 'Sorry, an error occurred. Please try again.',
+        isUser: false
+      };
+      
+      setMessages(prev => [...prev, errorMessage]);
+      setIsLoading(false);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -300,24 +299,7 @@ export default function AIConsultantPage() {
             </div>
 
             {/* AI Consultant Image */}
-            <div className="order-2 lg:order-2 flex items-center justify-center">
-              <div className="relative">
-                <div className="bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/30 rounded-2xl lg:rounded-4xl before:absolute before:inset-0 before:rounded-2xl lg:before:rounded-4xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl lg:after:rounded-4xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden p-6">
-                  <div className="text-center">
-                    <div className="text-6xl md:text-8xl mb-4">🤖</div>
-                    <h3 className="text-lg md:text-xl font-bold mb-2 bg-gradient-to-br from-white via-white/80 to-white/60 bg-clip-text text-transparent">
-                      {language === 'he' ? 'יועץ AI חכם' : 'Smart AI Consultant'}
-                    </h3>
-                    <p className="text-white/70 text-sm md:text-base" dir={language === 'he' ? 'rtl' : 'ltr'}>
-                      {language === 'he' 
-                        ? 'זמין 24/7 לייעוץ מקצועי'
-                        : 'Available 24/7 for professional advice'
-                      }
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+       
           </div>
         </div>
       </section>
