@@ -11,7 +11,7 @@ import { TESTIMONIALS_DATA } from './constants';
  */
 function TestimonialsSection() {
   // Language context
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
   
   // State for animations
   const [isVisible, setIsVisible] = useState(false);

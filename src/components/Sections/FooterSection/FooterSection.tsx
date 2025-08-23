@@ -6,7 +6,6 @@ import ScrollButton from './ScrollButton';
 import WhatsAppButton from './WhatsAppButton';
 import { WHATSAPP_URL, SCROLL_THRESHOLD } from './constants';
 import { scrollToTop, shouldShowScrollButton } from './utils';
-import { GiUluru } from 'react-icons/gi';
 
 /**
  * Footer section with responsive layout, scroll-to-top functionality, and social buttons
@@ -28,12 +27,11 @@ function FooterSection() {
     },
     {
       href: "/accessibility-statement",
-      text: language === 'he' ? 'הצהרת נגישות' : 'Accessibility Statement',
-      ariaLabel: language === 'he' ? 'הצהרת נגישות' : 'Accessibility Statement'
+      text: t('footer.accessibilityStatement'),
+      ariaLabel: t('footer.accessibilityStatement')
     }
   ];
   
-  const copyrightText = t('footer.copyright');
   const textDirection = language === 'he' ? 'rtl' : 'ltr';
 
   // ============================================================================

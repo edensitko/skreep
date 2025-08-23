@@ -89,7 +89,7 @@ const pricingPlans: PricingPlan[] = [
 ];
 
 export default function PricingCarouselSection() {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   const [selectedPlan, setSelectedPlan] = useState<PricingPlan | null>(pricingPlans[1]); // Mobile carousel state
   const [currentSlide, setCurrentSlide] = useState(1); // Start with Professional plan (second item)
   const [touchStart, setTouchStart] = useState(0);

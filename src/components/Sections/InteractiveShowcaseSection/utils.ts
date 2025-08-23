@@ -1,5 +1,5 @@
+import { RefObject } from 'react';
 import { SCROLL_CONFIG } from './constants';
-import type { ScrollPosition } from './types';
 
 // ============================================================================
 // UTILITY FUNCTIONS
