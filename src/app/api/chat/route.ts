@@ -15,12 +15,13 @@ export async function POST(request: NextRequest) {
 
     // Validate conversation history format
     const history: ChatMessage[] = Array.isArray(conversationHistory) 
-      ? conversationHistory.filter((msg: any) => 
-          msg && 
-          typeof msg.role === 'string' && 
-          typeof msg.content === 'string' &&
-          ['user', 'assistant', 'system'].includes(msg.role)
-        )
+      ? conversationHistory.filter((msg: unknown) => {
+          const message = msg as Record<string, unknown>;
+          return message && 
+            typeof message.role === 'string' && 
+            typeof message.content === 'string' &&
+            ['user', 'assistant', 'system'].includes(message.role);
+        })
       : [];
 
     // Get AI response
