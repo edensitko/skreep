@@ -2,8 +2,6 @@
 
 import React, { memo, useState, useEffect, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import StatCard from './StatCard';
-import StatsInfo from './StatsInfo';
 
 // Custom hook for animated counter
 const useAnimatedCounter = (end: number, duration: number = 2000, start: number = 0) => {
