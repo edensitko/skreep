@@ -13,7 +13,7 @@ const ComparisonRow = memo<ComparisonRowProps>(({ row, language }) => (
  
 
     {/* Freelancers column */}
-    <div className="py-2 px-2 text-center border-l border-white/10" role="gridcell">
+    <div className="py-2 px-2 text-center border-l border-white/10 " role="gridcell">
       <div>
         <h4 className="font-medium text-white text-xs" dir="ltr">
           {row.category}

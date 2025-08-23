@@ -7,6 +7,7 @@ import ChatMessage from './ChatMessage';
 import TypingIndicator from './TypingIndicator';
 import { Message, ChatState, ChatMode } from './types';
 import { TYPING_DELAY, RESPONSE_DELAY } from './constants';
+import { ChatMessage as OpenAIChatMessage } from '@/lib/openai/chat';
 
 const ChatSection: React.FC = () => {
   const { language, t } = useLanguage();
@@ -18,6 +19,8 @@ const ChatSection: React.FC = () => {
     isTyping: false,
     isLoading: false
   });
+  
+  const [conversationHistory, setConversationHistory] = useState<OpenAIChatMessage[]>([]);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -39,22 +42,47 @@ const ChatSection: React.FC = () => {
     }
   }, [chatState.messages, scrollToBottom, mode]);
 
-  // Generate bot response
-  const generateBotResponse = useCallback((): string => {
-    const botResponses = t('chat.botResponses');
-    if (Array.isArray(botResponses)) {
-      return botResponses[Math.floor(Math.random() * botResponses.length)];
+  // Generate bot response using OpenAI API
+  const generateBotResponse = useCallback(async (userMessage: string): Promise<string> => {
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: userMessage,
+          conversationHistory: conversationHistory
+        })
+      });
+
+      const data = await response.json();
+      
+      if (data.success && data.message) {
+        // Update conversation history
+        setConversationHistory(prev => [
+          ...prev,
+          { role: 'user', content: userMessage },
+          { role: 'assistant', content: data.message }
+        ]);
+        return data.message;
+      } else {
+        return data.error || 'מצטער, אירעה שגיאה. אנא נסה שוב.';
+      }
+    } catch (error) {
+      console.error('Chat API Error:', error);
+      return 'מצטער, לא הצלחתי להתחבר לשרת. אנא בדוק את החיבור לאינטרנט ונסה שוב.';
     }
-    return t('chat.botResponses');
-  }, [t]);
+  }, [conversationHistory]);
 
   // Handle sending message
   const handleSendMessage = useCallback(async () => {
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim() || chatState.isLoading) return;
 
+    const userMessageText = inputValue.trim();
     const userMessage: Message = {
       id: Date.now().toString(),
-      text: inputValue.trim(),
+      text: userMessageText,
       timestamp: new Date(),
       isUser: true
     };
@@ -65,13 +93,15 @@ const ChatSection: React.FC = () => {
       setChatState(prev => ({
         ...prev,
         isActive: true,
-        messages: [userMessage]
+        messages: [userMessage],
+        isLoading: true
       }));
     } else {
       // Add user message to existing chat
       setChatState(prev => ({
         ...prev,
-        messages: [...prev.messages, userMessage]
+        messages: [...prev.messages, userMessage],
+        isLoading: true
       }));
     }
 
@@ -82,11 +112,13 @@ const ChatSection: React.FC = () => {
       setChatState(prev => ({ ...prev, isTyping: true }));
     }, TYPING_DELAY);
 
-    // Add bot response after delay
-    setTimeout(() => {
+    // Get AI response
+    try {
+      const botResponseText = await generateBotResponse(userMessageText);
+      
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: generateBotResponse(),
+        text: botResponseText,
         timestamp: new Date(),
         isUser: false
       };
@@ -94,10 +126,27 @@ const ChatSection: React.FC = () => {
       setChatState(prev => ({
         ...prev,
         messages: [...prev.messages, botMessage],
-        isTyping: false
+        isTyping: false,
+        isLoading: false
       }));
-    }, RESPONSE_DELAY);
-  }, [inputValue, mode, generateBotResponse]);
+    } catch (error) {
+      console.error('Error getting bot response:', error);
+      
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: 'מצטער, אירעה שגיאה. אנא נסה שוב.',
+        timestamp: new Date(),
+        isUser: false
+      };
+
+      setChatState(prev => ({
+        ...prev,
+        messages: [...prev.messages, errorMessage],
+        isTyping: false,
+        isLoading: false
+      }));
+    }
+  }, [inputValue, mode, generateBotResponse, chatState.isLoading]);
 
   // Handle input key press
   const handleKeyPress = useCallback((e: React.KeyboardEvent) => {
@@ -183,15 +232,14 @@ const ChatSection: React.FC = () => {
               {t('chat.helperText')}
             </p>
           )}
-
           {/* Image under chat */}
           <div className="flex justify-center items-center ">
-            <Image
-              src="/assets/images/img/15.png"
+            <Image 
+              src="/assets/images/img/16.png"
               alt="AI Chat Assistant"
-              width={800}
-              height={800}
-              className="w-full max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg mx-auto opacity-80 hover:opacity-100 transition-opacity duration-300"
+              width={200}
+              height={200}
+              className="w-[300px] lg:w-[400px]  max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg mx-auto opacity-80 hover:opacity-100 transition-opacity duration-300"
               priority={false}
             />
           </div>
