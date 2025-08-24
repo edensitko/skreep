@@ -115,7 +115,7 @@ export default function RootPage() {
       "@type": "Organization",
       "name": "Skreep",
       "url": "https://skreep.com",
-      "logo": "https://skreep.com/assets/images/logo.svg",
+      "logo": "https://skreep.com/assets/images/logo-1.png",
       "description": "פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
       "foundingDate": "2023",
       "contactPoint": {

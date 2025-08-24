@@ -46,7 +46,7 @@ export default function Header() {
           <div className="flex 2xl:space-x-[100px] xl:space-x-10 justify-center items-center w-full xl:w-auto">
             <div className="flex justify-center items-center">
               <Link href="/" aria-label="logo">
-                <Image src="/assets/images/logo-1.png" alt="Skreep - פתרונות בינה מלאכותית" width={150} height={50} className="w-[150px] md:w-[150px] pt-3 mr-" priority />
+                <Image src="/assets/images/logo-1.png" alt="Skreep - פתרונות בינה מלאכותית" width={80} height={27} className="w-[80px] md:w-[90px] pt-3 mr-" priority />
               </Link>
             </div>
           </div>
@@ -84,10 +84,10 @@ export default function Header() {
             <Image 
               src="/assets/images/logo-1.png" 
               alt="Skreep - פתרונות בינה מלאכותית" 
-              width={100}
-              height={33}
-              className="w-[100px] md:w-[100px] pt-0"
-              style={{ width: 'auto', height: 'auto' }}
+              width={150}
+              height={50}
+              className="w-[100px] md:w-[150px] pt-0"
+              style={{ width: '100px', height: 'auto' }}
             />
           </Link>
         </div>

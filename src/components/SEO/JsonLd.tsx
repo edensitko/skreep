@@ -7,7 +7,7 @@ export default function JsonLd() {
       "@type": "Organization",
       "name": "Skreep",
       "url": "https://skreep.com",
-      "logo": "https://skreep.com/assets/images/logo.svg",
+      "logo": "https://skreep.com/assets/images/logo-1.png",
       "sameAs": [
         "https://www.facebook.com/skreep",
         "https://www.linkedin.com/company/skreep",
