@@ -179,7 +179,7 @@ export function generateOrganizationSchema() {
     name: 'סקריפ | Skreep AI Solutions',
     alternateName: ['סקריפ', 'Skreep', 'Skreep AI', 'סקריפ בינה מלאכותית'],
     url: businessInfo.url,
-    logo: `${seoConfig.siteUrl}/assets/images/logo.png`,
+    logo: `${seoConfig.siteUrl}/assets/images/logo-1.png`,
     description: 'סקריפ (Skreep) - חברת פתרונות בינה מלאכותית מובילה בישראל. מספקת פתרונות AI מתקדמים, אוטומציה חכמה וצ\'אטבוטים לעסקים.',
     slogan: 'פתרונות בינה מלאכותית מתקדמים לעסקים בישראל',
     keywords: 'סקריפ, Skreep, בינה מלאכותית, AI ישראל, פתרונות טכנולוגיים, אוטומציה, צ\'אטבוטים',

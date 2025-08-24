@@ -53,7 +53,7 @@ export default function HeroFour() {
         
         <div className="absolute top-0 z-0 left-32">
           <Image 
-            src="/assets/images/logo.png" 
+            src="/assets/images/logo-1.png" 
             alt="" 
             width={200}
             height={200}
