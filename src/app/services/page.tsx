@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Layout/Header/Header';
-import Footer from '@/components/Layout/Footer/Footer';
+import LazyImage from '@/components/ui/LazyImage';
 import PageSEO from '@/components/SEO/PageSEO';
 import LocalSEO from '@/components/SEO/LocalSEO';
 import SEOMeta from '@/components/SEO/SEOMeta';
@@ -143,7 +143,7 @@ export default function ServicesPage() {
       <section className="relative h-[300px] pt-44 pb-20 px-4 overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
-          <img
+          <LazyImage
             src="./assets/images/img/1.png"
             alt=""
             className="w-full h-full object-fill "
@@ -192,11 +192,10 @@ export default function ServicesPage() {
                 >
                   {/* Enhanced Image Section - Mobile Optimized */}
                   <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden">
-                    <img
+                    <LazyImage
                       src={originalService.imageBg}
                       alt={service.title}
                       className="w-full h-full object-cover"
-                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
                     

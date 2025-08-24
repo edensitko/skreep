@@ -1,0 +1,228 @@
+/* Critical CSS - Above the fold styles */
+
+/* Base styles for immediate rendering */
+html {
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000000;
+  color: #ffffff;
+  min-height: 100vh;
+  position: relative;
+  font-family: inherit;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Critical layout styles */
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.bg-black {
+  background-color: #000000;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+.z-20 {
+  z-index: 20;
+}
+
+.z-50 {
+  z-index: 50;
+}
+
+/* Critical flexbox */
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+/* Critical grid */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+/* Critical header styles */
+.header-bg {
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Critical loading state */
+.loading {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.loaded {
+  opacity: 1;
+}
+
+/* Critical hero section */
+.hero-gradient {
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+}
+
+/* Critical text sizes */
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+/* Critical spacing */
+.p-4 {
+  padding: 1rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+/* Critical buttons */
+.btn-primary {
+  background: linear-gradient(135deg, #06b6d4, #3b82f6);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+}
+
+/* Critical visibility */
+.hidden {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+/* Critical overflow */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/* Critical transitions for smooth loading */
+.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.opacity-100 {
+  opacity: 1;
+}

@@ -56,7 +56,7 @@ function LoadingScreen({ isLoading, onLoadingComplete }: LoadingScreenProps) {
           
           {/* Logo Container */}
         
-            <Image src="/assets/images/logo-2.png" alt="Logo" width={128} height={128} className=" h-32"/>
+            <Image src="/assets/images/logo-2.png" alt="Logo" width={128} height={128} className=" h-32" priority/>
         </div>
       </div>
     </div>

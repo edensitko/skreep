@@ -6,6 +6,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 import PartnerSlide from './PartnerSlide';
+import LazyImage from '@/components/ui/LazyImage';
 import { 
   PARTNERS_DATA, 
   SWIPER_CONFIG, 
@@ -135,16 +136,16 @@ function PartnersSection() {
       
       {/* Corner Shapes */}
       <div className="absolute z-10 shape-1 left-40 top-96 opacity-40" aria-hidden="true">
-        <img src="/assets/images/img/1.png" alt="" />
+        <LazyImage src="/assets/images/img/1.png" alt="" />
       </div>
       <div className="absolute z-10 shape-2 right-96 top-96 opacity-40" aria-hidden="true">
-        <img src="/assets/images/img/2.png" alt="" />
+        <LazyImage src="/assets/images/img/2.png" alt="" />
       </div>
       <div className="shape-3 absolute left-96 top-[550px] z-10 opacity-40" aria-hidden="true">
-        <img src="/assets/images/img/3.png" alt="" />
+        <LazyImage src="/assets/images/img/3.png" alt="" />
       </div>
       <div className="shape-4 absolute right-96 top-[550px] z-10 opacity-40" aria-hidden="true">
-        <img src="/assets/images/img/4.png" alt="" />
+        <LazyImage src="/assets/images/img/4.png" alt="" />
       </div>
     </section>
   );

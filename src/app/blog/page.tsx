@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Layout/Header/Header';
-import Footer from '@/components/Layout/Footer/Footer';
+import LazyImage from '@/components/ui/LazyImage';
 import PageSEO from '@/components/SEO/PageSEO';
 import LocalSEO from '@/components/SEO/LocalSEO';
 import SEOMeta from '@/components/SEO/SEOMeta';
@@ -13,7 +13,7 @@ import InnovationSection from '@/components/Sections/InnovationSection/Innovatio
 export default function Blog() {
   const [isVisible, setIsVisible] = useState(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
 
   // Intersection observer for title animation
   useEffect(() => {
@@ -149,7 +149,7 @@ export default function Blog() {
       <section className="relative h-[400px] pt-40 pb-20 px-4 overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
-          <img
+          <LazyImage
             src="./assets/images/img/1.png"
             alt=""
             className="w-full h-full object-fill "
@@ -188,7 +188,7 @@ export default function Blog() {
             <div className="bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/30 rounded-2xl lg:rounded-4xl before:absolute before:inset-0 before:rounded-2xl lg:before:rounded-4xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl lg:after:rounded-4xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden p-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div className="relative">
-                  <img 
+                  <LazyImage 
                     src={post.image} 
                     alt={post.title}
                     className="w-full h-64 lg:h-80 object-cover rounded-xl"
@@ -243,11 +243,10 @@ export default function Blog() {
               >
                 {/* Image Section */}
                 <div className="relative h-64 md:h-72 overflow-hidden">
-                  <img
+                  <LazyImage
                     src={post.image}
                     alt={post.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/50 to-black/20"></div>
                   

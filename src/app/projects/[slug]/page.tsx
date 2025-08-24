@@ -207,7 +207,7 @@ function getStats(slug: string, lang: string) {
     return stats[slug]?.[lang] || [];
   };
 
-function getProjectImages(slug: string): string[] {
+function getProjectImages(_slug: string): string[] {
     return [
       `/assets/images/projects/1.png`,
       `/assets/images/projects/2.png`,

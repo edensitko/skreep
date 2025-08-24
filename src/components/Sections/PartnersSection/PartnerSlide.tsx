@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import LazyImage from '@/components/ui/LazyImage';
 import type { PartnerSlideProps } from './types';
 
 /**
@@ -21,7 +22,7 @@ const PartnerSlide = memo<PartnerSlideProps>(({ partner, isActive, onTap }) => (
       }
     }}
   >
-    <img
+    <LazyImage
       src={partner.src}
       alt={partner.alt}
       className={`max-w-full max-h-[60px] h-auto transition-all duration-300 filter touch-manipulation ${
@@ -29,7 +30,6 @@ const PartnerSlide = memo<PartnerSlideProps>(({ partner, isActive, onTap }) => (
           ? 'opacity-100 grayscale-0 brightness-0 saturate-50 invert hue-rotate-[200deg] drop-shadow-[0_0_15px_rgba(135,206,250,0.8)]'
           : 'opacity-100 grayscale hover:opacity-100 hover:grayscale-0 hover:brightness-0 hover:saturate-100 hover:invert hover:hue-rotate-[200deg] group-hover:drop-shadow-[0_0_15px_rgba(135,206,250,0.8)]'
       }`}
-      loading="lazy"
     />
   </div>
 ));
