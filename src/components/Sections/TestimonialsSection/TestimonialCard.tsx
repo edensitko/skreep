@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import LazyImage from '@/components/ui/LazyImage';
 import type { TestimonialCardProps } from './types';
 
 /**
@@ -25,7 +26,7 @@ const TestimonialCard = memo<TestimonialCardProps>(({ testimonial, language }) =
         className="w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full overflow-hidden bg-gradient-to-br from-cyan-400 to-purple-400 flex items-center justify-center text-white text-lg md:text-xl flex-shrink-0"
         aria-hidden="true"
       >
-    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="avatar" className="w-full h-full object-cover" />  
+    <LazyImage src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="avatar" className="w-full h-full object-cover" />  
 
 
         

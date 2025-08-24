@@ -7,7 +7,20 @@ import { useLanguage } from '@/contexts/LanguageContext';
  * Component that dynamically updates document metadata based on current language
  */
 export default function DynamicMetadata() {
-  const { language, t } = useLanguage();
+  let language = 'he';
+  let t = (key: string) => key; // fallback function
+  
+  try {
+    const context = useLanguage();
+    language = context.language;
+    t = context.t;
+  } catch (error) {
+    // Fallback for when LanguageProvider is not available (e.g., during build)
+    // Only log in development mode to avoid console spam
+    if (process.env.NODE_ENV === 'development') {
+      console.debug('DynamicMetadata: Using fallback language context');
+    }
+  }
 
   useEffect(() => {
     // Update document title

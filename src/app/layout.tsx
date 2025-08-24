@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+
 import ClientLayout from '@/components/Layout/ClientLayout';
 import { UserTypeProvider } from '@/hooks/useGlobalUserType';
 import { ConditionalLayout } from '@/components/Layout/ConditionalLayout';
@@ -9,14 +10,16 @@ import { DynamicHtmlWrapper } from '@/components/Layout/DynamicHtmlWrapper';
 import DynamicMetadata from '@/components/Layout/DynamicMetadata';
 import StructuredData from '@/components/SEO/StructuredData';
 import Analytics from '@/components/SEO/Analytics';
+import CriticalCSS from '@/components/SEO/CriticalCSS';
+import HebrewSEO from '@/components/SEO/HebrewSEO';
 import { generateLocalBusinessSchema, generateOrganizationSchema, generateWebsiteSchema } from '@/lib/seo/utils';
 
 // Using system fonts to avoid Turbopack issues
 
 export const metadata: Metadata = {
-  title: "סקריפ | skreep - פתרונות בינה מלאכותית | AI Solutions Israel",
-  description: "פתרונות בינה מלאכותית מתקדמים לעסקים בישראל. אנחנו מספקים פתרונות טכנולוגיים חדשניים שיעזרו לעסק שלכם לחסוך עלויות ולהגדיל יעילות. AI consulting, automation, chatbots.",
-  keywords: "בינה מלאכותית, פתרונות טכנולוגיים, עסקים, חדשנות, אוטומציה, AI Israel, artificial intelligence, chatbots, automation, consulting, ישראל",
+  title: "סקריפ | Skreep - פתרונות בינה מלאכותית מתקדמים | AI Solutions Israel",
+  description: "סקריפ (Skreep) - חברת פתרונות בינה מלאכותית מובילה בישראל. אנחנו מספקים פתרונות AI מתקדמים, אוטומציה חכמה וצ'אטבוטים לעסקים. פתרונות טכנולוגיים חדשניים שיעזרו לעסק שלכם לחסוך עלויות ולהגדיל יעילות.",
+  keywords: "סקריפ, Skreep, בינה מלאכותית, AI ישראל, פתרונות טכנולוגיים, עסקים, חדשנות, אוטומציה, צ'אטבוטים, chatbots, automation, consulting, ישראל, AI consulting, artificial intelligence Israel, טכנולוגיה מתקדמת, פתרונות חכמים",
   authors: [{ name: "Skreep AI Solutions" }],
   creator: "Skreep",
   publisher: "Skreep",
@@ -32,8 +35,8 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "סקריפ | skreep - פתרונות בינה מלאכותית",
-    description: "פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
+    title: "סקריפ | Skreep - פתרונות בינה מלאכותית מתקדמים",
+    description: "סקריפ (Skreep) - חברת פתרונות בינה מלאכותית מובילה בישראל. פתרונות AI מתקדמים לעסקים",
     type: "website",
     locale: "he_IL",
     alternateLocale: "en_US",
@@ -50,8 +53,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "סקריפ | skreep - פתרונות בינה מלאכותית",
-    description: "פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
+    title: "סקריפ | Skreep - פתרונות בינה מלאכותית מתקדמים",
+    description: "סקריפ (Skreep) - חברת פתרונות בינה מלאכותית מובילה בישראל. פתרונות AI מתקדמים לעסקים",
     images: ["https://skreep.com/assets/images/logo-1.png"],
   },
   alternates: {
@@ -76,24 +79,25 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Generate structured data
-  const structuredData = [
-    generateLocalBusinessSchema(),
-    generateOrganizationSchema(),
-    generateWebsiteSchema()
-  ];
-
   return (
     <html lang="he" dir="rtl" suppressHydrationWarning>
       <head>
-        <StructuredData data={structuredData} />
+        <CriticalCSS />
+        <HebrewSEO />
+        <DynamicMetadata />
+        <StructuredData 
+          data={[
+            generateOrganizationSchema(),
+            generateLocalBusinessSchema(),
+            generateWebsiteSchema()
+          ]}
+        />
+        <Analytics />
       </head>
       <body
         className="antialiased bg-black min-h-screen relative loading font-sans"
       >
-        <Analytics />
         <LanguageProvider>
-          <DynamicMetadata />
           <DynamicHtmlWrapper>
             <UserTypeProvider>
               <ClientLayout>

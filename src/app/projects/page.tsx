@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Layout/Header/Header';
 import Footer from '@/components/Layout/Footer/Footer';
+import LazyImage from '@/components/ui/LazyImage';
 import PageSEO from '@/components/SEO/PageSEO';
 import LocalSEO from '@/components/SEO/LocalSEO';
 import SEOMeta from '@/components/SEO/SEOMeta';
@@ -26,7 +27,7 @@ interface ProjectData {
 export default function ProjectsPage() {
   const [isVisible, setIsVisible] = useState(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   const [projectsData, setProjectsData] = useState<ProjectData[]>([]);
 
   // Load projects data when language changes
@@ -153,7 +154,7 @@ export default function ProjectsPage() {
         <section className="relative h-[300px] pt-44 pb-20 px-4 overflow-hidden">
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
-            <img
+            <LazyImage
               src="./assets/images/img/1.png"
               alt=""
               className="w-full h-full object-fill"
@@ -183,7 +184,7 @@ export default function ProjectsPage() {
           <section className="py-12 px-4 relative z-10">
             <div className="container mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {projectsData.map((project, index) => (
+                {projectsData.map((project) => (
                   <Link 
                     key={project.id}
                     href={`/projects/${project.slug}`}

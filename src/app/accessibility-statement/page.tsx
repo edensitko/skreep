@@ -1,15 +1,22 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
 import PageSEO from '@/components/SEO/PageSEO';
 import LocalSEO from '@/components/SEO/LocalSEO';
 import SEOMeta from '@/components/SEO/SEOMeta';
 
 export default function AccessibilityStatementPage() {
   const [isVisible, setIsVisible] = useState(false);
+  const [language, setLanguage] = useState('he');
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const { language, t } = useLanguage();
+
+  // Detect language from browser or default to Hebrew
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const browserLang = navigator.language.startsWith('he') ? 'he' : 'en';
+      setLanguage(browserLang);
+    }
+  }, []);
 
   // Intersection observer for title animation
   useEffect(() => {

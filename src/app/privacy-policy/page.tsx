@@ -9,7 +9,7 @@ import SEOMeta from '@/components/SEO/SEOMeta';
 export default function PrivacyPolicyPage() {
   const [isVisible, setIsVisible] = useState(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
 
   // Intersection observer for title animation
   useEffect(() => {
