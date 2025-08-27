@@ -160,6 +160,7 @@ function ComparisonTableSection() {
                     width={110} 
                     height={110} 
                     className="object-contain" 
+                    style={{ width: 'auto', height: 'auto' }}
                   />
                 </div>
               </div>

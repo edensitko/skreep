@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ServiceCard {
   id: string;
@@ -106,10 +107,36 @@ const servicesData: ServiceCard[] = [
 ];
 
 function InteractiveShowcaseSection() {
-  const [selectedService, setSelectedService] = useState<ServiceCard | null>(servicesData[0]);
+  const { language, t } = useLanguage();
+  
+  // Use translated services data
+  const translatedServices = React.useMemo(() => {
+    const services = t('interactiveServices.items') || [];
+    if (Array.isArray(services) && services.length > 0) {
+      return services.map((service: Record<string, unknown>) => ({
+        id: String(service.id || ''),
+        title: String(service.title || ''),
+        description: String(service.description || ''),
+        longDescription: String(service.longDescription || ''),
+        features: Array.isArray(service.features) ? service.features.map(f => String(f)) : [],
+        color: String(service.color || ''),
+        imageBg: String(service.imageBg || '')
+      }));
+    }
+    return servicesData; // Fallback to hardcoded data
+  }, [t]);
+  
+  const [selectedService, setSelectedService] = useState<ServiceCard | null>(translatedServices[0]);
   const [isVisible, setIsVisible] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+
+  // Update selected service when translated services change
+  useEffect(() => {
+    if (translatedServices.length > 0) {
+      setSelectedService(translatedServices[0]);
+    }
+  }, [translatedServices]);
 
   // Intersection Observer for title animation
   useEffect(() => {
@@ -227,10 +254,10 @@ function InteractiveShowcaseSection() {
                   ? 'opacity-100 translate-y-0' 
                   : 'opacity-0 translate-y-8'
               }`} 
-              dir="rtl"
+              dir={language === 'he' ? 'rtl' : 'ltr'}
               style={{ textAlign: 'center' }}
             >
-              שירותים שעושים הבדל
+              {t('interactiveServices.title') || (language === 'he' ? 'השירותים שלנו' : 'Our Services')}
             </h1>
           </div>
 
@@ -262,7 +289,7 @@ function InteractiveShowcaseSection() {
               style={{ scrollBehavior: 'smooth' }}
             >
               <div className="flex gap-4 md:gap-6 p-2 pl-[calc(50vw-12rem)] md:pl-2 pr-[calc(50vw-12rem)] md:pr-2 min-w-max">
-                {servicesData.map((service, index) => (
+                {translatedServices.map((service, index) => (
                   <div
                     key={`${service.id}-${index}`}
                     data-service-id={service.id}
@@ -278,7 +305,7 @@ function InteractiveShowcaseSection() {
                       backgroundPosition: 'center',
                       backgroundRepeat: 'no-repeat',
                     }}
-                    dir="rtl"
+                    dir={language === 'he' ? 'rtl' : 'ltr'}
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-black/50 rounded-2xl"></div>
                     

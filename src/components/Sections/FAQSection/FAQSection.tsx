@@ -185,13 +185,13 @@ function FAQSection() {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-10">
             <h2 
               ref={titleRef}
               className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
-              dir={language === 'he' ? 'rtl' : 'ltr'}
+              
               style={{ textAlign: 'center' }}
             >
               {t('faq.title')}

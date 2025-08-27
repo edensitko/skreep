@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
+import { FiMenu, FiX } from 'react-icons/fi';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Header() {
@@ -46,7 +46,7 @@ export default function Header() {
           <div className="flex 2xl:space-x-[100px] xl:space-x-10 justify-center items-center w-full xl:w-auto">
             <div className="flex justify-center items-center">
               <Link href="/" aria-label="logo">
-                <Image src="/assets/images/logo-1.png" alt="Skreep - פתרונות בינה מלאכותית" width={150} height={50} className="w-[150px] md:w-[150px] pt-3 mr-" />
+                <Image src="/assets/images/logo-1.png" alt="Skreep - פתרונות בינה מלאכותית" width={150} height={50} className="w-[150px] md:w-[150px] pt-3 mr-" style={{ width: 'auto', height: 'auto' }} />
               </Link>
             </div>
           </div>
@@ -79,21 +79,21 @@ export default function Header() {
         </button>
         
         {/* Logo - Absolutely centered */}
-        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+        <div className="absolute w-[100px] md:w-[100px] pt-0 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
           <Link href="/" aria-label="logo" className="hover:scale-110 transition-all duration-300 block">
             <Image 
               src="/assets/images/logo-1.png" 
               alt="Skreep - פתרונות בינה מלאכותית" 
               width={100}
               height={33}
-              className="w-[100px] md:w-[100px] pt-0"
+              style={{ width: 'auto' , height: 'auto' }}
             />
           </Link>
         </div>
         
         {/* Desktop Navigation */}
         <div className="hidden lg:flex justify-between items-center w-full " >
-          {/* Left side - Language Switcher, Search and CTA */}
+          {/* Left side - Language Switcher and CTA */}
           <div className="flex items-center gap-4" dir="ltr">
             {/* Language Switcher */}
             <div className="flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full overflow-hidden">
@@ -121,27 +121,10 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Expandable Search Button */}
-            <div className="relative group">
-              <div className="flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full transition-all duration-300 group-hover:bg-white/15 overflow-hidden">
-                <input 
-                  type="text" 
-                  placeholder={t('header.search')}
-                  className="bg-transparent text-white placeholder-white/60 px-4 py-2 w-0 group-hover:w-48 transition-all duration-300 focus:outline-none focus:w-48 text-right"
-                  dir="ltr"
-                />
-                <button className="text-white hover:text-cyan-400 transition-colors p-2 flex-shrink-0">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </button>
-              </div>
-            </div>
             
             {/* CTA Button */}
             <Link href="/contact" 
-              className="text-white hover:scale-110 transition-all duration-300 flex items-center justify-center gap-2 relative z-20" 
+              className="text-white hover:scale-110 transition-all duration-300 flex items-center justify-center gap-2 relative z-20 xl:bg-white/10 xl:backdrop-blur-sm xl:border xl:border-white/20 xl:rounded-full xl:px-4 xl:py-2 xl:hover:bg-white/15" 
               dir="ltr"
               title={t('header.talkToUs')}
             >

@@ -38,7 +38,7 @@ jobs:
       - name: Build with Next.js
         run: yarn build
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          NEXT_PUBLIC_OPENAI_API_KEY: ${{ secrets.NEXT_PUBLIC_OPENAI_API_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

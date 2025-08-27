@@ -113,6 +113,8 @@ export default function Footer() {
             <p className="text-gray-400 mb-4">{t('mainFooter.newsletter.description')}</p>
             <form className={`flex ${language === 'he' ? 'flex-row-reverse' : 'flex-row'}`}>
               <input
+                id="footer-newsletter-email"
+                name="newsletterEmail"
                 type="email"
                 placeholder={t('mainFooter.newsletter.placeholder')}
                 className={`bg-gray-800 text-white px-4 py-2 w-full focus:outline-none ${language === 'he' ? 'rounded-r-lg' : 'rounded-l-lg'}`}

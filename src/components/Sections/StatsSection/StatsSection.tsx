@@ -96,11 +96,9 @@ const AnimatedStatCard = ({ stat, index, language }: {
           </span>
         </div>
         
-        {/* Divider */}
-        <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent mx-auto mb-3 group-hover:via-cyan-300 transition-colors duration-300"></div>
         
         {/* Label */}
-        <p className="text-white/80 text-sm md:text-base font-medium group-hover:text-white transition-colors duration-300" dir={language === 'he' ? 'rtl' : 'ltr'}>
+        <p className="text-white/80 text-sm md:text-base font-medium group-hover:text-white transition-colors duration-300 text-center" >
           {stat.label}
         </p>
         
@@ -128,7 +126,7 @@ function StatsSection() {
   const displayStats = Array.isArray(statsData) && statsData.length > 0 ? statsData : defaultStats;
 
   return (
-    <section className="w-full bg-black ">
+    <section className="w-full">
       <div className="w-[100%] my-12 lg:my-12 mx-auto  ">
         <div className="container mx-auto px-4 relative z-10 ">
           {/* Title Section */}

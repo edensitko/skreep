@@ -5,10 +5,11 @@ import ClientLayout from '@/components/Layout/ClientLayout';
 import { UserTypeProvider } from '@/hooks/useGlobalUserType';
 import { ConditionalLayout } from '@/components/Layout/ConditionalLayout';
 import { LanguageProvider } from '@/contexts/LanguageContext';
-import { DynamicHtmlWrapper } from '@/components/Layout/DynamicHtmlWrapper';
-import DynamicMetadata from '@/components/Layout/DynamicMetadata';
-import StructuredData from '@/components/SEO/StructuredData';
 import Analytics from '@/components/SEO/Analytics';
+import CookieConsent from '@/components/SEO/CookieConsent';
+import DynamicMetadata from '@/components/Layout/DynamicMetadata';
+import { DynamicHtmlWrapper } from '@/components/Layout/DynamicHtmlWrapper';
+import StructuredData from '@/components/SEO/StructuredData';
 import { generateLocalBusinessSchema, generateOrganizationSchema, generateWebsiteSchema } from '@/lib/seo/utils';
 
 // Using system fonts to avoid Turbopack issues
@@ -20,6 +21,11 @@ export const metadata: Metadata = {
   authors: [{ name: "Skreep AI Solutions" }],
   creator: "Skreep",
   publisher: "Skreep",
+  icons: {
+    icon: '/assets/images/logo-2.png',
+    shortcut: '/assets/images/logo-2.png',
+    apple: '/assets/images/logo-2.png',
+  },
   robots: {
     index: true,
     follow: true,
@@ -41,7 +47,7 @@ export const metadata: Metadata = {
     siteName: "Skreep AI Solutions",
     images: [
       {
-        url: "https://skreep.com/assets/images/logo-1.png",
+        url: "https://skreep.com/assets/images/logo-2.png",
         width: 1200,
         height: 630,
         alt: "Skreep AI Solutions Logo",
@@ -52,7 +58,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "סקריפ | skreep - פתרונות בינה מלאכותית",
     description: "פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
-    images: ["https://skreep.com/assets/images/logo-1.png"],
+    images: ["https://skreep.com/assets/images/logo-2.png"],
   },
   alternates: {
     canonical: "https://skreep.com",
@@ -103,6 +109,7 @@ export default function RootLayout({
               </ClientLayout>
             </UserTypeProvider>
           </DynamicHtmlWrapper>
+          <CookieConsent />
         </LanguageProvider>
       </body>
     </html>

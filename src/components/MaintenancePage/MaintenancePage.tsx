@@ -207,6 +207,7 @@ function MaintenancePage() {
                   src="./assets/images/logo-1.png" 
                   alt="Skreep Logo" 
                   className="relative h-8 md:h-12 lg:h-16 w-auto mx-auto filter drop-shadow-2xl hover:scale-105 transition-transform duration-300"
+                  style={{ width: 'auto', height: 'auto' }}
                 />
               </div>
             </div>

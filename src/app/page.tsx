@@ -15,19 +15,21 @@ import InnovationSection2 from '@/components/Sections/InnovationSection/Innovati
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import StructuredData from '@/components/SEO/StructuredData';
 
-const AIConsultantCTASection = dynamic(() => import('@/components/Sections/AIConsultantCTASection'), { loading: () => <div className="h-64 bg-black/20 animate-pulse" /> });
+const AIConsultantCTASection = dynamic(() => import('@/components/Sections/AIConsultantCTASection/AIConsultantCTASection'), { loading: () => <div className="h-64 bg-black/20 animate-pulse" /> });
 const StatsSection           = dynamic(() => import('@/components/Sections/StatsSection/StatsSection'), { loading: () => <div className="h-48 bg-black/20 animate-pulse" /> });
-const FAQSection             = dynamic(() => import('@/components/Sections/FAQSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
-const TestimonialsSection    = dynamic(() => import('@/components/Sections/TestimonialsSection'), { loading: () => <div className="h-64 bg-black/20 animate-pulse" /> });
-const ComparisonTableSection = dynamic(() => import('@/components/Sections/ComparisonTableSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
+const FAQSection             = dynamic(() => import('@/components/Sections/FAQSection/FAQSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
+const TestimonialsSection    = dynamic(() => import('@/components/Sections/TestimonialsSection/TestimonialsSection'), { loading: () => <div className="h-64 bg-black/20 animate-pulse" /> });
+const ComparisonTableSection = dynamic(() => import('@/components/Sections/ComparisonTableSection/ComparisonTableSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
 const ContactFormSection     = dynamic(() => import('@/components/Sections/ContactFormSection/ContactFormSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
-const ChatSection            = dynamic(() => import('@/components/Sections/ChatSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
+const ChatSection            = dynamic(() => import('@/components/Sections/ChatSection/ChatSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
 const BlogSection            = dynamic(() => import('@/components/Sections/BlogSection/BlogSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
 
 export const metadata: Metadata = {
-  title: "Skreep - פתרונות בינה מלאכותית מתקדמים | AI Solutions Israel",
-  description: "Skreep מפתחת פתרונות AI חדשניים לעסקים: צ'אטבוטים חכמים, אוטומציה עסקית, בניית אתרים ומערכות AI מותאמות אישית. הצטרפו למהפכת הבינה המלאכותית בישראל.",
+  title: "סקריפ - פתרונות בינה מלאכותית מתקדמים | Skreep AI Solutions",
+  description: "סקריפ מפתחת פתרונות AI חדשניים לעסקים: צ'אטבוטים חכמים, אוטומציה עסקית, בניית אתרים ומערכות AI מותאמות אישית. הצטרפו למהפכת הבינה המלאכותית בישראל.",
   keywords: [
+    'סקריפ',
+    "Skreep",
     "בינה מלאכותית",
     "AI solutions",
     "צ'אטבוטים",
@@ -37,8 +39,6 @@ export const metadata: Metadata = {
     "בניית אתרים",
     "web development",
     "Skreep",
-    "ישראל",
-    "Israel",
     "פתרונות דיגיטליים",
     "digital solutions",
     "חדשנות טכנולוגית",
@@ -61,13 +61,13 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Skreep - פתרונות בינה מלאכותית מתקדמים",
+    title: "סקריפ | skreep - פתרונות בינה מלאכותית",
     description: "פתרונות AI חדשניים לעסקים: צ'אטבוטים, אוטומציה ובניית אתרים. הצטרפו למהפכת הבינה המלאכותית עם Skreep.",
     url: 'https://skreep.com',
     siteName: 'Skreep',
     images: [
       {
-        url: 'https://skreep.com/assets/images/logo-1.png',
+        url: 'https://skreep.com/assets/images/logo-2.png',
         width: 1200,
         height: 630,
         alt: 'Skreep - פתרונות בינה מלאכותית',
@@ -79,11 +79,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Skreep - פתרונות בינה מלאכותית מתקדמים",
+    title: "סקריפ | skreep - פתרונות בינה מלאכותית",
     description: "פתרונות AI חדשניים לעסקים: צ'אטבוטים, אוטומציה ובניית אתרים. הצטרפו למהפכת הבינה המלאכותית.",
     site: '@skreep',
     creator: '@skreep',
-    images: ['https://skreep.com/assets/images/logo-1.png'],
+    images: ['https://skreep.com/assets/images/logo-2.png'],
   },
   robots: {
     index: true,
@@ -115,7 +115,7 @@ export default function RootPage() {
       "@type": "Organization",
       "name": "Skreep",
       "url": "https://skreep.com",
-      "logo": "https://skreep.com/assets/images/logo.svg",
+      "logo": "https://skreep.com/assets/images/logo-2.png",
       "description": "פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
       "foundingDate": "2023",
       "contactPoint": {

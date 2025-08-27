@@ -109,17 +109,12 @@ function OurProjectsSection() {
           <div className="text-center mb-2">
             <h1 
               className="font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out"
-              dir={language === 'he' ? 'rtl' : 'ltr'}
+             
               style={{ textAlign: 'center' }}
             >
               {t('ourProjects.title')}
             </h1>
-            <p 
-              className="text-lg md:text-xl text-white/70 leading-relaxed max-w-3xl mx-auto text-center"
-              dir={language === 'he' ? 'rtl' : 'ltr'}
-            >
-              {t('ourProjects.subtitle')}
-            </p>
+          
           </div>
 
           {/* Vertical Carousel */}

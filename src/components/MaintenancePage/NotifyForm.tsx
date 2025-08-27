@@ -49,6 +49,8 @@ export const NotifyForm = memo<NotifyFormProps>(({
           {/* Email Input */}
           <div className="relative flex-1">
             <input
+              id="maintenance-email"
+              name="notificationEmail"
               type="email"
               value={email}
               onChange={(e) => onEmailChange(e.target.value)}

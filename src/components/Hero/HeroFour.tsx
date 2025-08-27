@@ -108,6 +108,8 @@ export default function HeroFour() {
                       
                       <form onSubmit={handleSubmit} className="flex">
                         <input 
+                          id="hero-prompt-input"
+                          name="promptText"
                           type="text" 
                           className="w-full p-4 rounded-l-2xl bg-black/50 text-white border border-cyan/30 focus:outline-none focus:border-cyan"
                           placeholder="הקלד את הפרומפט שלך כאן..."

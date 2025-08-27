@@ -172,7 +172,7 @@
         "longDescription": "Development of customized artificial intelligence solutions that improve business efficiency and enable data-driven decision making.",
         "features": ["Advanced Machine Learning", "Natural Language Processing", "Smart Data Analysis", "Smart Automation"],
         "color": "from-blue-500 to-purple-600",
-        "imageBg": "/assets/images/img/6.png"
+        "imageBg": "/assets/images/servicesimg/1.png"
       },
       {
         "id": "web-development",
@@ -181,16 +181,16 @@
         "longDescription": "Creating advanced websites and applications with responsive design, fast performance and excellent user experience.",
         "features": ["Responsive Design", "Fast Performance", "Advanced SEO", "High Security"],
         "color": "from-green-500 to-teal-600",
-        "imageBg": "/assets/images/img/7.png"
+        "imageBg": "/assets/images/servicesimg/2.png"
       },
       {
         "id": "automation",
-        "title": "Automation & Processes",
+        "title": "Business Automation",
         "description": "Time and resource savings",
         "longDescription": "Implementation of advanced automation solutions that streamline business processes and reduce operational costs.",
         "features": ["Process Automation", "Workflow Management", "Automated Reports", "Advanced Integrations"],
         "color": "from-orange-500 to-red-600",
-        "imageBg": "/assets/images/img/8.png"
+        "imageBg": "/assets/images/servicesimg/9.png"
       },
       {
         "id": "mobile-apps",
@@ -199,7 +199,7 @@
         "longDescription": "Development of native and hybrid mobile applications with excellent user experience and high performance.",
         "features": ["Native Development", "Advanced UX/UI Design", "API Integration", "App Store Publishing"],
         "color": "from-pink-500 to-rose-600",
-        "imageBg": "/assets/images/img/9.png"
+        "imageBg": "/assets/images/servicesimg/10.png"
       },
       {
         "id": "cloud-solutions",
@@ -208,7 +208,7 @@
         "longDescription": "Setup and management of advanced cloud infrastructure with high availability, maximum security and full flexibility.",
         "features": ["AWS & Azure", "Data Security", "Automated Backups", "24/7 Monitoring"],
         "color": "from-cyan-500 to-blue-600",
-        "imageBg": "/assets/images/img/10.png"
+        "imageBg": "/assets/images/servicesimg/3.png"
       }
     ]
   },

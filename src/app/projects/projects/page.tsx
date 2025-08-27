@@ -51,7 +51,7 @@ export default function ProjectsPage() {
 
       <div className="relative container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-20" dir="rtl">
+        <div className="text-center mb-20" >
           <h1 className="font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-3xl md:text-5xl lg:text-6xl mb-6 leading-tight">
             הפרויקטים שלנו
           </h1>

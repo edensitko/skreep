@@ -6,7 +6,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import ChatMessage from './ChatMessage';
 import TypingIndicator from './TypingIndicator';
 import { Message, ChatState, ChatMode } from './types';
-import { TYPING_DELAY, RESPONSE_DELAY } from './constants';
+import { TYPING_DELAY } from './constants';
 import { ChatMessage as OpenAIChatMessage } from '@/lib/openai/chat';
 
 const ChatSection: React.FC = () => {
@@ -42,38 +42,94 @@ const ChatSection: React.FC = () => {
     }
   }, [chatState.messages, scrollToBottom, mode]);
 
-  // Generate bot response using OpenAI API
+  // Generate bot response using OpenAI API (client-side for static export)
   const generateBotResponse = useCallback(async (userMessage: string): Promise<string> => {
     try {
-      const response = await fetch('/api/chat', {
+      // Check if OpenAI API key is available
+      const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+      if (!apiKey) {
+        return language === 'he' 
+          ? 'מצטער, שירות הצ\'אט אינו זמין כרגע. אנא צור קשר ישירות.'
+          : 'Sorry, chat service is currently unavailable. Please contact us directly.';
+      }
+
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          message: userMessage,
-          conversationHistory: conversationHistory
+          model: 'gpt-4-turbo-preview',
+          messages: [
+            {
+              role: 'system',
+              content: `You are Skreepy AI, the expert AI consultant for Skreep - advanced artificial intelligence solutions for businesses in Israel.
+
+## Company Details:
+**Company Name:** Skreep
+**Website:** https://skreep.com
+**Location:** Israel
+**Phone:** +972 0585887744
+**Email:** info@skreep.com
+
+**Specialization:** Advanced AI solutions for businesses
+**Business Hours:** Sunday-Thursday 9:00-17:00 (Friday-Saturday closed)
+**AI Chat:** Available 24/7 for your service
+
+## Our Services:
+1. **Artificial Intelligence** - Development of advanced AI systems
+2. **Smart Automation** - Creating automated workflows
+3. **Chatbots** - 24/7 customer service solutions
+4. **Data Analysis** - Business insights and decision making
+5. **Integration** - AI solution integration with existing systems
+6. **Technology Consulting** - Professional training and consulting
+
+## Response Guidelines:
+- **Language:** ALWAYS respond in the SAME language the user writes in (Hebrew or English)
+- **Tone:** Professional, friendly, and helpful
+- **Length:** Short and clean responses - up to 3-4 sentences
+- **Content:** Provide practical advice and concrete solutions
+- **Focus:** Focus on AI solutions for Israeli businesses
+
+## CRITICAL: Language Detection
+- If user writes in English → respond in English
+- If user writes in Hebrew → respond in Hebrew
+- Match the user's language exactly`
+            },
+            ...conversationHistory,
+            { role: 'user', content: userMessage }
+          ],
+          max_tokens: 1500,
+          temperature: 0.7,
         })
       });
 
       const data = await response.json();
       
-      if (data.success && data.message) {
+      if (data.choices && data.choices[0]?.message?.content) {
+        const assistantMessage = data.choices[0].message.content;
+        
         // Update conversation history
         setConversationHistory(prev => [
           ...prev,
           { role: 'user', content: userMessage },
-          { role: 'assistant', content: data.message }
+          { role: 'assistant', content: assistantMessage }
         ]);
-        return data.message;
+        
+        return assistantMessage;
       } else {
-        return data.error || 'מצטער, אירעה שגיאה. אנא נסה שוב.';
+        return language === 'he' 
+          ? 'מצטער, אירעה שגיאה. אנא נסה שוב.'
+          : 'Sorry, an error occurred. Please try again.';
       }
     } catch (error) {
       console.error('Chat API Error:', error);
-      return 'מצטער, לא הצלחתי להתחבר לשרת. אנא בדוק את החיבור לאינטרנט ונסה שוב.';
+      return language === 'he'
+        ? 'מצטער, לא הצלחתי להתחבר לשרת. אנא בדוק את החיבור לאינטרנט ונסה שוב.'
+        : 'Sorry, I couldn\'t connect to the server. Please check your internet connection and try again.';
     }
-  }, [conversationHistory]);
+  }, [conversationHistory, language]);
 
   // Handle sending message
   const handleSendMessage = useCallback(async () => {
@@ -163,8 +219,10 @@ const ChatSection: React.FC = () => {
 
   return (
     <section className="w-full bg-black ">
-      <div className="relative pt-16 rounded-t-[100px] lg:py-20 bg-white/5 shadow-b-xl shadow-white/10 overflow-hidden">
+      <div className="relative pt-16  lg:py-20 bg-white/5 shadow-b-xl shadow-white/10 overflow-hidden">
       {/* Background Effects */}
+      {/* black shadow in top */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-black/10 to-transparent z-10" />
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/5 via-transparent to-purple-600/5" />
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-400/10 rounded-full blur-3xl" />
       
@@ -201,9 +259,11 @@ const ChatSection: React.FC = () => {
               <div className="flex gap-2 items-center">
                 <input
                   ref={inputRef}
+                  id="chat-input"
+                  name="chatMessage"
                   type="text"
                   value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
+                  onChange={handleInputChange}
                   onKeyDown={handleKeyPress}
                   placeholder={t('chatSection.placeholder')}
                   className="flex-1 bg-white/10 border border-white/20 rounded-full px-4 lg:px-6 py-2 lg:py-3 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300 text-sm lg:text-base"
@@ -228,18 +288,18 @@ const ChatSection: React.FC = () => {
 
           {/* Helper Text - Only visible in input mode */}
           {mode === 'input' && (
-            <p className="text-center text-white/50 text-sm mt-4 animate-fadeIn" dir={language === 'he' ? 'rtl' : 'ltr'}>
+            <p className="text-center text-white/50 text-sm mt-4 animate-fadeIn" >
               {t('chat.helperText')}
             </p>
           )}
           {/* Image under chat */}
-          <div className="flex justify-center items-center ">
+          <div className="flex justify-center items-center py-6 ">
             <Image 
               src="/assets/images/img/16.png"
               alt="AI Chat Assistant"
               width={200}
               height={200}
-              className="w-[300px] lg:w-[400px]  max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg mx-auto opacity-80 hover:opacity-100 transition-opacity duration-300"
+              className="w-[200px] lg:w-[400px]  max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg mx-auto opacity-80 hover:opacity-100 transition-opacity duration-300"
               priority={false}
             />
           </div>

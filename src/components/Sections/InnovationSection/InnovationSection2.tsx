@@ -83,44 +83,35 @@ const InnovationSection2 = () => {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-5 relative z-10">
+      <div className="container mx-auto py-2 relative z-10">
         <div className="text-center">
           {/* Main Text with Stunning Effects */}
           <div className="relative">
             {/* Background glow effect */}
-            <div 
-              className="absolute inset-0 blur-2xl opacity-20"
-              style={{
-                transform: `translateX(${(scrollProgress - 0.5) * 400}px) scale(${1 + scrollProgress * 0.5})`
-              }}
-            >
-              <h1 className="text-6xl md:text-8xl lg:text-9xl font-black bg-gradient-to-r from-cyan-400 via-white to-cyan-400 bg-clip-text text-transparent">
-                {language === 'he' ? '  הדור הבא' : 'NEXT GENERATION IN DEVELOPMENT'}
-              </h1>
-            </div>
+           
 
             {/* Main text with controlled scroll animation */}
             <h1 
-              className="relative text-3xl sm:text-3xl md:text-4xl lg:text-6xl font-black text-transparent"
+              className="relative text-2xl sm:text-2xl md:text-3xl lg:text-6xl font-black text-transparent"
               style={{
                 transform: `translateX(${language === 'he' ? (0.5 - scrollProgress) * (isMobile ? 120 : 400) : (scrollProgress - 0.5) * (isMobile ? 120 : 400)}px)`,
                 WebkitTextStroke: isMobile ? '0.5px white' : '1px white',
                 transition: isMobile ? 'transform 0.1s ease-out' : 'transform 0.15s ease-out'
               }}
             >
-              {language === 'he' ? ' חדשנות דרך  ' : 'INNOVATION THROUGH  '}
+              {language === 'he' ? ' טכונולוגיה שמשנה עסקים' : 'TECHNOLOGY THAT CHANGES BUSINESS'}
             </h1>
 
             {/* Duplicate text with opposite direction */}
             <h1 
-              className="relative mt-2 sm:mt-4 text-3xl sm:text-3xl md:text-4xl lg:text-6xl font-black opacity-80 text-transparent"
+              className="relative mt-1 sm:mt-2 text-2xl sm:text-xl md:text-3xl lg:text-6xl font-black opacity-80 text-transparent"
               style={{
                 transform: `translateX(${language === 'he' ? (scrollProgress - 0.5) * (isMobile ? 100 : 350) : (0.5 - scrollProgress) * (isMobile ? 100 : 350)}px)`,
                 WebkitTextStroke: isMobile ? '0.5px cyan' : '1px cyan',
                 transition: isMobile ? 'transform 0.1s ease-out' : 'transform 0.15s ease-out'
               }}
             >
-              {language === 'he' ? 'דרך חכמה ויעילה' : ' INTELLIGENCE AND EFFICIENCY'}
+              {language === 'he' ? 'בינה מלאכותית לכל מטרה'  : 'INTELLIGENT AI FOR EVERY GOAL'}
             </h1>
           </div>
         </div>

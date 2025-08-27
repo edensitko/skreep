@@ -44,6 +44,7 @@ const ProjectCard = memo<ProjectCardProps>(({
                 width={180}
                 height={220}
                 className="object-cover w-full h-full"
+                style={{ width: 'auto', height: 'auto' }}
                 priority={index === 0}
               />
             </div>

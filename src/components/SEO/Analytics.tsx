@@ -24,9 +24,13 @@ export default function Analytics({
   linkedInPartnerId = process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID
 }: AnalyticsProps) {
   const [isMounted, setIsMounted] = useState(false);
+  const [hasConsent, setHasConsent] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
+    // Check for cookie consent
+    const consent = localStorage.getItem('cookie-consent');
+    setHasConsent(consent === 'accepted');
   }, []);
 
   // Track page views
@@ -38,6 +42,11 @@ export default function Analytics({
       });
     }
   }, [googleAnalyticsId]);
+
+  // Don't load any analytics without consent
+  if (!hasConsent || !isMounted) {
+    return null;
+  }
 
   return (
     <>
@@ -58,7 +67,9 @@ export default function Analytics({
                 page_location: window.location.href,
                 anonymize_ip: true,
                 allow_google_signals: false,
-                allow_ad_personalization_signals: false
+                allow_ad_personalization_signals: false,
+                cookie_flags: 'SameSite=Lax;Secure',
+                storage: 'none'
               });
             `}
           </Script>

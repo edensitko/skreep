@@ -104,17 +104,32 @@ export default function ServicesPage() {
     }
   ], [language]);
 
-  // Use all services data from constants (no user type filtering)
+  // Use translated services data
   const servicesData = React.useMemo(() => {
+    const translatedServices = t('interactiveServices.items') || [];
+    if (Array.isArray(translatedServices) && translatedServices.length > 0) {
+      return translatedServices.map((service: any, index: number) => ({
+        id: index + 1,
+        image: service.imageBg || `/assets/images/servicesimg/${index + 1}.png`,
+        title: service.title,
+        subtitle: service.description,
+        description: service.longDescription,
+        features: service.features || [],
+        delay: index * 100
+      }));
+    }
+    
+    // Fallback to hardcoded data if translation fails
     return SERVICES_DATA.map((service, index) => ({
       id: index + 1,
       image: service.imageBg,
       title: service.title,
       subtitle: service.description,
       description: service.longDescription,
+      features: service.features || [],
       delay: index * 100
     }));
-  }, []);
+  }, [t]);
 
   return (
     <div className="min-h-screen bg-black">
@@ -181,7 +196,6 @@ export default function ServicesPage() {
           {/* Enhanced Services Grid - Mobile 2 Columns */}
           <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-8 lg:gap-12 max-w-6xl mx-auto">
             {servicesData.map((service, index) => {
-              const originalService = SERVICES_DATA[index];
               return (
                 <div
                   key={service.id}
@@ -193,7 +207,7 @@ export default function ServicesPage() {
                   {/* Enhanced Image Section - Mobile Optimized */}
                   <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden">
                     <img
-                      src={originalService.imageBg}
+                      src={service.image}
                       alt={service.title}
                       className="w-full h-full object-cover"
                       loading="lazy"
@@ -231,7 +245,7 @@ export default function ServicesPage() {
                   {/* Enhanced Features Section - Mobile Optimized */}
                   <div className="p-3 sm:p-4 md:p-6 lg:p-8 bg-gradient-to-t from-black/60 via-black/30 to-transparent relative">
                     <div className="grid grid-cols-1 gap-2 sm:gap-3 md:gap-4">
-                      {originalService.features.slice(0, 4).map((feature, featureIndex) => (
+                      {(service.features || []).slice(0, 4).map((feature: string, featureIndex: number) => (
                         <div key={featureIndex} className="flex items-center gap-2 sm:gap-3">
                           <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-cyan-400/20 to-purple-400/20 rounded-full flex items-center justify-center flex-shrink-0">
                             <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full"></div>
