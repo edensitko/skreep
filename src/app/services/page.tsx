@@ -108,12 +108,12 @@ export default function ServicesPage() {
   const servicesData = React.useMemo(() => {
     const translatedServices = t('interactiveServices.items') || [];
     if (Array.isArray(translatedServices) && translatedServices.length > 0) {
-      return translatedServices.map((service: any, index: number) => ({
+      return translatedServices.map((service: { imageBg?: string; title: string; subtitle: string; description: string; longDescription?: string; features?: string[] }, index: number) => ({
         id: index + 1,
         image: service.imageBg || `/assets/images/servicesimg/${index + 1}.png`,
         title: service.title,
         subtitle: service.description,
-        description: service.longDescription,
+        description: service.longDescription || service.description,
         features: service.features || [],
         delay: index * 100
       }));
