@@ -2,7 +2,7 @@ import OpenAI from 'openai';
 
 // Initialize OpenAI client with API key from environment variables
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY || process.env.NEXT_PUBLIC_OPENAI_API_KEY || 'dummy-key-for-build',
 });
 
 export default openai;

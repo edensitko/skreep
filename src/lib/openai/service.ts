@@ -18,6 +18,15 @@ export async function sendChatMessage(
   conversationHistory: ChatMessage[] = []
 ): Promise<ChatResponse> {
   try {
+    // Check if API key is available
+    const apiKey = process.env.OPENAI_API_KEY || process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+    if (!apiKey || apiKey === 'dummy-key-for-build') {
+      return {
+        message: 'מצטער, שירות הצ\'אט זמנית לא זמין. אנא צור קשר ישירות בטלפון +972 0585887744 או במייל info@skreep.com',
+        error: 'OpenAI API key not configured',
+      };
+    }
+
     // Prepare messages array with system prompt and conversation history
     const messages: ChatMessage[] = [
       {
