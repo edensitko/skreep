@@ -200,15 +200,15 @@ const Timeline = memo<TimelineProps>(({
           </div>
         </div>
         
-        {/* CTA Button - Centered */}
-        <div className="flex justify-center mt-8 md:mt-12 lg:mt-16">
+        {/* CTA Button - Below Cards */}
+        <div className="flex justify-center mt-8 md:mt-12 lg:mt-16 relative z-10">
           <div 
             className={`transition-all duration-1000 delay-500 ${
               isHydrated && scrollProgress > 0.8 ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
             }`}
           >
-          <button 
-            className="group relative bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/20 rounded-2xl px-8 py-4 transition-all duration-500 hover:backdrop-blur-[10px] hover:bg-gradient-to-br hover:from-black/40 hover:via-black/25 hover:to-black/10 hover:border-cyan-400/30 hover:shadow-2xl hover:shadow-cyan-400/20 before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-br before:from-white/10 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 overflow-hidden lg:mt-16"
+            <button 
+            className=" group relative bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/20 rounded-2xl px-6 py-3 transition-all duration-500 hover:backdrop-blur-[10px] hover:bg-gradient-to-br hover:from-black/40 hover:via-black/25 hover:to-black/10 hover:border-cyan-400/30 hover:shadow-2xl hover:shadow-cyan-400/20 before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-br before:from-white/10 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 overflow-hidden"
             onClick={() => {
               // Scroll to contact section or open contact form
               const contactSection = document.getElementById('contact');
@@ -220,27 +220,23 @@ const Timeline = memo<TimelineProps>(({
               }
             }}
           >
-            <span className="relative z-10 text-white font-semibold text-lg group-hover:text-cyan-100 transition-colors duration-300">
+            <span className="relative z-10 text-white font-semibold text-base group-hover:text-cyan-100 transition-colors duration-300">
               המסע שלכם מתחיל כאן
             </span>
             
             {/* Button Icon */}
             <div className="relative z-10 inline-flex items-center mr-2">
-              <svg 
-                className="w-5 h-5 text-cyan-400 group-hover:text-cyan-300 transition-all duration-300 group-hover:translate-x-1" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
+              {/* ICON OF TAP */}
             </div>
             
             {/* Hover Effect Overlay */}
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-          </button>
+            </button>
           </div>
         </div>
+        
+        {/* Bottom Dark Gradient */}
+        <div className="absolute bottom-0 left-0 right-0 h-26 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none" />
       </div>
     </div>
   );

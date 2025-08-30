@@ -14,6 +14,7 @@ import InnovationSection from '@/components/Sections/InnovationSection/Innovatio
 import InnovationSection2 from '@/components/Sections/InnovationSection/InnovationSection2';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import StructuredData from '@/components/SEO/StructuredData';
+import NoCodeBenefitsSection from '@/components/Sections/NoCodeBenefitsSection';
 
 const AIConsultantCTASection = dynamic(() => import('@/components/Sections/AIConsultantCTASection/AIConsultantCTASection'), { loading: () => <div className="h-64 bg-black/20 animate-pulse" /> });
 const StatsSection           = dynamic(() => import('@/components/Sections/StatsSection/StatsSection'), { loading: () => <div className="h-48 bg-black/20 animate-pulse" /> });
@@ -23,7 +24,6 @@ const ComparisonTableSection = dynamic(() => import('@/components/Sections/Compa
 const ContactFormSection     = dynamic(() => import('@/components/Sections/ContactFormSection/ContactFormSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
 const ChatSection            = dynamic(() => import('@/components/Sections/ChatSection/ChatSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
 const BlogSection            = dynamic(() => import('@/components/Sections/BlogSection/BlogSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
-
 export const metadata: Metadata = {
   title: "סקריפ - פתרונות בינה מלאכותית מתקדמים | Skreep AI Solutions",
   description: "סקריפ מפתחת פתרונות AI חדשניים לעסקים: צ'אטבוטים חכמים, אוטומציה עסקית, בניית אתרים ומערכות AI מותאמות אישית. הצטרפו למהפכת הבינה המלאכותית בישראל.",
@@ -196,6 +196,7 @@ export default function RootPage() {
         <ChatSection />
         <InnovationSection />
         <ServicesSection />
+        < NoCodeBenefitsSection />
         <OurProjectsSection />
         <FAQSection />
         <AIConsultantCTASection />
