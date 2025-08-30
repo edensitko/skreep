@@ -113,65 +113,111 @@ function ComparisonTableSection() {
       </div>
       
       <section 
-        className="w-[90%] mx-auto"
+        className="w-full mx-auto"
         role="region"
         aria-label={t('comparisonTable.sectionAriaLabel')}
         dir={language === 'he' ? 'rtl' : 'ltr'}
       >
-        <div className="mx-auto container px-2 py-6">
+        <div className="w-full px-4 py-6 relative">
         
-        {/* Comparison Table */}
-        <div 
-          className="rounded-3xl overflow-hidden" 
-          dir={language === 'he' ? 'ltr' : 'ltr'}
-          role="table"
-          aria-label={t('comparisonTable.tableAriaLabel')}
-        >
-          {/* Header Row */}
-          <div className="grid grid-cols-4" role="row">
-            <div 
-              className="py-2 px-1 mt-8 text-center border border-white/10"
-              role="columnheader"
-            >
-              <h3 className="font-light text-red-300 text-sm" dir={language === 'he' ? 'rtl' : 'ltr'}>
-                {t('comparisonTable.headers.freelancers')}
-              </h3>
-            </div>
-            <div 
-              className="py-2 px-1 mt-8 text-center border border-white/10"
-              role="columnheader"
-            >
-              <h3 className="font-light text-red-300 text-sm" dir={language === 'he' ? 'rtl' : 'ltr'}>
-                {t('comparisonTable.headers.competitors')}
-              </h3>
-            </div>
-            <div 
-              className="col-span-2 rounded-tl-3xl bg-gradient-to-r from-cyan-500/20 to-purple-500/20 py-2 px-4 text-center"
-              role="columnheader"
-            >
-              <div className="flex items-center justify-center gap-3">
-                <div>
-                  <p className="text-white text-md" dir={language === 'he' ? 'rtl' : 'ltr'}>
-                    {t('comparisonTable.headers.skreepProduct')}
-                  </p>
+        {/* Slide Gesture Indicator */}
+        <div className="flex items-center justify-center mb-4 text-white/70 md:hidden">
+          <div className="flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 text-xs">
+            {language === 'he' ? (
+              <>
+                <svg className="w-3 h-3 text-cyan-300" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+                </svg>
+                <span className="font-normal text-white/70">
+                  החלק לצפייה
+                </span>
+                <svg className="w-3 h-3 text-cyan-300" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+              </>
+            ) : (
+              <>
+                <svg className="w-3 h-3 text-cyan-300" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+                </svg>
+                <span className="font-normal text-white/70">
+                  Swipe to view
+                </span>
+                <svg className="w-3 h-3 text-cyan-300" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+                </svg>
+              </>
+            )}
+          </div>
+        </div>
+        
+        {/* Comparison Table Container */}
+        <div className="overflow-x-auto scrollbar-hide">
+          <div 
+            className="min-w-[800px] w-full lg:w-[85%] lg:mx-auto" 
+            dir={language === 'he' ? 'rtl' : 'ltr'}
+            role="table"
+            aria-label={t('comparisonTable.tableAriaLabel')}
+          >
+            {/* Header Row */}
+            <div className="grid gap-0" style={{gridTemplateColumns: '0.8fr 2fr 1fr 1fr 1fr'}} role="row">
+              <div 
+                className=""
+                role="columnheader"
+              >
+              
+              </div>
+              <div 
+                className={`py-1 px-4 text-center bg-gradient-to-br from-cyan-500/30 to-purple-500/30 backdrop-blur-sm relative overflow-hidden ${language === 'he' ? 'rounded-tr-2xl' : 'rounded-tl-2xl'}`}
+                role="columnheader"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 to-purple-400/10 animate-pulse"></div>
+                <div className="relative z-10">
+                <div className="mt-2 text-white text-sm font-medium">
+                    {language === 'he' ? 'מוצר מבית' : 'In-House Product'}
+                  </div>
                   <Image 
                     src="/assets/images/logo-1.png" 
                     alt="Skreep Logo" 
-                    width={110} 
-                    height={110} 
-                    className="object-contain" 
-                    style={{ width: 'auto', height: 'auto' }}
+                    width={100} 
+                    height={100} 
+                    className="object-contain mx-auto" 
                   />
+                 
                 </div>
               </div>
+              <div 
+                className=" py-6 px-3 text-center bg-gradient-to-br from-gray-600/20 to-gray-700/20 backdrop-blur-sm"
+                role="columnheader"
+              >
+                <h3 className="font-semibold text-gray-300 text-xs leading-tight" >
+                  {language === 'he' ? 'מתחרים' : 'Competitors'}
+                </h3>
+              </div>
+              <div 
+                className="py-6 px-3 text-center bg-gradient-to-br from-gray-600/20 to-gray-700/20 backdrop-blur-sm"
+                role="columnheader"
+              >
+                <h3 className="font-semibold text-gray-300 text-xs leading-tight" >
+                  {language === 'he' ? 'פריסלנסרים' : 'Freelancers'}
+                </h3>
+              </div>
+              <div 
+                className={`py-6 px-3 text-center bg-gradient-to-br from-gray-600/20 to-gray-700/20 backdrop-blur-sm ${language === 'he' ? 'rounded-tl-2xl' : 'rounded-tr-2xl'}`}
+                role="columnheader"
+              >
+                <h3 className="font-semibold text-gray-300 text-xs leading-tight" >
+                  {language === 'he' ? 'תוכנות פיתוח' : 'Development Software'}
+                </h3>
+              </div>
             </div>
-          </div>
 
-          {/* Comparison Rows */}
-          <div role="rowgroup">
-            {comparisonData.map((row, index) => (
-              <ComparisonRow key={index} row={row} index={index} language={language} />
-            ))}
+            {/* Comparison Rows */}
+            <div role="rowgroup">
+              {comparisonData.map((row, index) => (
+                <ComparisonRow key={index} row={row} index={index} language={language} />
+              ))}
+            </div>
           </div>
         </div>
 

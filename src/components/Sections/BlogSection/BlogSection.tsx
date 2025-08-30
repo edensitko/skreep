@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { BLOG_DATA, BLOG_CATEGORIES, BlogPost } from '@/data/blogData';
 
@@ -86,7 +87,7 @@ export default function BlogSection({ language: propLanguage }: BlogSectionProps
   };
 
   return (
-    <section className="relative overflow-hidden py-16 w-[95%] mx-auto bg-gradient-to-br">
+    <section className="relative overflow-hidden py-16 w-[95%] lg:w-[85%] mx-auto bg-gradient-to-br">
       <div className="mx-auto max-w-full px-0">
         {/* Header */}
         <div className="text-center pt-16 pb-8 w-full">
@@ -127,9 +128,10 @@ export default function BlogSection({ language: propLanguage }: BlogSectionProps
           >
             <div className="flex gap-4 md:gap-6 p-2 pl-[calc(50vw-12rem)] md:pl-2 pr-[calc(50vw-12rem)] md:pr-2 min-w-max">
               {BLOG_DATA.map((post: BlogPost, index: number) => (
-                <article
+                <Link
                   key={`${post.id}-${index}`}
-                  className="flex-shrink-0 w-80 lg:w-96 h-64 md:h-72 backdrop-blur-sm border rounded-2xl cursor-pointer group transition-all duration-300 hover:scale-95 bg-cover bg-center bg-no-repeat relative overflow-hidden opacity-90 border-white/20 hover:border-white/30 hover:opacity-100"
+                  href={`/blog/${post.id}`}
+                  className="flex-shrink-0 w-80 lg:w-96 h-64 md:h-72 backdrop-blur-sm border rounded-2xl cursor-pointer group transition-all duration-300 hover:scale-95 bg-cover bg-center bg-no-repeat relative overflow-hidden opacity-90 border-white/20 hover:border-white/30 hover:opacity-100 block"
                   style={{ backgroundImage: `url(${post.image})` }}
                   dir={language === 'he' ? 'rtl' : 'ltr'}
                 >
@@ -166,7 +168,7 @@ export default function BlogSection({ language: propLanguage }: BlogSectionProps
                       </span>
                     </div>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
           </div>

@@ -29,9 +29,14 @@ function AIConsultantCTASection() {
   // ============================================================================
   
   const handlePrimaryClick = useCallback(() => {
-    // Navigate to AI consultant or trigger action
-    console.log('Primary CTA clicked - AI Consultant');
-    // Add your navigation logic here
+    // Navigate to AI consultant chat section
+    const chatSection = document.getElementById('ai-consultant');
+    if (chatSection) {
+      chatSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Fallback: navigate to AI consultant page
+      window.location.href = '/ai-consultant';
+    }
   }, []);
   // ============================================================================
   // EFFECTS

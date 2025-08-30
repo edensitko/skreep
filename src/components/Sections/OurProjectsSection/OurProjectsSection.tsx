@@ -1,6 +1,7 @@
 'use client';
 
 import React, { memo, useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 import ProjectCard from './ProjectCard';
 import type { ProjectSection } from './types';
@@ -169,8 +170,9 @@ function OurProjectsSection() {
           
           {/* View More Button - Centered */}
           <div className="flex justify-center mt-16">
-            <button 
-              className="bg-gradient-to-l from-cyan-400/10 via-cyan-400/30 to-cyan-400/60 text-white border border-white/20 px-6 py-3 rounded-full font-semibold flex items-center gap-2" 
+            <Link 
+              href="/projects"
+              className="bg-gradient-to-l from-cyan-400/10 via-cyan-400/30 to-cyan-400/60 text-white border border-white/20 px-6 py-3 rounded-full font-semibold flex items-center gap-2 hover:from-cyan-400/20 hover:via-cyan-400/40 hover:to-cyan-400/70 hover:border-cyan-400/50 transition-all duration-300" 
               dir={language === 'he' ? 'rtl' : 'ltr'}
               aria-label={t('ourProjects.viewMoreProjects')}
             >
@@ -191,7 +193,7 @@ function OurProjectsSection() {
                   strokeLinejoin="round"
                 />
               </svg>
-            </button>
+            </Link>
           </div>
         </div>
       </div>

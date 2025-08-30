@@ -57,7 +57,7 @@ function NoCodeBenefitsSection() {
   return (
     <section 
       ref={sectionRef}
-      className="relative w-full py-8 md:py-20 overflow-hidden"
+      className="relative w-[95%] mx-auto pt-16 md:pt-20 overflow-hidden"
       dir="rtl"
       role="region"
       aria-label="יתרונות פתרונות ללא קוד"
