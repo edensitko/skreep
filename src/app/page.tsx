@@ -25,28 +25,24 @@ const ContactFormSection     = dynamic(() => import('@/components/Sections/Conta
 const ChatSection            = dynamic(() => import('@/components/Sections/ChatSection/ChatSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
 const BlogSection            = dynamic(() => import('@/components/Sections/BlogSection/BlogSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
 export const metadata: Metadata = {
-  title: "סקריפ - פתרונות בינה מלאכותית מתקדמים | Skreep AI Solutions",
-  description: "סקריפ מפתחת פתרונות AI חדשניים לעסקים: צ'אטבוטים חכמים, אוטומציה עסקית, בניית אתרים ומערכות AI מותאמות אישית. הצטרפו למהפכת הבינה המלאכותית בישראל.",
+  title: "סקריפ - פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
+  description: "סקריפ - חברת פתרונות בינה מלאכותית מובילה בישראל. פתרונות טכנולוגיים חדשניים לעסקים: אוטומציה חכמה, צ'אטבוטים, ניתוח נתונים וייעוץ AI. חסכו עלויות והגדילו יעילות עם הפתרונות המתקדמים שלנו.",
   keywords: [
     'סקריפ',
-    "Skreep",
     "בינה מלאכותית",
-    "AI solutions",
+    "פתרונות טכנולוגיים",
+    "עסקים",
+    "חדשנות",
+    "אוטומציה",
     "צ'אטבוטים",
-    "chatbots",
     "אוטומציה עסקית",
-    "business automation", 
     "בניית אתרים",
-    "web development",
-    "Skreep",
     "פתרונות דיגיטליים",
-    "digital solutions",
     "חדשנות טכנולוגית",
-    "technology innovation",
     "מערכות AI",
-    "AI systems",
     "שירותי AI",
-    "AI services"
+    "AI ישראל",
+    "ייעוץ טכנולוגי"
   ],
   authors: [{ name: 'Skreep', url: 'https://skreep.com' }],
   creator: 'Skreep',
@@ -61,13 +57,13 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "סקריפ | skreep - פתרונות בינה מלאכותית",
-    description: "פתרונות AI חדשניים לעסקים: צ'אטבוטים, אוטומציה ובניית אתרים. הצטרפו למהפכת הבינה המלאכותית עם Skreep.",
+    title: "סקריפ - פתרונות בינה מלאכותית מתקדמים לעסקים",
+    description: "סקריפ - חברת פתרונות בינה מלאכותית מובילה בישראל. פתרונות טכנולוגיים חדשניים לעסקים: אוטומציה חכמה, צ'אטבוטים וניתוח נתונים.",
     url: 'https://skreep.com',
-    siteName: 'Skreep',
+    siteName: 'סקריפ | Skreep',
     images: [
       {
-        url: 'https://skreep.com/assets/images/logo-2.png',
+        url: 'https://skreep.com/assets/images/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Skreep - פתרונות בינה מלאכותית',
@@ -79,11 +75,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "סקריפ | skreep - פתרונות בינה מלאכותית",
-    description: "פתרונות AI חדשניים לעסקים: צ'אטבוטים, אוטומציה ובניית אתרים. הצטרפו למהפכת הבינה המלאכותית.",
+    title: "סקריפ - פתרונות בינה מלאכותית מתקדמים לעסקים",
+    description: "סקריפ - חברת פתרונות בינה מלאכותית מובילה בישראל. פתרונות טכנולוגיים חדשניים לעסקים.",
     site: '@skreep',
     creator: '@skreep',
-    images: ['https://skreep.com/assets/images/logo-2.png'],
+    images: ['https://skreep.com/assets/images/og-image.jpg'],
   },
   robots: {
     index: true,

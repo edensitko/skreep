@@ -135,10 +135,10 @@ export default function ProjectsPage() {
     <>
       <PageSEO 
         pageType="projects"
-        title={language === 'he' ? 'פרוייקטים - פרויקטי בינה מלאכותית | סקריפ' : 'projects - AI Projects | Skreep'}
+        title={language === 'he' ? 'פרויקטים - דוגמאות עבודות בינה מלאכותית' : 'Projects - AI Work Examples | Skreep'}
         description={language === 'he' 
-          ? 'גלו את הפרויקטים המתקדמים שלנו בתחום הבינה המלאכותית. מערכות ניהול חכמות, פלטפורמות מסחר ואפליקציות בריאות דיגיטליות.'
-          : 'Discover our advanced AI projects. Smart management systems, commerce platforms and digital health applications.'
+          ? 'דוגמאות לפרויקטים שפיתחנו בתחום הבינה המלאכותית. מערכות ניהול חכמות, פלטפורמות מסחר ואפליקציות בריאות דיגיטליות.'
+          : 'Examples of AI projects we developed. Smart management systems, commerce platforms and digital health applications.'
         }
         faqs={faqData}
       />

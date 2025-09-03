@@ -8,16 +8,17 @@ module.exports = {
     '/admin/*',
     '/api/*',
     '/404',
-    '/500'
+    '/500',
+    '/projects/projects'
   ],
   alternateRefs: [
     {
       href: 'https://skreep.com',
-      hreflang: 'he',
+      hreflang: 'he-IL',
     },
     {
       href: 'https://skreep.com/en',
-      hreflang: 'en',
+      hreflang: 'en-US',
     },
     {
       href: 'https://skreep.com',
@@ -77,8 +78,11 @@ module.exports = {
     } else if (path.includes('/contact')) {
       priority = 0.9;
       changefreq = 'monthly';
-    } else if (path.includes('/projects')) {
+    } else if (path.includes('/services')) {
       priority = 0.8;
+      changefreq = 'weekly';
+    } else if (path.includes('/projects')) {
+      priority = 0.6;
       changefreq = 'weekly';
     }
 

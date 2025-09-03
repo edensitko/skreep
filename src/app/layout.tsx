@@ -15,9 +15,9 @@ import { generateLocalBusinessSchema, generateOrganizationSchema, generateWebsit
 // Using system fonts to avoid Turbopack issues
 
 export const metadata: Metadata = {
-  title: "סקריפ | skreep - פתרונות בינה מלאכותית | AI Solutions Israel",
-  description: "פתרונות בינה מלאכותית מתקדמים לעסקים בישראל. אנחנו מספקים פתרונות טכנולוגיים חדשניים שיעזרו לעסק שלכם לחסוך עלויות ולהגדיל יעילות. AI consulting, automation, chatbots.",
-  keywords: "בינה מלאכותית, פתרונות טכנולוגיים, עסקים, חדשנות, אוטומציה, AI Israel, artificial intelligence, chatbots, automation, consulting, ישראל",
+  title: "סקריפ - פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
+  description: "סקריפ - חברת פתרונות בינה מלאכותית מובילה בישראל. פתרונות טכנולוגיים חדשניים לעסקים: אוטומציה חכמה, צ'אטבוטים, ניתוח נתונים וייעוץ בינה מלאכותית. חסכו עלויות והגדילו יעילות עם הפתרונות המתקדמים שלנו.",
+  keywords: "סקריפ, בינה מלאכותית, פתרונות טכנולוגיים, עסקים, חדשנות, אוטומציה, צ'אטבוטים, ייעוץ טכנולוגי, פתרונות עסקיים, ישראל",
   authors: [{ name: "Skreep AI Solutions" }],
   creator: "Skreep",
   publisher: "Skreep",
@@ -38,16 +38,16 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "סקריפ | skreep - פתרונות בינה מלאכותית",
-    description: "פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
+    title: "סקריפ - פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
+    description: "סקריפ - חברת פתרונות בינה מלאכותית מובילה בישראל. פתרונות טכנולוגיים חדשניים לעסקים: אוטומציה חכמה, צ'אטבוטים וניתוח נתונים",
     type: "website",
     locale: "he_IL",
     alternateLocale: "en_US",
     url: "https://skreep.com",
-    siteName: "Skreep AI Solutions",
+    siteName: "סקריפ",
     images: [
       {
-        url: "https://skreep.com/assets/images/logo-2.png",
+        url: "https://skreep.com/assets/images/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Skreep AI Solutions Logo",
@@ -56,9 +56,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "סקריפ | skreep - פתרונות בינה מלאכותית",
-    description: "פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
-    images: ["https://skreep.com/assets/images/logo-2.png"],
+    title: "סקריפ - פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
+    description: "סקריפ - חברת פתרונות בינה מלאכותית מובילה בישראל. פתרונות טכנולוגיים חדשניים לעסקים",
+    images: ["https://skreep.com/assets/images/og-image.jpg"],
   },
   alternates: {
     canonical: "https://skreep.com",
