@@ -1,0 +1,125 @@
+'use client';
+
+import React, { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+const InnovationSection2 = () => {
+  const { language } = useLanguage();
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+
+      const rect = sectionRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const sectionHeight = rect.height;
+      
+      // Calculate scroll progress from when section enters until it completely exits
+      const sectionTop = rect.top;
+      const sectionBottom = rect.bottom;
+      
+      // Animation starts when section enters viewport and continues until it completely exits
+      if (sectionBottom > 0 && sectionTop < windowHeight) {
+        // Mobile-optimized scroll calculation
+        if (isMobile) {
+          // For mobile: simpler, more responsive calculation
+          const viewportCenter = windowHeight / 2;
+          const sectionCenter = sectionTop + sectionHeight / 2;
+          const distanceFromCenter = viewportCenter - sectionCenter;
+          const maxDistance = (windowHeight + sectionHeight) / 2;
+          const progress = Math.max(0, Math.min(1, 0.5 + (distanceFromCenter / maxDistance) * 0.5));
+          setScrollProgress(progress);
+        } else {
+          // Desktop: original calculation
+          const totalAnimationRange = windowHeight * 0.8 + sectionHeight * 0.6;
+          const currentScroll = windowHeight - sectionTop;
+          const progress = Math.max(0, Math.min(1, currentScroll / totalAnimationRange));
+          setScrollProgress(progress);
+        }
+      } else if (sectionTop >= windowHeight) {
+        setScrollProgress(0);
+      } else if (sectionBottom <= 0) {
+        setScrollProgress(1);
+      }
+    };
+
+    // Initial setup
+    handleResize();
+    handleScroll();
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isMobile]);
+
+  return (
+    <section 
+      ref={sectionRef}
+      className="w-full bg-black relative overflow-hidden border-t border-b border-white/50"
+    >
+      <div className="w-[100%]  mx-auto ">
+        <div className="relative z-10">
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/10 via-transparent to-purple-600/10 animate-pulse"></div>
+        
+       
+
+        {/* Large blur effects */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-400/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-400/5 rounded-full blur-3xl animate-pulse"></div>
+      </div>
+
+      {/* Main Content */}
+      <div className="container mx-auto py-2 relative z-10">
+        <div className="text-center">
+          {/* Main Text with Stunning Effects */}
+          <div className="relative">
+            {/* Background glow effect */}
+           
+
+            {/* Main text with controlled scroll animation */}
+            <h1 
+              className="relative text-2xl sm:text-2xl md:text-3xl lg:text-6xl font-black text-transparent"
+              style={{
+                transform: `translateX(${language === 'he' ? (0.5 - scrollProgress) * (isMobile ? 120 : 400) : (scrollProgress - 0.5) * (isMobile ? 120 : 400)}px)`,
+                WebkitTextStroke: isMobile ? '0.5px white' : '1px white',
+                transition: isMobile ? 'transform 0.1s ease-out' : 'transform 0.15s ease-out'
+              }}
+            >
+              {language === 'he' ? ' טכונולוגיה שמשנה עסקים' : 'TECHNOLOGY THAT CHANGES BUSINESS'}
+            </h1>
+
+            {/* Duplicate text with opposite direction */}
+            <h1 
+              className="relative mt-1 sm:mt-2 text-2xl sm:text-xl md:text-3xl lg:text-6xl font-black opacity-80 text-transparent"
+              style={{
+                transform: `translateX(${language === 'he' ? (scrollProgress - 0.5) * (isMobile ? 100 : 350) : (0.5 - scrollProgress) * (isMobile ? 100 : 350)}px)`,
+                WebkitTextStroke: isMobile ? '0.5px cyan' : '1px cyan',
+                transition: isMobile ? 'transform 0.1s ease-out' : 'transform 0.15s ease-out'
+              }}
+            >
+              {language === 'he' ? 'בינה מלאכותית לכל מטרה'  : 'INTELLIGENT AI FOR EVERY GOAL'}
+            </h1>
+          </div>
+        </div>
+        </div>
+      </div>
+      </div>
+    </section>
+  );
+};
+
+export default InnovationSection2;
