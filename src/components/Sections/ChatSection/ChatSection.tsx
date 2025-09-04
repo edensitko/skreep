@@ -21,9 +21,34 @@ const ChatSection: React.FC = () => {
   });
   
   const [conversationHistory, setConversationHistory] = useState<OpenAIChatMessage[]>([]);
+  const [isVisible, setIsVisible] = useState(false);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+
+  // Intersection Observer for title animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentTitleRef = titleRef.current;
+    if (currentTitleRef) {
+      observer.observe(currentTitleRef);
+    }
+
+    return () => {
+      if (currentTitleRef) {
+        observer.unobserve(currentTitleRef);
+      }
+    };
+  }, []);
 
   // Auto-scroll to bottom when new messages arrive (only within messages container)
   const scrollToBottom = useCallback(() => {
@@ -229,10 +254,17 @@ const ChatSection: React.FC = () => {
       <div className=" z-10 w-full mx-auto px-4 sm:px-6 lg:px-8 relative items-center">
         {/* Header */}
         <div className="text-center mb-4 lg:mb-6 ">
-          <h1 className="font-bold text-center bg-gradient-to-br from-white via-white-60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-6 leading-tight tracking-wide transition-all duration-1000 ease-out mx-auto" >
+          <h1 
+            ref={titleRef}
+            className={`font-bold text-center bg-gradient-to-br from-white via-white-60 to-white/20 bg-clip-text text-transparent text-3xl md:text-4xl lg:text-5xl mb-6 leading-tight tracking-wide transition-all duration-1000 ease-out mx-auto ${
+              isVisible 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-8'
+            }`}
+          >
             {t('chat.title')}
           </h1>
-          <p className="text-white/70 text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed" >
+          <p className="text-white/70 text-md lg:text-xl max-w-xl mx-auto leading-relaxed" >
             {t('chat.subtitle')}
           </p>
           <div className="mt-8 lg:mt-12 flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-12 text-white/60">
@@ -241,7 +273,7 @@ const ChatSection: React.FC = () => {
 
         {/* Chat Container */}
         <div className="max-w-4xl lg:max-w-5xl mx-auto">
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl">
+          <div className="">
             
             {/* Chat Messages Area - Only visible in chat mode */}
             {mode === 'chat' && (
@@ -291,6 +323,67 @@ const ChatSection: React.FC = () => {
             <p className="text-center text-white/50 text-sm mt-4 animate-fadeIn" >
               {t('chat.helperText')}
             </p>
+          )}
+
+          {/* Suggestion Buttons - Only visible in input mode */}
+          {mode === 'input' && (
+            <div className="mt-4 flex flex-wrap justify-center gap-2 max-w-6xl mx-auto px-0">
+              {language === 'he' ? (
+                <>
+                  <button
+                    onClick={() => setInputValue('אני רוצה לפתח אתר לעסק שלי')}
+                    className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-white/70 hover:bg-white/10 hover:text-white transition-all duration-300 text-xs"
+                  >
+                    אני רוצה לפתח אתר לעסק שלי
+                  </button>
+                  <button
+                    onClick={() => setInputValue('איך אוכל לשלב בינה מלאכותית בעסק שלי?')}
+                    className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-white/70 hover:bg-white/10 hover:text-white transition-all duration-300 text-xs"
+                  >
+                    איך אוכל לשלב בינה מלאכותית בעסק שלי?
+                  </button>
+                  <button
+                    onClick={() => setInputValue('מה זה MVP ואיך אני יכול לפתח אחד?')}
+                    className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-white/70 hover:bg-white/10 hover:text-white transition-all duration-300 text-xs"
+                  >
+                    מה זה MVP ואיך אני יכול לפתח אחד?
+                  </button>
+                  <button
+                    onClick={() => setInputValue('כמה זמן לוקח לפתח אפליקציה?')}
+                    className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-white/70 hover:bg-white/10 hover:text-white transition-all duration-300 text-xs"
+                  >
+                    כמה זמן לוקח לפתח אפליקציה?
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => setInputValue('I want to develop a website for my business')}
+                    className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-white/70 hover:bg-white/10 hover:text-white transition-all duration-300 text-xs"
+                  >
+                    I want to develop a website for my business
+                  </button>
+                  <button
+                    onClick={() => setInputValue('How can I integrate AI into my business?')}
+                    className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-white/70 hover:bg-white/10 hover:text-white transition-all duration-300 text-xs"
+                  >
+                    How can I integrate AI into my business?
+                  </button>
+                  <button
+                    onClick={() => setInputValue('What is an MVP and how can I develop one?')}
+                    className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-white/70 hover:bg-white/10 hover:text-white transition-all duration-300 text-xs"
+                  >
+                    What is an MVP and how can I develop one?
+                  </button>
+                  <button
+                    onClick={() => setInputValue('How long does it take to develop an app?')}
+                    className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-white/70 hover:bg-white/10 hover:text-white transition-all duration-300 text-xs"
+                  >
+                    How long does it take to develop an app?
+                  </button>
+                </>
+              )}
+            </div>
           )}
           {/* Image under chat */}
           <div className="flex justify-center items-center py-6 ">
