@@ -10,7 +10,7 @@ const ContactInfoItem = memo<ContactInfoItemProps>(({ contact, language }) => {
   const { t } = useLanguage();
   
   return (
-    <div className="flex items-center gap-2" dir={language === 'he' ? 'rtl' : 'ltr'}>
+    <div className="flex gap-1" dir={language === 'he' ? 'rtl' : 'ltr'}>
       <div 
         className={`w-6 h-6 rounded-full bg-gradient-to-r ${gradient} flex items-center justify-center flex-shrink-0`}
         aria-hidden="true"

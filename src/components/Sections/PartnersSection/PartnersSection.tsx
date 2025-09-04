@@ -97,7 +97,7 @@ function PartnersSection() {
         <div className="relative z-20 mb-8 md:mb-12">
           <h1 
             ref={titleRef}
-            className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight transition-all duration-1000 ease-out ${
+            className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-3xl md:text-4xl lg:text-5xl mb-4 leading-tight transition-all duration-1000 ease-out ${
               isVisible 
                 ? 'opacity-100 translate-y-0' 
                 : 'opacity-0 translate-y-8'

@@ -62,7 +62,7 @@
     "sectionAriaLabel": "About Us",
     "title": "About Us",
     "heading": "Leading Software House",
-    "description": "Defined by digital dynamics, our digital marketing agency stands out as a beacon of innovation and strategic capability.\n\nWe love to turn our knowledge and understanding into something that will help you succeed.\n\nWe believe in the power of challenge and change to make the world more efficient.",
+    "description": "A software and digital house that accompanies businesses and companies from the idea stage to the finished product. In every project, we combine advanced technology, creativity, and strategic thinking - to build solutions that create real value for our clients. Our expertise is turning ideas into reality.",
     "buttonText": "Read More",
     "imageAlt": "About us main image"
   },
@@ -170,7 +170,7 @@
         "title": "AI Solutions",
         "description": "Advanced AI systems for businesses",
         "longDescription": "Development of customized artificial intelligence solutions that improve business efficiency and enable data-driven decision making.",
-        "features": ["Advanced Machine Learning", "Natural Language Processing", "Smart Data Analysis", "Smart Automation"],
+        "features": ["Advanced Machine Learning", "Natural Language Processing", "Smart Data Analysis", "Smart Automation", "Computer Vision", "Pattern Recognition"],
         "color": "from-blue-500 to-purple-600",
         "imageBg": "/assets/images/servicesimg/1.png"
       },
@@ -179,7 +179,7 @@
         "title": "Web Development",
         "description": "Custom digital solutions",
         "longDescription": "Creating advanced websites and applications with responsive design, fast performance and excellent user experience.",
-        "features": ["Responsive Design", "Fast Performance", "Advanced SEO", "High Security"],
+        "features": ["Responsive Design", "Fast Performance", "Advanced SEO", "High Security", "React Development", "Node.js Backend"],
         "color": "from-green-500 to-teal-600",
         "imageBg": "/assets/images/servicesimg/2.png"
       },
@@ -188,7 +188,7 @@
         "title": "Business Automation",
         "description": "Time and resource savings",
         "longDescription": "Implementation of advanced automation solutions that streamline business processes and reduce operational costs.",
-        "features": ["Process Automation", "Workflow Management", "Automated Reports", "Advanced Integrations"],
+        "features": ["Process Automation", "Workflow Management", "Automated Reports", "Advanced Integrations", "RPA Solutions", "Workflow Optimization"],
         "color": "from-orange-500 to-red-600",
         "imageBg": "/assets/images/servicesimg/9.png"
       },
@@ -197,7 +197,7 @@
         "title": "Mobile App Development",
         "description": "Native and hybrid mobile development with excellent user experience and high performance",
         "longDescription": "Development of native and hybrid mobile applications with excellent user experience and high performance.",
-        "features": ["Native Development", "Advanced UX/UI Design", "API Integration", "App Store Publishing"],
+        "features": ["Native Development", "Advanced UX/UI Design", "API Integration", "App Store Publishing", "React Native", "Flutter Development"],
         "color": "from-pink-500 to-rose-600",
         "imageBg": "/assets/images/servicesimg/10.png"
       },
@@ -206,7 +206,7 @@
         "title": "Cloud Solutions",
         "description": "Advanced and secure cloud infrastructure",
         "longDescription": "Setup and management of advanced cloud infrastructure with high availability, maximum security and full flexibility.",
-        "features": ["AWS & Azure", "Data Security", "Automated Backups", "24/7 Monitoring"],
+        "features": ["AWS & Azure", "Data Security", "Automated Backups", "24/7 Monitoring", "Docker Containers", "Kubernetes"],
         "color": "from-cyan-500 to-blue-600",
         "imageBg": "/assets/images/servicesimg/3.png"
       }
@@ -393,6 +393,7 @@
   "comparisonTable": {
     "title": "Why Choose Us ?",
     "titleHighlight": "",
+    "subtitle": "Comprehensive comparison between different market solutions",
     "sectionAriaLabel": "Service comparison",
     "tableAriaLabel": "Comparison table between service providers",
     "headers": {
@@ -526,13 +527,8 @@
       "address": "Tel Aviv, Israel",
       "email": "info@skreep.com",
       "phone": "-"
-    },
-    "newsletter": {
-      "title": "Subscribe to Newsletter",
-      "description": "Subscribe to our newsletter to receive updates on new products and offers",
-      "placeholder": "Enter your email",
-      "submitAriaLabel": "Subscribe to newsletter"
     }
+  
   },
   "common": {
     "loading": "Loading...",

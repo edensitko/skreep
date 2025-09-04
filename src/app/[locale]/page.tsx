@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'technology innovation',
         'AI systems',
         'AI services',
-        'Israel AI',
+        'AI',
         'AI consulting'
       ],
       authors: [{ name: 'Skreep', url: 'https://skreep.com' }],

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 import ComparisonRow from './ComparisonRow';
@@ -12,6 +12,10 @@ import { COMPARISON_DATA } from './constants';
  */
 function ComparisonTableSection() {
   const { language, t } = useLanguage();
+  const [isVisible, setIsVisible] = useState(false);
+  const [isSubtitleVisible, setIsSubtitleVisible] = useState(false);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
   
   // Get comparison data from translations with language-aware fallback
   const comparisonData = useMemo(() => {
@@ -99,17 +103,77 @@ function ComparisonTableSection() {
       ];
     }
   }, [t, language]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentTitleRef = titleRef.current;
+    if (currentTitleRef) {
+      observer.observe(currentTitleRef);
+    }
+
+    return () => {
+      if (currentTitleRef) {
+        observer.unobserve(currentTitleRef);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsSubtitleVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentSubtitleRef = subtitleRef.current;
+    if (currentSubtitleRef) {
+      observer.observe(currentSubtitleRef);
+    }
+
+    return () => {
+      if (currentSubtitleRef) {
+        observer.unobserve(currentSubtitleRef);
+      }
+    };
+  }, []);
   
   return (
     <div className="w-full">
       {/* Title Outside the Box */}
-      <div className="text-center w-[85%] mx-auto">
+      <div className="text-center w-[85%] my-2 mt-20 mx-auto">
         <h1 
-          className="w-full font-bold text-center bg-gradient-to-r from-white/90 via-white-50 to-white/10 bg-clip-text text-transparent text-3xl md:text-3xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out opacity-100 translate-y-0"
+          ref={titleRef}
+          className={`w-full font-bold text-center bg-gradient-to-r from-white/90 via-white-50 to-white/10 bg-clip-text text-transparent text-3xl md:text-3xl lg:text-5xl mb-2 leading-tight tracking-wide transition-all duration-1000 ease-out ${
+            isVisible 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-8'
+          }`}
           dir='ltr'
         >
           {t('comparisonTable.title')} <span className="bg-gradient-to-r from-white/30 to-white/10 bg-clip-text text-transparent font-extrabold">{t('comparisonTable.titleHighlight')}</span>
         </h1>
+        
+        <p 
+          ref={subtitleRef}
+          className={`text-md font-light md:text-lg text-white/70 mx-auto transition-all duration-1000 delay-200 ${
+            isSubtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+          dir={language === 'he' ? 'rtl' : 'ltr'}
+          style={{ textAlign: 'center' }}
+        >
+          {t('comparisonTable.subtitle') || (language === 'he' ? 'השוואה מקיפה בין הפתרונות השונים בשוק' : 'Comprehensive comparison between different market solutions')}
+        </p>
       </div>
       
       <section 

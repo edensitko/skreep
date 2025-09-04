@@ -34,8 +34,8 @@ function AboutSection() {
         }
       },
       {
-        threshold: 0.3,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.5,
+        rootMargin: '-100px 0px -100px 0px'
       }
     );
 

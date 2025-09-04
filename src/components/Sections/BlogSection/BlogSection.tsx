@@ -26,6 +26,10 @@ export default function BlogSection({ language: propLanguage }: BlogSectionProps
   const [visibleSlides, setVisibleSlides] = useState(1);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isSubtitleVisible, setIsSubtitleVisible] = useState(false);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
 
   const updateVisibleSlides = () => {
     if (typeof window !== 'undefined') {
@@ -38,6 +42,50 @@ export default function BlogSection({ language: propLanguage }: BlogSectionProps
     const handleResize = () => updateVisibleSlides();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentTitleRef = titleRef.current;
+    if (currentTitleRef) {
+      observer.observe(currentTitleRef);
+    }
+
+    return () => {
+      if (currentTitleRef) {
+        observer.unobserve(currentTitleRef);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsSubtitleVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentSubtitleRef = subtitleRef.current;
+    if (currentSubtitleRef) {
+      observer.observe(currentSubtitleRef);
+    }
+
+    return () => {
+      if (currentSubtitleRef) {
+        observer.unobserve(currentSubtitleRef);
+      }
+    };
   }, []);
 
   const totalSlides = BLOG_DATA.length;
@@ -87,16 +135,32 @@ export default function BlogSection({ language: propLanguage }: BlogSectionProps
   };
 
   return (
-    <section className="relative overflow-hidden py-16 w-[95%] lg:w-[85%] mx-auto bg-gradient-to-br">
+    <section className="relative overflow-hidden py-20 w-[95%] lg:w-[85%] mx-auto bg-gradient-to-br">
       <div className="mx-auto max-w-full px-0">
         {/* Header */}
-        <div className="text-center pt-16 pb-8 w-full">
+        <div className="text-center pb-2 w-full">
           <h2 
-            className="font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out"
+            ref={titleRef}
+            className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-3xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out ${
+              isVisible 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-8'
+            }`}
             style={{ textAlign: 'center' }}
           >
             {language === 'he' ? 'הבלוג שלנו' : 'Our Blog'}
           </h2>
+          
+          <p 
+            ref={subtitleRef}
+            className={`text-md font-light md:text-lg text-white/70 mx-auto transition-all duration-1000 delay-200 ${
+              isSubtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+            dir={language === 'he' ? 'rtl' : 'ltr'}
+            style={{ textAlign: 'center' }}
+          >
+            {language === 'he' ? 'תובנות, טיפים ומאמרים על טכנולוגיות מתקדמות ובינה מלאכותית' : 'Insights, tips, and articles about advanced technologies and artificial intelligence'}
+          </p>
         </div>
 
 
@@ -131,7 +195,7 @@ export default function BlogSection({ language: propLanguage }: BlogSectionProps
                 <Link
                   key={`${post.id}-${index}`}
                   href={`/blog/${post.id}`}
-                  className="flex-shrink-0 w-80 lg:w-96 h-64 md:h-72 backdrop-blur-sm border rounded-2xl cursor-pointer group transition-all duration-300 hover:scale-95 bg-cover bg-center bg-no-repeat relative overflow-hidden opacity-90 border-white/20 hover:border-white/30 hover:opacity-100 block"
+                  className="flex-shrink-0 w-70 lg:w-96 h-64 md:h-72 backdrop-blur-sm border rounded-2xl cursor-pointer group transition-all duration-300 hover:scale-95 bg-cover bg-center bg-no-repeat relative overflow-hidden opacity-90 border-white/20 hover:border-white/30 hover:opacity-100 block"
                   style={{ backgroundImage: `url(${post.image})` }}
                   dir={language === 'he' ? 'rtl' : 'ltr'}
                 >

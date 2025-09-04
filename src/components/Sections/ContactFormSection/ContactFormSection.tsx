@@ -186,17 +186,23 @@ function ContactFormSection() {
       role="region"
       aria-label={t('contactForm.sectionAriaLabel')}
     >
-      {/* Glass-morphism container matching About section */}
-      <div className="text-center mb-6">
-            <h2 className="font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out" >
+        <div className="text-center mb-6">
+            <h2 className="font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-3xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out" >
               {t('contactForm.title')}
             </h2>
-            <p className="text-xl text-white/70 max-w-2xl mx-auto leading-relaxed text-center">
+           
+          </div>
+      {/* Glass-morphism container matching About section */}
+   
+      <div className="bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/30 rounded-2xl lg:rounded-4xl before:absolute before:inset-0 before:rounded-2xl lg:before:rounded-4xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl lg:after:rounded-4xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden transition-all duration-700 ease-out text-white pt-8 md:pt-16 pb-4 md:pb-8">
+      <div className="text-center mb-6">
+          
+            <p className="text-md text-white/70 max-w-2xl mx-auto leading-relaxed text-center">
               {t('contactForm.subtitle')}
             </p>
           </div>
-      <div className="bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/30 rounded-2xl lg:rounded-4xl before:absolute before:inset-0 before:rounded-2xl lg:before:rounded-4xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl lg:after:rounded-4xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden transition-all duration-700 ease-out text-white pt-8 md:pt-16 pb-4 md:pb-8">
-        <div className="container mx-auto px-4 md:px-8 py-8 md:py-16 relative z-10">
+        <div className="container mx-auto px-4 md:px-4 py-4 md:py-4 relative z-10">
+          
           <div className="max-w-2xl mx-auto">
           {/* Header */}
        
@@ -353,7 +359,7 @@ function ContactFormSection() {
             </form>
           
             {/* Contact Info */}
-            <div className="mt-6 space-x-10 flex">
+            <div className="mt-6 space-x-5 flex">
               {CONTACT_INFO.map((contact, index) => (
                 <ContactInfoItem
                   key={index}

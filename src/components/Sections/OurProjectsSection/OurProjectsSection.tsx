@@ -13,7 +13,11 @@ function OurProjectsSection() {
   const { language, t } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [projectsData, setProjectsData] = useState<ProjectSection[]>([]);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isSubtitleVisible, setIsSubtitleVisible] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
 
   // Update projects data when language changes
   useEffect(() => {
@@ -75,6 +79,42 @@ function OurProjectsSection() {
     });
   }, [language]);
 
+  // Intersection Observer for title animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (titleRef.current) {
+      observer.observe(titleRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Intersection Observer for subtitle animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsSubtitleVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (subtitleRef.current) {
+      observer.observe(subtitleRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const scrollToCard = (index: number) => {
     setCurrentIndex(index);
     if (carouselRef.current) {
@@ -100,21 +140,36 @@ function OurProjectsSection() {
 
   return (
     <section 
-      className="w-[90%] mx-auto py-16 md:py-24 relative overflow-hidden"
+      className="w-[90%] mx-auto py-16 mb-20 md:py-24 relative overflow-hidden"
       role="region"
       aria-label={t('ourProjects.title')}
     >
       <div className="container mx-auto px-10 ">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-2">
+          <div className="relative z-20 mb-8 md:mb-12">
             <h1 
-              className="font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out"
-             
+              ref={titleRef}
+              className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-3xl md:text-4xl lg:text-5xl mb-4 leading-tight transition-all duration-1000 ease-out ${
+                isVisible 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-8'
+              }`}
               style={{ textAlign: 'center' }}
             >
               {t('ourProjects.title')}
             </h1>
+            
+            <p 
+              ref={subtitleRef}
+              className={`text-md font-light md:text-lg text-white/70 mx-auto transition-all duration-1000 delay-200 ${
+                isSubtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+              dir={language === 'he' ? 'rtl' : 'ltr'}
+              style={{ textAlign: 'center' }}
+            >
+              {t('ourProjects.subtitle') || (language === 'he' ? 'מבחר מהפרויקטים המוצלחים שפיתחנו ללקוחותינו' : 'A selection of successful projects we developed for our clients')}
+            </p>
           
           </div>
 

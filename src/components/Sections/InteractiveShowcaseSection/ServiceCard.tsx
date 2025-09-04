@@ -41,7 +41,7 @@ const ServiceCard = memo<ServiceCardProps>(({
       </div>
 
       {/* Service Content */}
-      <div className="space-y-3 md:space-y-4" dir="rtl">
+      <div className="space-y-3 md:space-y-4" >
         <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-cyan-100 transition-colors">
           {service.title}
         </h3>

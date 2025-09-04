@@ -65,7 +65,7 @@ export default function HeroFour() {
             <div className="flex justify-center p-5 rounded-3xl mt-10">
               <div>
                 
-                <h1 className="font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-xl sm:text-xl text-center mb-7 md:mb-[60px] w-full max-w-[844px] mx-auto transition-all duration-1000 ease-out" dir="rtl">
+                <h1 className="font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-3xl sm:text-3xl text-center mb-7 md:mb-[60px] w-full max-w-[844px] mx-auto transition-all duration-1000 ease-out" dir="rtl">
                   <span>יועץ הבינה מלאכותית שלך</span>
                   <span className="text-cyan"> שוחחו על הרעיון שלכם עם עוזר הבינה המלאכותית כדי להתחיל.</span>
                 </h1>

@@ -57,7 +57,7 @@ function NoCodeBenefitsSection() {
   return (
     <section 
       ref={sectionRef}
-      className="relative w-[95%] mx-auto pt-16 md:pt-20 overflow-hidden"
+      className="relative w-[95%] mx-auto pt-20 md:pt-20 overflow-hidden"
       dir="rtl"
       role="region"
       aria-label="יתרונות פתרונות ללא קוד"
@@ -91,7 +91,7 @@ function NoCodeBenefitsSection() {
         <div className="text-center mb-8 md:mb-16">
           <h1 
             ref={titleRef}
-            className={`font-bold bg-gradient-to-br from-white via-white-60 to-white/20 bg-clip-text text-transparent text-2xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out ${
+            className={`font-bold bg-gradient-to-br from-white via-white-60 to-white/20 bg-clip-text text-transparent text-3xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out ${
               state.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             dir="rtl"
@@ -101,7 +101,7 @@ function NoCodeBenefitsSection() {
           </h1>
           
           <p 
-            className={`text-lg md:text-xl text-white/70 leading-relaxed max-w-4xl mx-auto transition-all duration-1000 delay-200 ${
+            className={`text-md  font-light md:text-lg text-white/70 mx-auto transition-all duration-1000 delay-200 ${
               state.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >

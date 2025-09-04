@@ -183,7 +183,7 @@ export default function RootPage() {
   return (
     <LanguageProvider>
       <StructuredData data={structuredData} />
-      <main className="flex min-h-screen flex-col">
+      <main className="flex bg-black min-h-screen flex-col">
         <Header />
         <HeroGrid />
         <PartnersSection />
