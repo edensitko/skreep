@@ -69,11 +69,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     if (!isMounted) return key; // Return key during SSR/SSG
     
     const keys = key.split('.');
-    let value: any = messages[language];
+    let value: unknown = messages[language];
     
     for (const k of keys) {
-      if (value && value[k] !== undefined) {
-        value = value[k];
+      if (value && typeof value === 'object' && k in (value as Record<string, unknown>)) {
+        value = (value as Record<string, unknown>)[k];
       } else {
         if (process.env.NODE_ENV !== 'production') {
           console.warn(`Translation key not found: ${key}`);
@@ -82,7 +82,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       }
     }
     
-    return value || key;
+    return typeof value === 'string' ? value : key;
   };
 
   return (
