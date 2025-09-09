@@ -263,8 +263,7 @@ export default async function LocalePage({ params }: Props) {
 }
 
 export async function generateStaticParams() {
-  return [
-    { locale: 'en' },
-    { locale: 'he' }
-  ];
+  return [{ locale: "he" },
+     { locale: "en" }]; 
+
 }
