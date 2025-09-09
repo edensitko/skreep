@@ -173,15 +173,20 @@ export function generateLocalBusinessSchema() {
  */
 export function generateOrganizationSchema() {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    '@id': `${seoConfig.siteUrl}#organization`,
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${seoConfig.siteUrl}#organization`,
     name: businessInfo.name,
     url: businessInfo.url,
-    logo: `${seoConfig.siteUrl}/assets/images/logo.png`,
+    logo: {
+      "@type": "ImageObject",
+      url: `${seoConfig.siteUrl}/logo-full.png`,
+      width: 512,
+      height: 512,
+    },
     description: businessInfo.description,
     address: {
-      '@type': 'PostalAddress',
+      "@type": "PostalAddress",
       streetAddress: businessInfo.address.streetAddress,
       addressLocality: businessInfo.address.addressLocality,
       addressRegion: businessInfo.address.addressRegion,
@@ -189,15 +194,15 @@ export function generateOrganizationSchema() {
       addressCountry: businessInfo.address.addressCountry,
     },
     contactPoint: {
-      '@type': 'ContactPoint',
+      "@type": "ContactPoint",
       telephone: businessInfo.telephone,
-      contactType: 'customer service',
+      contactType: "customer service",
       email: businessInfo.email,
-      availableLanguage: ['Hebrew', 'English'],
+      availableLanguage: ["Hebrew", "English"],
     },
     sameAs: [
-      'https://www.linkedin.com/company/skreep',
-      'https://twitter.com/skreep_ai',
+      "https://www.linkedin.com/company/skreep",
+      "https://twitter.com/skreep_ai",
     ],
   };
 }
