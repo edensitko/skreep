@@ -4,18 +4,6 @@
 // import ClientLayout from '@/components/Layout/ClientLayout';
 // import { UserTypeProvider } from '@/hooks/useGlobalUserType';
 // import { ConditionalLayout } from '@/components/Layout/ConditionalLayout';
-// import { LanguageProvider } from '@/contexts/LanguageContext';
-// import Analytics from '@/components/SEO/Analytics';
-// import CookieConsent from '@/components/SEO/CookieConsent';
-// import DynamicMetadata from '@/components/Layout/DynamicMetadata';
-// import { DynamicHtmlWrapper } from '@/components/Layout/DynamicHtmlWrapper';
-// import StructuredData from '@/components/SEO/StructuredData';
-// import { generateLocalBusinessSchema, generateOrganizationSchema, generateWebsiteSchema } from '@/lib/seo/utils';
-
-// // Using system fonts to avoid Turbopack issues
-
-// export const metadata: Metadata = {
-//   title: "סקריפ - פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
 //   description: "סקריפ - חברת פתרונות בינה מלאכותית מובילה בישראל. פתרונות טכנולוגיים חדשניים לעסקים: אוטומציה חכמה, צ'אטבוטים, ניתוח נתונים וייעוץ בינה מלאכותית. חסכו עלויות והגדילו יעילות עם הפתרונות המתקדמים שלנו.",
 //   keywords: "סקריפ, בינה מלאכותית, פתרונות טכנולוגיים, עסקים, חדשנות, אוטומציה, צ'אטבוטים, ייעוץ טכנולוגי, פתרונות עסקיים, ישראל",
 //   authors: [{ name: "Skreep AI Solutions" }],
@@ -122,17 +110,17 @@ import "./globals.css";
 import ClientLayout from "@/components/Layout/ClientLayout";
 import { UserTypeProvider } from "@/hooks/useGlobalUserType";
 import { ConditionalLayout } from "@/components/Layout/ConditionalLayout";
-import { LanguageProvider } from "@/contexts/LanguageContext";
 import Analytics from "@/components/SEO/Analytics";
 import CookieConsent from "@/components/SEO/CookieConsent";
 import DynamicMetadata from "@/components/Layout/DynamicMetadata";
 import { DynamicHtmlWrapper } from "@/components/Layout/DynamicHtmlWrapper";
 import StructuredData from "@/components/SEO/StructuredData";
-import {
-  generateLocalBusinessSchema,
-  generateOrganizationSchema,
-  generateWebsiteSchema,
-} from "@/lib/seo/utils";
+import { generateLocalBusinessSchema, generateOrganizationSchema, generateWebsiteSchema } from "@/lib/seo/utils";
+import { useCallback, useMemo, useState } from 'react';
+import PageSEO from '@/components/SEO/PageSEO';
+import LocalSEO from '@/components/SEO/LocalSEO';
+import AEO from '@/components/SEO/AEO';
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 // חשוב: ודא שבנתיב הבא קיימים הקבצים:
 // /assets/images/logo-2.png  (32x32 לפחות)
@@ -223,12 +211,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // JSON-LD גלובלי – ארגון/אתר/עסק מקומי
-  const structuredData = [
+  // Global structured data
+  const [pageStructuredData, setPageStructuredData] = useState<Array<Record<string, unknown>>>([]);
+  
+  // Combine all structured data
+  const structuredData = useMemo(() => [
     generateLocalBusinessSchema(),
-    generateOrganizationSchema(), 
+    generateOrganizationSchema(),
     generateWebsiteSchema(),
-  ];
+    ...pageStructuredData
+  ].filter(Boolean), [pageStructuredData]);
+  
+  // Callback to collect structured data from page components
+  const handleStructuredData = useCallback((data: Array<Record<string, unknown>>) => {
+    setPageStructuredData((prev: Array<Record<string, unknown>>) => [...prev, ...data]);
+  }, []);
 
   return (
     <html lang="he" dir="rtl" suppressHydrationWarning>
@@ -242,6 +239,9 @@ export default function RootLayout({
           <DynamicHtmlWrapper>
             <UserTypeProvider>
               <ClientLayout>
+                <PageSEO onStructuredData={handleStructuredData} />
+                <LocalSEO onStructuredData={handleStructuredData} />
+                <AEO onStructuredData={handleStructuredData} />
                 <ConditionalLayout>{children}</ConditionalLayout>
               </ClientLayout>
             </UserTypeProvider>

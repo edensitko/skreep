@@ -127,44 +127,37 @@ export function generatePageMetadata(props: PageSEOProps = {}): Metadata {
  */
 export function generateLocalBusinessSchema() {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    '@id': `${seoConfig.siteUrl}#business`,
-    name: businessInfo.name,
-    description: businessInfo.description,
-    url: businessInfo.url,
-    telephone: businessInfo.telephone,
-    email: businessInfo.email,
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${seoConfig.siteUrl}#business`,
+    name: "סקריפ - פתרונות בינה מלאכותית",
+    url: seoConfig.siteUrl,
+    telephone: "+972-3-1234567",
+    email: "info@skreep.com",
+    image: `${seoConfig.siteUrl}/logo-512.png`,
+    priceRange: "$$",
     address: {
-      '@type': 'PostalAddress',
-      streetAddress: businessInfo.address.streetAddress,
-      addressLocality: businessInfo.address.addressLocality,
-      addressRegion: businessInfo.address.addressRegion,
-      postalCode: businessInfo.address.postalCode,
-      addressCountry: businessInfo.address.addressCountry,
+      "@type": "PostalAddress",
+      streetAddress: "רחוב הטכנולוגיה 123",
+      addressLocality: "תל אביב",
+      addressRegion: "מחוז תל אביב",
+      postalCode: "6789012",
+      addressCountry: "IL"
     },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: businessInfo.geo.latitude,
-      longitude: businessInfo.geo.longitude,
-    },
-    openingHoursSpecification: businessInfo.openingHours.map(hours => ({
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: hours.split(' ')[0],
-      opens: hours.split(' ')[1].split('-')[0],
-      closes: hours.split(' ')[1].split('-')[1],
-    })),
-    priceRange: businessInfo.priceRange,
-    areaServed: businessInfo.areaServed.map(area => ({
-      '@type': 'Place',
-      name: area,
-    })),
-    serviceType: businessInfo.serviceType,
+    openingHoursSpecification: [{
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "09:00",
+      closes: "18:00"
+    }],
+    areaServed: [{
+      "@type": "Country",
+      name: "Israel"
+    }],
     sameAs: [
-      // Add social media URLs here
-      'https://www.linkedin.com/company/skreep',
-      'https://twitter.com/skreep_ai',
-    ],
+      "https://www.linkedin.com/company/skreep",
+      "https://twitter.com/skreep_ai"
+    ]
   };
 }
 
@@ -176,34 +169,30 @@ export function generateOrganizationSchema() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": `${seoConfig.siteUrl}#organization`,
-    name: businessInfo.name,
-    url: businessInfo.url,
+    name: "Skreep",
+    url: seoConfig.siteUrl,
     logo: {
       "@type": "ImageObject",
-      url: `${seoConfig.siteUrl}/logo-full.png`,
+      url: `${seoConfig.siteUrl}/logo-512.png`,
       width: 512,
-      height: 512,
+      height: 512
     },
-    description: businessInfo.description,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: businessInfo.address.streetAddress,
-      addressLocality: businessInfo.address.addressLocality,
-      addressRegion: businessInfo.address.addressRegion,
-      postalCode: businessInfo.address.postalCode,
-      addressCountry: businessInfo.address.addressCountry,
-    },
+    description: "פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: businessInfo.telephone,
+      telephone: "+972-50-000-0000",
+      email: "hello@skreep.com",
       contactType: "customer service",
-      email: businessInfo.email,
-      availableLanguage: ["Hebrew", "English"],
+      availableLanguage: ["Hebrew", "English"]
+    },
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "IL"
     },
     sameAs: [
       "https://www.linkedin.com/company/skreep",
-      "https://twitter.com/skreep_ai",
-    ],
+      "https://twitter.com/skreep_ai"
+    ]
   };
 }
 
@@ -212,25 +201,21 @@ export function generateOrganizationSchema() {
  */
 export function generateWebsiteSchema() {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    '@id': `${seoConfig.siteUrl}#website`,
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${seoConfig.siteUrl}#website`,
     url: seoConfig.siteUrl,
-    name: seoConfig.siteName,
-    description: seoConfig.defaultDescription,
-    publisher: {
-      '@id': `${seoConfig.siteUrl}#organization`,
-    },
+    name: "Skreep",
+    publisher: { "@id": `${seoConfig.siteUrl}#organization` },
     potentialAction: {
-      '@type': 'SearchAction',
+      "@type": "SearchAction",
       target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${seoConfig.siteUrl}/search?q={search_term_string}`,
+        "@type": "EntryPoint",
+        urlTemplate: "https://skreep.com/search?q={search_term_string}"
       },
-      'query-input': 'required name=search_term_string',
+      "query-input": "required name=search_term_string"
     },
-    inLanguage: ['he', 'en'],
-  };
+    inLanguage: ["he-IL", "en-US"]  };
 }
 
 /**

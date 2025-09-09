@@ -4,6 +4,7 @@
 
 'use client';
 
+import { useEffect } from 'react';
 import StructuredData from './StructuredData';
 import { businessInfo } from '@/lib/seo/config';
 
@@ -20,7 +21,7 @@ interface LocalSEOProps {
 /**
  * Local SEO component for geographic and location-based optimization
  */
-export default function LocalSEO({ showMap = false, customLocation }: LocalSEOProps) {
+export default function LocalSEO({ showMap = false, customLocation, onStructuredData }: LocalSEOProps & { onStructuredData?: (data: any[]) => void }) {
   const location = customLocation || {
     name: businessInfo.name,
     address: `${businessInfo.address.streetAddress}, ${businessInfo.address.addressLocality}`,
@@ -128,10 +129,15 @@ export default function LocalSEO({ showMap = false, customLocation }: LocalSEOPr
     photo: 'https://skreep.com/assets/images/office-location.jpg'
   };
 
+  // Pass structured data up to the root layout if callback is provided
+  useEffect(() => {
+    if (onStructuredData) {
+      onStructuredData([localBusinessSchema, placeSchema]);
+    }
+  }, [onStructuredData, localBusinessSchema, placeSchema]);
+
   return (
     <>
-      <StructuredData data={[localBusinessSchema, placeSchema]} />
-      
       {/* Geo Meta Tags */}
       <meta name="geo.region" content="IL-TA" />
       <meta name="geo.placename" content={businessInfo.address.addressLocality} />

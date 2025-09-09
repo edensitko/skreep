@@ -11,7 +11,6 @@ import ServicesSection from '@/components/Sections/InteractiveShowcaseSection';
 import InnovationSection from '@/components/Sections/InnovationSection/InnovationSection';
 import InnovationSection2 from '@/components/Sections/InnovationSection/InnovationSection2';
 import { LanguageProvider } from '@/contexts/LanguageContext';
-import StructuredData from '@/components/SEO/StructuredData';
 import NoCodeBenefitsSection from '@/components/Sections/NoCodeBenefitsSection';
 
 const AIConsultantCTASection = dynamic(() => import('@/components/Sections/AIConsultantCTASection/AIConsultantCTASection'), { loading: () => <div className="h-64 bg-black/20 animate-pulse" /> });
@@ -237,7 +236,6 @@ export default async function LocalePage({ params }: Props) {
 
   return (
     <LanguageProvider>
-      <StructuredData data={structuredData} />
       <main className="flex min-h-screen flex-col">
         <Header />
         <HeroGrid />

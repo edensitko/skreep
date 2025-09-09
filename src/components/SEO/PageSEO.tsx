@@ -22,6 +22,7 @@ interface PageSEOProps {
     areaServed: string[];
     serviceType: string;
   }>;
+  onStructuredData?: (data: any[]) => void;
 }
 
 /**
@@ -32,7 +33,8 @@ export default function PageSEO({
   title,
   description,
   faqs,
-  services
+  services,
+  onStructuredData
 }: PageSEOProps) {
   const pathname = usePathname();
   const { trackEvent } = useSEO();
@@ -91,5 +93,12 @@ export default function PageSEO({
 
   const structuredData = getStructuredData();
 
-  return structuredData.length > 0 ? <StructuredData data={structuredData} /> : null;
+  // Pass structured data up to the root layout if callback is provided
+  useEffect(() => {
+    if (onStructuredData && structuredData.length > 0) {
+      onStructuredData(structuredData);
+    }
+  }, [onStructuredData, structuredData]);
+
+  return null;
 }
