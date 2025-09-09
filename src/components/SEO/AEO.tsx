@@ -4,6 +4,7 @@
 
 'use client';
 
+import { useEffect } from 'react';
 import StructuredData from './StructuredData';
 import { seoConfig } from '@/lib/seo/config';
 
@@ -33,12 +34,13 @@ interface AEOProps {
     };
   };
   language?: 'he' | 'en';
+  onStructuredData?: (data: any[]) => void;
 }
 
 /**
  * Answer Engine Optimization component for AI search engines
  */
-export default function AEO({ questions, howTo, product, language = 'he' }: AEOProps) {
+export default function AEO({ questions, howTo, product, language = 'he', onStructuredData }: AEOProps) {
   const structuredData: Record<string, unknown>[] = [];
 
   // FAQ Schema for AI answers
@@ -110,10 +112,15 @@ export default function AEO({ questions, howTo, product, language = 'he' }: AEOP
 
   structuredData.push(speakableSchema);
 
+  // Pass structured data up to the root layout if callback is provided
+  useEffect(() => {
+    if (onStructuredData && structuredData.length > 0) {
+      onStructuredData(structuredData);
+    }
+  }, [onStructuredData, structuredData]);
+
   return (
     <>
-      <StructuredData data={structuredData} />
-      
       {/* AEO Meta Tags for AI Crawlers */}
       <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
       <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
