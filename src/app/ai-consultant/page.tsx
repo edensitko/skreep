@@ -16,7 +16,7 @@ export default function AIConsultantPage() {
   const [isMounted, setIsMounted] = useState(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
 
   // Ensure component is mounted before rendering interactive elements
   useEffect(() => {

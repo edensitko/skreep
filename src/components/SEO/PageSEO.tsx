@@ -9,20 +9,29 @@ import { usePathname } from 'next/navigation';
 import StructuredData from './StructuredData';
 import { generateFAQSchema, generateServiceSchema } from '@/lib/seo/utils';
 import { useSEO } from '@/hooks/useSEO';
+import { StructuredDataItem } from './types';
+
+interface FAQItem {
+  question: string;
+  answer: string;
+  category?: string;
+}
+
+interface ServiceItem {
+  name: string;
+  description: string;
+  provider: string;
+  areaServed: string[];
+  serviceType: string;
+}
 
 interface PageSEOProps {
   pageType?: 'home' | 'about' | 'services' | 'contact' | 'projects' | 'faq';
   title?: string;
   description?: string;
-  faqs?: Array<{ question: string; answer: string }>;
-  services?: Array<{
-    name: string;
-    description: string;
-    provider: string;
-    areaServed: string[];
-    serviceType: string;
-  }>;
-  onStructuredData?: (data: any[]) => void;
+  faqs?: FAQItem[];
+  services?: ServiceItem[];
+  onStructuredData?: (data: StructuredDataItem[]) => void;
 }
 
 /**
@@ -50,23 +59,39 @@ export default function PageSEO({
   }, [pathname, pageType, trackEvent]);
 
   // Generate page-specific structured data
-  const getStructuredData = () => {
-    const data: Record<string, unknown>[] = [];
+  const getStructuredData = (): StructuredDataItem[] => {
+    const data: StructuredDataItem[] = [];
 
-    // FAQ Schema
+    // Add FAQ schema if FAQs are provided
     if (faqs && faqs.length > 0) {
-      data.push(generateFAQSchema(faqs));
+      const faqSchema = generateFAQSchema(faqs);
+      if (faqSchema) {
+        data.push({
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqs.map(faq => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: faq.answer
+            }
+          }))
+        });      }
     }
 
-    // Service Schema
+    // Add service schema if services are provided
     if (services && services.length > 0) {
       services.forEach(service => {
-        data.push(generateServiceSchema(service));
+        const serviceSchema = generateServiceSchema(service);
+        if (serviceSchema) {
+          data.push(serviceSchema);
+        }
       });
     }
 
-    // Breadcrumb Schema
-    if (pathname !== '/') {
+    // Add breadcrumb schema for better navigation
+    if (pathname && pathname !== '/') {
       const pathSegments = pathname.split('/').filter(Boolean);
       const breadcrumbItems = [
         { name: 'בית', url: '/' },

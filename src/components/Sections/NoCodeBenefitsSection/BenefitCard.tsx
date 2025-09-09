@@ -10,8 +10,7 @@ import type { BenefitCardProps } from './types';
 const BenefitCard = memo<BenefitCardProps>(({ 
   benefit, 
   index, 
-  isVisible, 
-  isHydrated,
+
   className = '' 
 }) => {
   return (

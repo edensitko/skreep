@@ -1,14 +1,10 @@
-// ============================================================================
-// LOCAL SEO AND GEO COMPONENT
-// ============================================================================
-
 'use client';
 
-import { useEffect } from 'react';
-import StructuredData from './StructuredData';
+import React, { useEffect, useMemo } from 'react';
+import { StructuredDataItem, SEOBaseProps, Address, GeoCoordinates, OpeningHoursSpecification, Review } from './types';
 import { businessInfo } from '@/lib/seo/config';
 
-interface LocalSEOProps {
+interface LocalSEOProps extends Omit<SEOBaseProps, 'title' | 'description' | 'image' | 'url' | 'type' | 'publishedTime' | 'modifiedTime'> {
   showMap?: boolean;
   customLocation?: {
     name: string;
@@ -21,7 +17,7 @@ interface LocalSEOProps {
 /**
  * Local SEO component for geographic and location-based optimization
  */
-export default function LocalSEO({ showMap = false, customLocation, onStructuredData }: LocalSEOProps & { onStructuredData?: (data: any[]) => void }) {
+const LocalSEO = ({ showMap = false, customLocation, onStructuredData }: LocalSEOProps): React.JSX.Element => {
   const location = customLocation || {
     name: businessInfo.name,
     address: `${businessInfo.address.streetAddress}, ${businessInfo.address.addressLocality}`,
@@ -30,7 +26,7 @@ export default function LocalSEO({ showMap = false, customLocation, onStructured
   };
 
   // Generate local business structured data
-  const localBusinessSchema = {
+  const localBusinessSchema: StructuredDataItem = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: location.name,
@@ -115,7 +111,7 @@ export default function LocalSEO({ showMap = false, customLocation, onStructured
   };
 
   // Generate place schema for better local search
-  const placeSchema = {
+  const placeSchema: StructuredDataItem = {
     '@context': 'https://schema.org',
     '@type': 'Place',
     name: location.name,
@@ -134,12 +130,22 @@ export default function LocalSEO({ showMap = false, customLocation, onStructured
     if (onStructuredData) {
       onStructuredData([localBusinessSchema, placeSchema]);
     }
-  }, [onStructuredData, localBusinessSchema, placeSchema]);
+  }, [onStructuredData]);
+  
+  // Memoize the schemas to prevent unnecessary re-renders
+  const schemas = useMemo(() => [localBusinessSchema, placeSchema], [localBusinessSchema, placeSchema]);
+  
+  // Update parent when schemas change
+  useEffect(() => {
+    if (onStructuredData) {
+      onStructuredData(schemas);
+    }
+  }, [onStructuredData, schemas]);
 
   return (
     <>
       {/* Geo Meta Tags */}
-      <meta name="geo.region" content="IL-TA" />
+      <meta name="geo.region" content={`IL-${businessInfo.address.addressRegion?.toUpperCase() || 'TA'}`} />
       <meta name="geo.placename" content={businessInfo.address.addressLocality} />
       <meta name="geo.position" content={`${location.latitude};${location.longitude}`} />
       <meta name="ICBM" content={`${location.latitude}, ${location.longitude}`} />
@@ -171,3 +177,6 @@ export default function LocalSEO({ showMap = false, customLocation, onStructured
     </>
   );
 }
+
+// Default export for backward compatibility
+export default LocalSEO;

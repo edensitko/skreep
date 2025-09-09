@@ -6,7 +6,6 @@ import ScrollButton from './ScrollButton';
 import WhatsAppButton from './WhatsAppButton';
 import { WHATSAPP_URL, SCROLL_THRESHOLD } from './constants';
 import { scrollToTop, shouldShowScrollButton } from './utils';
-import { GiUluru } from 'react-icons/gi';
 
 /**
  * Footer section with responsive layout, scroll-to-top functionality, and social buttons

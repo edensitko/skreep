@@ -3,7 +3,7 @@
 // ============================================================================
 
 import { Metadata } from 'next';
-import { seoConfig, businessInfo } from './config';
+import { seoConfig } from './config';
 
 export interface PageSEOProps {
   title?: string;
