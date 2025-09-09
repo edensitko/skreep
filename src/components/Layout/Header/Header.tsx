@@ -81,13 +81,16 @@ export default function Header() {
         {/* Logo - Absolutely centered */}
         <div className="absolute w-[100px] md:w-[100px] pt-0 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
           <Link href="/" aria-label="logo" className="hover:scale-110 transition-all duration-300 block">
-            <Image 
-              src="/assets/images/logo-1.png" 
-              alt="Skreep - פתרונות בינה מלאכותית" 
-              width={100}
-              height={33}
-              style={{ width: 'auto' , height: 'auto' }}
-            />
+            <div className="relative w-[100px] h-[33px]">
+              <Image 
+                src="/assets/images/logo-1.png" 
+                alt="Skreep - פתרונות בינה מלאכותית" 
+                fill
+                sizes="(max-width: 768px) 100px, 100px"
+                className="object-contain"
+                priority
+              />
+            </div>
           </Link>
         </div>
         

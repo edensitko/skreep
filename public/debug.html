@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Debug Page</title>
+  <script>
+    function checkConsole() {
+      console.log('Debug script loaded');
+      fetch('/')
+        .then(response => response.text())
+        .then(html => {
+          console.log('Page loaded successfully');
+          document.getElementById('status').textContent = 'Page loaded successfully';
+        })
+        .catch(error => {
+          console.error('Error loading page:', error);
+          document.getElementById('status').textContent = 'Error: ' + error.message;
+        });
+    }
+    window.onload = checkConsole;
+  </script>
+</head>
+<body>
+  <h1>Debug Page</h1>
+  <div id="status">Loading...</div>
+  <div id="content"></div>
+</body>
+</html>

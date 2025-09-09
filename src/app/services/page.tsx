@@ -146,7 +146,6 @@ export default function ServicesPage() {
         pageType="services"
         title={language === 'he' ? "שירותי בינה מלאכותית מתקדמים" : "Advanced AI Services"}
         description={language === 'he' ? "פתרונות AI מותאמים אישית לעסקים" : "Customized AI solutions for businesses"}
-        services={seoServicesData}
         faqs={faqData}
       />
       
