@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Layout/Header/Header';
-import Footer from '@/components/Layout/Footer/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
 import LocalSEO from '@/components/SEO/LocalSEO';
 import SEOMeta from '@/components/SEO/SEOMeta';

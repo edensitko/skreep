@@ -188,51 +188,7 @@ export default async function LocalePage({ params }: Props) {
   const { locale } = await params;
   
   // Structured data based on locale
-  const structuredData = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": locale === 'en' ? "Skreep" : "סקריפ",
-      "url": locale === 'en' ? "https://skreep.com/en" : "https://skreep.com",
-      "logo": "https://skreep.com/assets/images/logo-2.png",
-      "description": locale === 'en' 
-        ? "Advanced AI solutions for businesses"
-        : "פתרונות בינה מלאכותית מתקדמים לעסקים",
-      "foundingDate": "2023",
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+972-50-000-0000",
-        "email": "hello@skreep.com",
-        "contactType": "customer service",
-        "areaServed": "IL",
-        "availableLanguage": ["Hebrew", "English"]
-      },
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "IL",
-        "addressRegion": "Israel"
-      },
-      "sameAs": [
-        "https://www.linkedin.com/company/skreep",
-        "https://twitter.com/skreep"
-      ]
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": locale === 'en' ? "Skreep" : "סקריפ",
-      "url": locale === 'en' ? "https://skreep.com/en" : "https://skreep.com",
-      "description": locale === 'en'
-        ? "Advanced AI solutions for businesses"
-        : "פתרונות בינה מלאכותית מתקדמים לעסקים",
-      "inLanguage": locale === 'en' ? "en-US" : "he-IL",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": `https://skreep.com${locale === 'en' ? '/en' : ''}/search?q={search_term_string}`,
-        "query-input": "required name=search_term_string"
-      }
-    }
-  ];
+  
 
   return (
     <LanguageProvider>

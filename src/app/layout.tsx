@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useMemo, useState } from 'react';
-import type { Metadata } from "next";
 import "./globals.css";
 
 import ClientLayout from "@/components/Layout/ClientLayout";
@@ -11,98 +10,22 @@ import Analytics from "@/components/SEO/Analytics";
 import CookieConsent from "@/components/SEO/CookieConsent";
 import DynamicMetadata from "@/components/Layout/DynamicMetadata";
 import { DynamicHtmlWrapper } from "@/components/Layout/DynamicHtmlWrapper";
-import StructuredData from "@/components/SEO/StructuredData";
-import { generateLocalBusinessSchema, generateOrganizationSchema, generateWebsiteSchema } from "@/lib/seo/utils";
-import PageSEO from '@/components/SEO/PageSEO';
-import LocalSEO from '@/components/SEO/LocalSEO';
-import AEO from '@/components/SEO/AEO';
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { AEO, LocalSEO, PageSEO, StructuredData } from '@/components/SEO';
+import { generateLocalBusinessSchema, generateOrganizationSchema, generateWebsiteSchema } from '@/lib/seo/utils';
 
-// Important: Ensure these files exist in the public directory:
-// /assets/images/logo-2.png  (at least 32x32)
-// /logo-full.png             (recommended 512x512)
-// /apple-touch-icon.png      (180x180)
-// /assets/images/og-image.jpg (1200x630)
+interface StructuredDataItem {
+  [key: string]: unknown;
+}
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://skreep.com"),
-  title: "סקריפ - פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
-  description: "סקריפ - חברת פתרונות בינה מלאכותית מובילה בישראל. פתרונות טכנולוגיים חדשניים לעסקים: אוטומציה חכמה, צ'אטבוטים, ניתוח נתונים וייעוץ בינה מלאכותית. חסכו עלויות והגדילו יעילות עם הפתרונות המתקדמים שלנו.",
-  keywords: "סקריפ, בינה מלאכותית, פתרונות טכנולוגיים, עסקים, חדשנות, אוטומציה, צ'אטבוטים, ייעוץ טכנולוגי, פתרונות עסקיים, ישראל",
-  authors: [{ name: "Skreep AI Solutions", url: "https://skreep.com" }],
-  creator: "Skreep",
-  publisher: "Skreep",
-
-  icons: {
-    icon: [
-      { url: "/favicon.ico" },
-      { url: "/assets/images/logo-2.png", type: "image/png", sizes: "32x32" },
-      { url: "/logo-full.png", type: "image/png", sizes: "512x512" },
-    ],
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
-    shortcut: ["/favicon.ico"],
-  },
-
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  openGraph: {
-    title: "סקריפ - פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
-    description:
-      "סקריפ - חברת פתרונות בינה מלאכותית מובילה בישראל. פתרונות טכנולוגיים חדשניים לעסקים: אוטומציה חכמה, צ'אטבוטים וניתוח נתונים",
-    type: "website",
-    locale: "he_IL",
-    alternateLocale: "en_US",
-    url: "https://skreep.com",
-    siteName: "סקריפ",
-    images: [
-      {
-        url: "https://skreep.com/assets/images/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Skreep AI Solutions Logo",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "סקריפ - פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
-    description:
-      "סקריפ - חברת פתרונות בינה מלאכותית מובילה בישראל. פתרונות טכנולוגיים חדשניים לעסקים",
-    images: ["https://skreep.com/assets/images/og-image.jpg"],
-  },
-  alternates: {
-    canonical: "https://skreep.com",
-    languages: {
-      he: "https://skreep.com",
-      en: "https://skreep.com/en",
-      "x-default": "https://skreep.com",
-    },
-  },
-  verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "",
-    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || "",
-    other: {
-      "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || "",
-    },
-  },
-};
-
+// Client component for the main layout
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   // State to collect structured data from child components
-  const [structuredData, setStructuredData] = useState<any[]>([]);
+  const [structuredData, setStructuredData] = useState<StructuredDataItem[]>([]);
 
   // Generate base schemas
   const baseStructuredData = useMemo(
@@ -115,7 +38,7 @@ export default function RootLayout({
   );
 
   // Callback to receive structured data from child components
-  const handleStructuredData = useCallback((data: any[]) => {
+  const handleStructuredData = useCallback((data: StructuredDataItem[]) => {
     setStructuredData((prev) => [...prev, ...data]);
   }, []);
 

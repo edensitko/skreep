@@ -7,7 +7,6 @@ import type { ContactInfoItemProps } from './types';
  */
 const ContactInfoItem = memo<ContactInfoItemProps>(({ contact, language }) => {
   const { type, value, icon, gradient, href } = contact;
-  const { t } = useLanguage();
   
   return (
     <div className="flex gap-1" dir={language === 'he' ? 'rtl' : 'ltr'}>

@@ -89,11 +89,9 @@ const pricingPlans: PricingPlan[] = [
 ];
 
 export default function PricingCarouselSection() {
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   const [selectedPlan, setSelectedPlan] = useState<PricingPlan | null>(pricingPlans[1]); // Mobile carousel state
-  const [currentSlide, setCurrentSlide] = useState(1); // Start with Professional plan (second item)
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
+  const [currentSlide] = useState(1); // Start with Professional plan (second item)
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -149,45 +147,8 @@ export default function PricingCarouselSection() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Detect centered plan on scroll  // Mobile slide functions
-  const nextSlide = () => {
-    setCurrentSlide(prev => (prev + 1) % pricingPlans.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide(prev => (prev - 1 + pricingPlans.length) % pricingPlans.length);
-  };
-
-  // Touch handlers for mobile swipe
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(0); // Reset touchEnd
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-    // Prevent default to avoid scrolling issues
-    e.preventDefault();
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe) {
-      nextSlide();
-    }
-    if (isRightSwipe) {
-      prevSlide();
-    }
-    
-    // Reset touch values
-    setTouchStart(0);
-    setTouchEnd(0);
-  };
+  
+ 
 
   // Desktop scroll functions
   const scrollLeft = () => {
