@@ -12,7 +12,6 @@ import OurProjectsSection from '@/components/Sections/OurProjectsSection';
 import ServicesSection from '@/components/Sections/InteractiveShowcaseSection';
 import InnovationSection from '@/components/Sections/InnovationSection/InnovationSection';
 import InnovationSection2 from '@/components/Sections/InnovationSection/InnovationSection2';
-import { LanguageProvider } from '@/contexts/LanguageContext';
 import NoCodeBenefitsSection from '@/components/Sections/NoCodeBenefitsSection';
 
 const AIConsultantCTASection = dynamic(() => import('@/components/Sections/AIConsultantCTASection/AIConsultantCTASection'), { loading: () => <div className="h-64 bg-black/20 animate-pulse" /> });
@@ -180,27 +179,25 @@ export default function RootPage() {
   ];
 
   return (
-    <LanguageProvider>
-      <main className="flex bg-black min-h-screen flex-col">
-        <Header />
-        <HeroGrid />
-        <PartnersSection />
-        <AboutSection />
-        <StatsSection />
-        <ChatSection />
-        <InnovationSection />
-        <ServicesSection />
-        < NoCodeBenefitsSection />
-        <OurProjectsSection />
-        <FAQSection />
-        <AIConsultantCTASection />
-        <TestimonialsSection />
-        <ComparisonTableSection />
-        <BlogSection />
-        <InnovationSection2 />
-        <ContactFormSection />
-        <Footer />
-      </main>
-    </LanguageProvider>
+    <main className="flex bg-black min-h-screen flex-col">
+      <Header />
+      <HeroGrid />
+      <PartnersSection />
+      <AboutSection />
+      <StatsSection />
+      <ChatSection />
+      <InnovationSection />
+      <ServicesSection />
+      <NoCodeBenefitsSection />
+      <OurProjectsSection />
+      <FAQSection />
+      <AIConsultantCTASection />
+      <TestimonialsSection />
+      <ComparisonTableSection />
+      <BlogSection />
+      <InnovationSection2 />
+      <ContactFormSection />
+      <Footer />
+    </main>
   );
 }

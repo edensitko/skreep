@@ -1,8 +1,4 @@
-'use client';
-
-import { useCallback, useMemo, useState } from 'react';
 import "./globals.css";
-
 import ClientLayout from "@/components/Layout/ClientLayout";
 import { UserTypeProvider } from "@/hooks/useGlobalUserType";
 import { ConditionalLayout } from "@/components/Layout/ConditionalLayout";
@@ -11,47 +7,105 @@ import CookieConsent from "@/components/SEO/CookieConsent";
 import DynamicMetadata from "@/components/Layout/DynamicMetadata";
 import { DynamicHtmlWrapper } from "@/components/Layout/DynamicHtmlWrapper";
 import { LanguageProvider } from "@/contexts/LanguageContext";
-import { AEO, LocalSEO, PageSEO, StructuredData } from '@/components/SEO';
-import { generateLocalBusinessSchema, generateOrganizationSchema, generateWebsiteSchema } from '@/lib/seo/utils';
+import { AEO, LocalSEO, PageSEO } from '@/components/SEO';
 
-interface StructuredDataItem {
-  [key: string]: unknown;
-}
-
-// Client component for the main layout
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  // State to collect structured data from child components
-  const [structuredData, setStructuredData] = useState<StructuredDataItem[]>([]);
-
-  // Generate base schemas
-  const baseStructuredData = useMemo(
-    () => [
-      generateLocalBusinessSchema(),
-      generateOrganizationSchema(),
-      generateWebsiteSchema(),
+}) {
+  const organization = {
+    "@type": "Organization",
+    "@id": "https://skreep.com#organization",
+    name: "Skreep",
+    url: "https://skreep.com",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://skreep.com/logo-512.png",
+      width: 512,
+      height: 512
+    },
+    description: "פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
+    sameAs: [
+      "https://www.linkedin.com/company/skreep",
+      "https://twitter.com/skreep_ai"
     ],
-    []
-  );
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: "+972-50-000-0000",
+      email: "hello@skreep.com",
+      contactType: "customer service",
+      availableLanguage: ["Hebrew","English"]
+    },
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "IL",
+      addressRegion: "Israel"
+    }
+  };
 
-  // Callback to receive structured data from child components
-  const handleStructuredData = useCallback((data: StructuredDataItem[]) => {
-    setStructuredData((prev) => [...prev, ...data]);
-  }, []);
+  const website = {
+    "@type": "WebSite",
+    "@id": "https://skreep.com#website",
+    url: "https://skreep.com",
+    name: "Skreep",
+    publisher: { "@id": "https://skreep.com#organization" },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: "https://skreep.com/search?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    },
+    inLanguage: ["he-IL","en-US"]
+  };
 
-  // Combine base schemas with component schemas
-  const allStructuredData = useMemo(
-    () => [...baseStructuredData, ...structuredData],
-    [baseStructuredData, structuredData]
-  );
+  const localBusiness = {
+    "@type": "LocalBusiness",
+    "@id": "https://skreep.com#business",
+    name: "סקריפ - פתרונות בינה מלאכותית",
+    url: "https://skreep.com",
+    telephone: "+972-3-1234567",
+    email: "info@skreep.com",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "רחוב הטכנולוגיה 123",
+      addressLocality: "תל אביב",
+      addressRegion: "מחוז תל אביב",
+      postalCode: "6789012",
+      addressCountry: "IL"
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        opens: "09:00",
+        closes: "18:00"
+      }
+    ],
+    priceRange: "$$",
+    sameAs: [
+      "https://www.linkedin.com/company/skreep",
+      "https://twitter.com/skreep_ai"
+    ]
+  };
+
+  const ldJson = {
+    "@context": "https://schema.org",
+    "@graph": [organization, website, localBusiness]
+  };
+
+  const structuredData = JSON.stringify(ldJson);
 
   return (
     <html lang="he" dir="rtl" suppressHydrationWarning>
       <head>
-        <StructuredData data={allStructuredData} />
+        <script
+          id="structured-data"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredData }}
+        />
       </head>
       <body className="antialiased bg-black min-h-screen relative loading font-sans">
         <Analytics />
@@ -61,9 +115,9 @@ export default function RootLayout({
             <UserTypeProvider>
               <ClientLayout>
                 <ConditionalLayout>
-                  <PageSEO onStructuredData={handleStructuredData} />
-                  <LocalSEO onStructuredData={handleStructuredData} />
-                  <AEO onStructuredData={handleStructuredData} />
+                  <PageSEO />
+                  <LocalSEO />
+                  <AEO />
                   {children}
                 </ConditionalLayout>
               </ClientLayout>

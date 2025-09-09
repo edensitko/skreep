@@ -21,55 +21,72 @@ const messages = {
   en: enMessages
 };
 
+// Function to safely get language from localStorage
+const getStoredLanguage = (): Language => {
+  if (typeof window === 'undefined') return 'he'; // Default to Hebrew on server
+  const savedLanguage = localStorage.getItem('language') as Language;
+  return (savedLanguage && (savedLanguage === 'he' || savedLanguage === 'en')) 
+    ? savedLanguage 
+    : 'he';
+};
+
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguage] = useState<Language>('he');
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
-  // Load language from localStorage on mount
+  // Set initial language after mount to avoid hydration mismatch
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') as Language;
-    if (savedLanguage && (savedLanguage === 'he' || savedLanguage === 'en')) {
-      setLanguage(savedLanguage);
-    }
-    setIsInitialized(true);
+    setLanguage(getStoredLanguage());
+    setIsMounted(true);
   }, []);
 
-  // Save language to localStorage when it changes
+  // Update document and localStorage when language changes
   useEffect(() => {
-    if (!isInitialized) return; // Don't run on initial load
+    if (!isMounted) return;
     
-    const savedLanguage = localStorage.getItem('language');
+    // Update localStorage
+    localStorage.setItem('language', language);
     
-    // Only refresh if language actually changed
-    if (savedLanguage !== language) {
-      localStorage.setItem('language', language);
-      // Update document direction and lang
+    // Update document properties
+    if (typeof document !== 'undefined') {
       document.documentElement.dir = language === 'he' ? 'rtl' : 'ltr';
       document.documentElement.lang = language;
-      
-      // Refresh the page to ensure all components reset properly
-      window.location.reload();
     }
-  }, [language, isInitialized]);
+  }, [language, isMounted]);
+
+  // Handle language change with page reload
+  const handleLanguageChange = (lang: Language) => {
+    if (lang !== language) {
+      setLanguage(lang);
+      if (typeof window !== 'undefined') {
+        window.location.reload();
+      }
+    }
+  };
 
   // Translation function
   const t = (key: string): string => {
+    if (!isMounted) return key; // Return key during SSR/SSG
+    
     const keys = key.split('.');
-    let value: unknown = messages[language];
+    let value: any = messages[language];
     
     for (const k of keys) {
-      if (value && typeof value === 'object' && k in value) {
-        value = (value as Record<string, unknown>)[k];
+      if (value && value[k] !== undefined) {
+        value = value[k];
       } else {
-        return key;
+        if (process.env.NODE_ENV !== 'production') {
+          console.warn(`Translation key not found: ${key}`);
+        }
+        return key; // Return the key if translation not found
       }
     }
     
-    return typeof value === 'string' ? value : key;
+    return value || key;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage: handleLanguageChange, t }}>
       {children}
     </LanguageContext.Provider>
   );

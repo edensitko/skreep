@@ -13,6 +13,10 @@ interface SEOTrackingProps {
   action?: string;
   label?: string;
   value?: number;
+  event?: string;
+  page_path?: string;
+  page_type?: string;
+  page_title?: string;
 }
 
 /**
@@ -45,33 +49,48 @@ export function useSEO() {
     }
   }, [pathname]);
 
-  // Track custom events
+  // Track custom events and page views
   const trackEvent = ({
     title = 'Custom Event',
     category = 'engagement',
     action = 'click',
     label,
-    value
+    value,
+    event,
+    page_path,
+    page_type,
+    page_title
   }: SEOTrackingProps) => {
-    if (typeof window !== 'undefined') {
-      // Google Analytics
-      if (window.gtag) {
-        window.gtag('event', action, {
-          event_category: category,
-          event_label: label,
-          value: value,
-          custom_parameter: title,
-        });
-      }
+    if (typeof window === 'undefined') return;
 
-      // Facebook Pixel
-      if (window.fbq) {
-        window.fbq('track', 'CustomEvent', {
-          event_category: category,
-          event_label: label,
-          value: value,
+    // Handle page view events
+    if (event === 'page_view') {
+      if (window.gtag) {
+        window.gtag('event', 'page_view', {
+          page_title: page_title || document.title,
+          page_path: page_path || window.location.pathname,
+          page_type: page_type || 'page'
         });
       }
+      return;
+    }
+
+    // Handle custom events
+    if (window.gtag) {
+      window.gtag('event', action, {
+        event_category: category,
+        event_label: label,
+        value: value,
+        custom_parameter: title,
+      });
+    }
+
+    if (window.fbq) {
+      window.fbq('track', 'CustomEvent', {
+        event_category: category,
+        event_label: label,
+        value: value,
+      });
     }
   };
 
