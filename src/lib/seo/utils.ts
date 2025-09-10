@@ -135,7 +135,7 @@ export function generateLocalBusinessSchema() {
     url: seoConfig.siteUrl,
     telephone: "+972-5887744",
     email: "info@skreep.com",
-    image: `${seoConfig.siteUrl}/assets/images/logo-1.png`,
+    image: `${seoConfig.siteUrl}/assets/images/og-image.jpg`,
     priceRange: "$$",
     address: {
       "@type": "PostalAddress",

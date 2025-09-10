@@ -23,8 +23,6 @@ export default function CookieConsent({ onAccept, onDecline }: CookieConsentProp
   const handleAccept = () => {
     localStorage.setItem('cookie-consent', 'accepted');
     setIsVisible(false);
-    // Trigger page reload to load analytics
-    window.location.reload();
     onAccept?.();
   };
 
