@@ -4,6 +4,7 @@
 
 import { Metadata } from 'next';
 import { seoConfig } from './config';
+import { RiInstagramLine } from 'react-icons/ri';
 
 export interface PageSEOProps {
   title?: string;
@@ -132,13 +133,13 @@ export function generateLocalBusinessSchema() {
     "@id": `${seoConfig.siteUrl}#business`,
     name: "סקריפ - פתרונות בינה מלאכותית",
     url: seoConfig.siteUrl,
-    telephone: "+972-3-1234567",
+    telephone: "+972-5887744",
     email: "info@skreep.com",
-    image: `${seoConfig.siteUrl}/logo-512.png`,
+    image: `${seoConfig.siteUrl}/assets/images/logo-1.png`,
     priceRange: "$$",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "רחוב הטכנולוגיה 123",
+      streetAddress: ""  ,
       addressLocality: "תל אביב",
       addressRegion: "מחוז תל אביב",
       postalCode: "6789012",
@@ -155,6 +156,7 @@ export function generateLocalBusinessSchema() {
       name: "Israel"
     }],
     sameAs: [
+      "https://www.instagram.com/skreep.il",
       "https://www.linkedin.com/company/skreep",
       "https://twitter.com/skreep_ai"
     ]
@@ -173,7 +175,7 @@ export function generateOrganizationSchema() {
     url: seoConfig.siteUrl,
     logo: {
       "@type": "ImageObject",
-      url: `${seoConfig.siteUrl}/logo-512.png`,
+      url: `${seoConfig.siteUrl}/assets/images/logo-1.png`,
       width: 512,
       height: 512
     },

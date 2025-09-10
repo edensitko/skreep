@@ -21,7 +21,7 @@ export default function RootLayout({
     url: "https://skreep.com",
     logo: {
       "@type": "ImageObject",
-      url: "https://skreep.com/logo-512.png",
+      url: "https://skreep.com/assets/images/logo-1.png",
       width: 512,
       height: 512
     },
