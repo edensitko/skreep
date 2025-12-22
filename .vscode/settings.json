@@ -1,0 +1,5 @@
+{
+    "kiroAgent.configureMCP": "Enabled",
+    "editor.experimental.treeSitterTelemetry": true,
+    "typescript.autoClosingTags": false
+}

@@ -1,0 +1,274 @@
+import React, { useRef, useState, useEffect, ReactNode, MouseEventHandler, UIEvent, MouseEvent } from 'react';
+import { motion, useInView } from 'motion/react';
+
+interface AnimatedItemProps {
+  children: ReactNode;
+  delay?: number;
+  index: number;
+  onMouseEnter?: MouseEventHandler<HTMLDivElement>;
+  onClick?: MouseEventHandler<HTMLDivElement>;
+}
+
+const AnimatedItem: React.FC<AnimatedItemProps> = ({ children, delay = 0, index, onMouseEnter, onClick }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { amount: 0.5, once: false });
+  return (
+    <motion.div
+      ref={ref}
+      data-index={index}
+      onMouseEnter={onMouseEnter}
+      onClick={onClick}
+      initial={{ scale: 0.7, opacity: 0 }}
+      animate={inView ? { scale: 1, opacity: 1 } : { scale: 0.7, opacity: 0 }}
+      transition={{ duration: 0.2, delay }}
+      className="mb-2 cursor-pointer"
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+interface AnimatedListProps {
+  items?: string[];
+  answers?: string[];
+  onItemSelect?: (item: string, index: number) => void;
+  showGradients?: boolean;
+  enableArrowNavigation?: boolean;
+  className?: string;
+  itemClassName?: string;
+  displayScrollbar?: boolean;
+  initialSelectedIndex?: number;
+  expandable?: boolean;
+}
+
+const AnimatedList: React.FC<AnimatedListProps> = ({
+  items = [
+    'Item 1',
+    'Item 2',
+    'Item 3',
+    'Item 4',
+    'Item 5',
+    'Item 6',
+    'Item 7',
+    'Item 8',
+    'Item 9',
+    'Item 10',
+    'Item 11',
+    'Item 12',
+    'Item 13',
+    'Item 14',
+    'Item 15'
+  ],
+  answers = [],
+  onItemSelect,
+  showGradients = true,
+  enableArrowNavigation = true,
+  className = '',
+  itemClassName = '',
+  displayScrollbar = true,
+  initialSelectedIndex = -1,
+  expandable = false
+}) => {
+  const listRef = useRef<HTMLDivElement>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number>(initialSelectedIndex);
+  const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
+  const [keyboardNav, setKeyboardNav] = useState<boolean>(false);
+  const [topGradientOpacity, setTopGradientOpacity] = useState<number>(0);
+  const [bottomGradientOpacity, setBottomGradientOpacity] = useState<number>(1);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [dragStart, setDragStart] = useState<{ x: number; y: number; scrollTop: number }>({ x: 0, y: 0, scrollTop: 0 });
+  const [hasDragged, setHasDragged] = useState<boolean>(false);
+
+  const handleScroll = (e: UIEvent<HTMLDivElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.target as HTMLDivElement;
+    setTopGradientOpacity(Math.min(scrollTop / 50, 1));
+    const bottomDistance = scrollHeight - (scrollTop + clientHeight);
+    setBottomGradientOpacity(scrollHeight <= clientHeight ? 0 : Math.min(bottomDistance / 50, 1));
+  };
+
+  const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
+    if (!listRef.current) return;
+    setIsDragging(true);
+    setHasDragged(false);
+    setDragStart({
+      x: e.clientX,
+      y: e.clientY,
+      scrollTop: listRef.current.scrollTop
+    });
+  };
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!isDragging || !listRef.current) return;
+    
+    const deltaY = e.clientY - dragStart.y;
+    const deltaX = e.clientX - dragStart.x;
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    
+    if (distance > 5) {
+      setHasDragged(true);
+    }
+    
+    const newScrollTop = dragStart.scrollTop - deltaY;
+    listRef.current.scrollTop = Math.max(0, Math.min(newScrollTop, listRef.current.scrollHeight - listRef.current.clientHeight));
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    setTimeout(() => setHasDragged(false), 100);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+    setTimeout(() => setHasDragged(false), 100);
+  };
+
+  useEffect(() => {
+    if (!enableArrowNavigation) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey)) {
+        e.preventDefault();
+        setKeyboardNav(true);
+        setSelectedIndex(prev => Math.min(prev + 1, items.length - 1));
+      } else if (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) {
+        e.preventDefault();
+        setKeyboardNav(true);
+        setSelectedIndex(prev => Math.max(prev - 1, 0));
+      } else if (e.key === 'Enter') {
+        if (selectedIndex >= 0 && selectedIndex < items.length) {
+          e.preventDefault();
+          if (onItemSelect) {
+            onItemSelect(items[selectedIndex], selectedIndex);
+          }
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [items, selectedIndex, onItemSelect, enableArrowNavigation]);
+
+  useEffect(() => {
+    if (!keyboardNav || selectedIndex < 0 || !listRef.current) return;
+    const container = listRef.current;
+    const selectedItem = container.querySelector(`[data-index="${selectedIndex}"]`) as HTMLElement | null;
+    if (selectedItem) {
+      const extraMargin = 50;
+      const containerScrollTop = container.scrollTop;
+      const containerHeight = container.clientHeight;
+      const itemTop = selectedItem.offsetTop;
+      const itemBottom = itemTop + selectedItem.offsetHeight;
+      if (itemTop < containerScrollTop + extraMargin) {
+        container.scrollTo({ top: itemTop - extraMargin, behavior: 'smooth' });
+      } else if (itemBottom > containerScrollTop + containerHeight - extraMargin) {
+        container.scrollTo({
+          top: itemBottom - containerHeight + extraMargin,
+          behavior: 'smooth'
+        });
+      }
+    }
+    setKeyboardNav(false);
+  }, [selectedIndex, keyboardNav]);
+
+  return (
+    <div className={`relative w-[500px] ${className}`}>
+      
+      <div
+        ref={listRef}
+        className={`max-h-[430px] overflow-y-auto p-2 select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'} ${
+          displayScrollbar
+            ? '[&::-webkit-scrollbar]:w-[8px] [&::-webkit-scrollbar-track]:bg-[#060010] [&::-webkit-scrollbar-thumb]:bg-[#222] [&::-webkit-scrollbar-thumb]:rounded-[4px]'
+            : 'scrollbar-hide'
+        }`}
+        onScroll={handleScroll}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          scrollbarWidth: displayScrollbar ? 'thin' : 'none',
+          scrollbarColor: '#222 #060010'
+        }}
+      >
+        {items.map((item, index) => {
+          const isExpanded = expandedItems.has(index);
+          const hasAnswer = answers && answers[index];
+          
+          return (
+            <AnimatedItem
+              key={index}
+              delay={0.1}
+              index={index}
+              onMouseEnter={() => !isDragging && setSelectedIndex(index)}
+              onClick={() => {
+                if (hasDragged) return;
+                
+                setSelectedIndex(index);
+                
+                if (expandable && hasAnswer) {
+                  setExpandedItems(prev => {
+                    const newSet = new Set(prev);
+                    if (newSet.has(index)) {
+                      newSet.delete(index);
+                    } else {
+                      newSet.add(index);
+                    }
+                    return newSet;
+                  });
+                }
+                
+                if (onItemSelect) {
+                  onItemSelect(item, index);
+                }
+              }}
+            >
+              <div className={`bg-[#111] rounded-lg overflow-hidden transition-all duration-300 ${selectedIndex === index ? 'bg-[#222]' : ''} ${itemClassName}`}>
+                <div className="p-3 flex items-center justify-between min-h-[65px]">
+                  <p className="text-white m-0 flex-1 text-sm leading-relaxed">{item}</p>
+                  {expandable && hasAnswer && (
+                    <motion.div
+                      animate={{ rotate: isExpanded ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="ml-2 text-white/60"
+                    >
+                      ▼
+                    </motion.div>
+                  )}
+                </div>
+                
+                {expandable && hasAnswer && (
+                  <motion.div
+                    initial={false}
+                    animate={{
+                      height: isExpanded ? 'auto' : 0,
+                      opacity: isExpanded ? 1 : 0
+                    }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-3 pb-3 border-t border-white/10">
+                      <p className="text-white/80 mt-1 text-sm leading-relaxed">{answers[index]}</p>
+                    </div>
+                  </motion.div>
+                )}
+              </div>
+            </AnimatedItem>
+          );
+        })}
+      </div>
+      {showGradients && (
+        <>
+          <div
+            className="absolute top-0 left-0 right-0 h-[50px] bg-gradient-to-b from-black to-transparent pointer-events-none transition-opacity duration-300 ease"
+            style={{ opacity: topGradientOpacity }}
+          ></div>
+          <div
+            className="absolute bottom-0 left-0 right-0 h-[100px] bg-gradient-to-t from-black to-transparent pointer-events-none transition-opacity duration-300 ease"
+            style={{ opacity: bottomGradientOpacity }}
+          ></div>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default AnimatedList;
