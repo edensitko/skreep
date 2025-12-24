@@ -102,7 +102,7 @@ const SecondHeroSection: React.FC = () => {
                 <div className="flex flex-col items-center justify-center gap-10">
                     {/* Content Side */}
                     <div className="w-full max-w-3xl text-center">
-                        <h2 className="text-5xl md:text-5xl xl:text-5xl italic text-white/90 font-semilight mb-6 text-center">
+                        <h2 className="text-4xl md:text-5xl xl:text-5xl italic text-white/90 font-semilight mb-6 text-center">
                             <span>{t(`hero.${userType}.title`)}</span>
                             <span className={`relative inline-block px-3 font-semilight italic text-white uppercase mx-1 ${userType === 'entrepreneurs' ? 'bg-gradient-to-r from-green-400' : 'bg-gradient-to-r from-cyan-400'
                                 }`}>
