@@ -34,7 +34,7 @@ const SecondHeroSection: React.FC = () => {
     const pillarColors = {
         business: {
             topColor: '#094744',
-            bottomColor: '#048c85'
+            bottomColor: '#d2f4ff'
         },
         entrepreneurs: {
             topColor: '#0a4706',
@@ -47,37 +47,30 @@ const SecondHeroSection: React.FC = () => {
     return (
         <section ref={sectionRef} className="relative w-full min-h-[600px] overflow-hidden bg-black" dir={language === 'he' ? 'rtl' : 'ltr'}>
             {/* Toggle Button */}
-            <div className={`absolute top-32 z-50 animate-in ${
-                language === 'he' 
-                    ? 'right-4 md:right-24' 
-                    : 'left-4 md:left-24'
-            }`} style={{ 
-                animationName: language === 'he' ? 'slide-in-right' : 'slide-in-left', 
-                animationDuration: '0.6s', 
-                animationDelay: '0.3s', 
-                animationFillMode: 'both' 
+            <div className="absolute top-36 z-50 animate-in left-1/2 -translate-x-1/2" style={{
+                animationName: 'fade-up',
+                animationDuration: '0.6s',
+                animationDelay: '0.3s',
+                animationFillMode: 'both'
             }}>
-                <button 
-                    type="button" 
-                    className="bg-black/40 border border-cyan-100/10 rounded-full shadow-style-one px-3 py-2 md:px-5 md:py-3 relative overflow-hidden"
+                <button
+                    type="button"
+                    className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-2 py-1.5 md:px-3 md:py-2 relative overflow-hidden hover:bg-white/10 transition-all"
                     onClick={toggleTab}
                 >
-                    <div className="flex items-center gap-2 md:gap-4 relative z-10 flex-row">
-                        <span className={`text-sm transition-all duration-300 ${
-                            userType === 'business' ? 'text-cyan-400 font-bold' : 'text-white'
-                        }`}>
+                    <div className="flex items-center gap-1.5 md:gap-2 relative z-10 flex-row">
+                        <span className={`text-xs transition-all duration-300 ${userType === 'business' ? 'text-cyan-400 font-semibold' : 'text-white/60'
+                            }`}>
                             {TAB_BUSINESS}
                         </span>
-                        <div className="relative w-10 h-5 bg-gray-600 rounded-full">
-                            <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-300 ${
-                                language === 'he' 
-                                    ? (userType === 'business' ? 'right-0.5 translate-x-0' : 'right-0.5 -translate-x-5')
-                                    : (userType === 'entrepreneurs' ? 'right-0.5 translate-x-0' : 'right-0.5 -translate-x-5')
-                            }`}></div>
+                        <div className="relative w-8 h-4 bg-white/10 rounded-full border border-white/20">
+                            <div className={`absolute top-0.5 w-3 h-3 rounded-full transition-transform duration-300 ${userType === 'business' ? 'bg-cyan-400' : 'bg-green-400'} ${language === 'he'
+                                ? (userType === 'business' ? 'right-0.5 translate-x-0' : 'right-0.5 -translate-x-4')
+                                : (userType === 'entrepreneurs' ? 'right-0.5 translate-x-0' : 'right-0.5 -translate-x-4')
+                                }`}></div>
                         </div>
-                        <span className={`text-sm transition-all duration-300 ${
-                            userType === 'entrepreneurs' ? 'text-green-400 font-bold' : 'text-white'
-                        }`}>
+                        <span className={`text-xs transition-all duration-300 ${userType === 'entrepreneurs' ? 'text-green-400 font-semibold' : 'text-white/60'
+                            }`}>
                             {TAB_ENTREPRENEURS}
                         </span>
                     </div>
@@ -90,60 +83,57 @@ const SecondHeroSection: React.FC = () => {
                     <LightPillar
                         topColor={colors.topColor}
                         bottomColor={colors.bottomColor}
-                        intensity={isMobile ? 0.3 : 0.5}
-                        rotationSpeed={0.3}
+                        intensity={isMobile ? 0.45 : 0.5}
+                        rotationSpeed={0.7}
                         glowAmount={0.005}
                         pillarWidth={isMobile ? 3 : 3.0}
                         pillarHeight={isMobile ? 0.5 : 0.4}
-                        noiseIntensity={0.5}
+                        noiseIntensity={0.3}
                         pillarRotation={isMobile ? 20 : 40}
                         interactive={true}
-                        mixBlendMode="normal"
+                        mixBlendMode="screen"
                         parentRef={sectionRef}
                     />
                 </div>
             </div>
 
             {/* Content Overlay */}
-            <div className="relative z-10 container mx-auto px-4 py-48 lg:py-36">
-                <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
+            <div className="relative z-10 container mx-auto px-10 pt-58 pb-20 lg:pt-58 lg:pb-36">
+                <div className="flex flex-col items-center justify-center gap-10">
                     {/* Content Side */}
-                    <div className={`w-full lg:w-1/2 ${language === 'he' ? 'text-right' : 'text-left'}`}>
-                        <h2 className={`text-3xl md:text-4xl xl:text-5xl text-white/90 font-semibold mb-6`}>
+                    <div className="w-full max-w-3xl text-center">
+                        <h2 className="text-5xl md:text-5xl xl:text-5xl italic text-white/90 font-semilight mb-6 text-center">
                             <span>{t(`hero.${userType}.title`)}</span>
-                            <span className={`relative inline-block px-3 font-bold text-white uppercase mx-2 ${userType === 'entrepreneurs' ? 'bg-gradient-to-r from-green-400' : 'bg-gradient-to-r from-cyan-400'
+                            <span className={`relative inline-block px-3 font-semilight italic text-white uppercase mx-1 ${userType === 'entrepreneurs' ? 'bg-gradient-to-r from-green-400' : 'bg-gradient-to-r from-cyan-400'
                                 }`}>
                                 <span className="relative z-10">{t(`hero.${userType}.titleHighlight`)}</span>
                             </span>
                         </h2>
 
-                        <p className="text-white/70 text-lg md:text-xl italic mb-8">
+                        <p className="text-white/70 text-lg md:text-xl italic mb-6 text-center">
                             {t(`hero.${userType}.subtitle`)}
                         </p>
 
-                        <p className={`text-white/60 bg-white/10 backdrop-blur-sm p-4 rounded-xl text-sm md:text-base mb-8 ${language === 'he'
-                            ? 'border-r-4 pr-5 text-right'
-                            : 'border-l-4 pl-5 text-left'
-                            } ${userType === 'entrepreneurs' ? 'border-green-500' : 'border-cyan-500'}`}>
+                        <p className={`text-white/60 text-sm md:text-base mb-8 text-center max-w-xl mx-auto`}>
                             {t(`hero.${userType}.description`)}
                         </p>
 
                         {/* CTA Buttons */}
-                        <div className="flex flex-wrap gap-4">
+                        <div className="flex flex-wrap gap-4 justify-center">
                             <Link
                                 href="/services"
-                                className={`flex items-center gap-2 bg-transparent border text-white px-6 py-3 rounded-full transition-all ${userType === 'entrepreneurs'
-                                    ? 'border-green-400/30 hover:bg-green-400/10'
-                                    : 'border-cyan-400/30 hover:bg-cyan-400/10'
+                                className={`flex items-center justify-center gap-2 bg-white/5 backdrop-blur-xl border text-white px-6 py-3 rounded-full transition-all hover:bg-white/10 ${userType === 'entrepreneurs'
+                                    ? 'border-green-400/30 hover:border-green-400/50'
+                                    : 'border-cyan-400/30 hover:border-cyan-400/50'
                                     }`}
                             >
                                 <span>{t(`hero.${userType}.servicesButton`)}</span>
                             </Link>
                             <Link
                                 href="/contact"
-                                className={`flex items-center gap-2 text-white px-6 py-3 rounded-full transition-all ${userType === 'entrepreneurs'
-                                    ? 'bg-green-400/40 hover:bg-green-500/40'
-                                    : 'bg-cyan-400/40 hover:bg-cyan-500/40'
+                                className={`flex items-center justify-center gap-2 backdrop-blur-xl border text-white px-6 py-3 rounded-full transition-all ${userType === 'entrepreneurs'
+                                    ? 'bg-green-400/20 border-green-400/30 hover:bg-green-400/30'
+                                    : 'bg-cyan-400/20 border-cyan-400/30 hover:bg-cyan-400/30'
                                     }`}
                             >
                                 <span>{t(`hero.${userType}.contactButton`)}</span>
@@ -151,9 +141,9 @@ const SecondHeroSection: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Image Side */}
-                    <div className="w-full lg:w-1/2">
-                        <div className="relative w-full h-[400px] flex items-center justify-center">
+                    {/* Image Section - Below Content */}
+                    <div className="w-full max-w-md">
+                        <div className="relative w-full h-[300px] md:h-[400px] flex items-center justify-center">
                             <div className={`absolute w-[250px] h-[250px] rounded-full blur-3xl ${userType === 'entrepreneurs' ? 'bg-green-400/20' : 'bg-cyan-400/20'
                                 }`}></div>
                             <Image
@@ -161,7 +151,7 @@ const SecondHeroSection: React.FC = () => {
                                 alt="Hero Image"
                                 width={500}
                                 height={350}
-                                className="w-full h-auto relative z-10 max-w-md"
+                                className="w-full h-auto relative z-10"
                             />
                         </div>
                     </div>

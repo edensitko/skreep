@@ -1,24 +1,9 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { BLOG_DATA, BlogPost } from '@/data/blogData';
+import { blogPosts } from '@/data/blogPosts';
 import { useLanguage } from '@/contexts/LanguageContext';
-// Removed heroicons dependency - using inline SVGs instead
 import Link from 'next/link';
-
-interface BlogSectionProps {
-  language?: 'he' | 'en';
-}
-
-// Helper function to format date
-const formatDate = (dateString: string): string => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', { 
-    year: 'numeric', 
-    month: 'short', 
-    day: 'numeric' 
-  });
-};
 
 const BlogSection = () => {
   const { language, t } = useLanguage();
@@ -88,8 +73,8 @@ const BlogSection = () => {
     };
   }, []);
 
-  const totalSlides = BLOG_DATA.length;
-  const extendedData = [BLOG_DATA[totalSlides - 1], ...BLOG_DATA, BLOG_DATA[0]];
+  const totalSlides = blogPosts.length;
+  const extendedData = [blogPosts[totalSlides - 1], ...blogPosts, blogPosts[0]];
 
   const nextSlide = () => {
     if (isTransitioning) return;
@@ -119,8 +104,6 @@ const BlogSection = () => {
       setCurrentSlide(1);
     }
   };
-
-  // Removed auto-play functionality
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -191,11 +174,11 @@ const BlogSection = () => {
             style={{ scrollBehavior: 'smooth' }}
           >
             <div className="flex gap-4 md:gap-6 p-2 pl-[calc(50vw-12rem)] md:pl-2 pr-[calc(50vw-12rem)] md:pr-2 min-w-max">
-              {BLOG_DATA.map((post: BlogPost, n: number) => (
+              {blogPosts.map((post, n) => (
                 <Link
                   key={`${post.id}-${n}`}
-                  href={`/blog/${post.id}`}
-                  className="flex-shrink-0 w-70 lg:w-96 h-64 md:h-72 backdrop-blur-sm border rounded-3xl cursor-pointer group transition-all duration-300 hover:scale-95 bg-cover bg-center bg-no-repeat relative overflow-hidden opacity-90 border-white/20 hover:border-white/30 hover:opacity-100 block"
+                  href={`/blog/${post.slug}`}
+                  className="flex-shrink-0 w-70 lg:w-96 h-64 md:h-72 backdrop-blur-sm border rounded-3xl cursor-pointer group transition-all duration-300 hover:scale-95 bg-cover bg-center bg-no-repeat relative overflow-hidden opacity-90 border-white/20 hover:border-cyan-400/30 hover:opacity-100 block"
                   style={{ backgroundImage: `url(${post.image})` }}
                   dir={language === 'he' ? 'rtl' : 'ltr'}
                 >
@@ -204,21 +187,21 @@ const BlogSection = () => {
                   <div className="absolute bottom-0 left-0 right-0 p-4 md:p-10 relative z-20">
                     <div className="mb-3">
                       <span className="inline-block px-3 py-1 bg-cyan-400/20 text-cyan-300 text-xs font-medium rounded-full mb-2">
-                        {post.category[language]}
+                        {post.category[language as 'he' | 'en']}
                       </span>
                       <div className="flex items-center gap-2 text-white/60 text-xs mb-2">
-                        <span>{formatDate(post.publishDate)}</span>
+                        <span>{formatDate(post.date)}</span>
                         <span>•</span>
-                        <span>{post.readTime[language]}</span>
+                        <span>{post.readTime[language as 'he' | 'en']}</span>
                       </div>
                     </div>
                     
                     <h3 className="text-lg md:text-xl font-bold text-white mb-2 group-hover:text-cyan-200 transition-colors line-clamp-2">
-                      {post.title[language]}
+                      {post.title[language as 'he' | 'en']}
                     </h3>
                     
                     <p className="text-white/80 text-sm line-clamp-2 mb-3">
-                      {post.excerpt[language]}
+                      {post.excerpt[language as 'he' | 'en']}
                     </p>
                   </div>
                 </Link>

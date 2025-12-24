@@ -146,9 +146,9 @@ export default function HeroGrid() {
             </div>
 
             {/* Right Side - Content */}
-            <div className={`w-full lg:w-1/2 order-1 lg:order-2 ${language === 'he' ? 'text-right' : 'text-left'}`}>
+            <div className={`w-full lg:w-1/2 order-1 lg:order-2 text-center lg:${language === 'he' ? 'text-right' : 'text-left'}`}>
               {/* Heading */}
-              <h2 className={`text-4xl md:text-5xl xl:text-55 text-white/70 font-semibold mb-[35px] pointer-events-auto xl:ml-5 mx-auto ${language === 'he' ? 'text-right' : 'text-left'}`} dir={language === 'he' ? 'rtl' : 'ltr'}>
+              <h2 className={`text-4xl md:text-5xl xl:text-55 text-white/70 font-semibold mb-[35px] pointer-events-auto xl:ml-5 mx-auto text-center lg:${language === 'he' ? 'text-right' : 'text-left'}`} dir={language === 'he' ? 'rtl' : 'ltr'}>
                 <span>{t(`hero.${userType}.title`)}</span><span className="relative inline-block px-3 font-bold text-white uppercase">
                   <span className="relative z-10">{t(`hero.${userType}.titleHighlight`)}</span>
                   <span className="absolute top-0 left-0 block w-full h-full bg-gradient-to-r from-cyan-400"></span>
@@ -158,18 +158,18 @@ export default function HeroGrid() {
               </h2>
 
               {/* CTA Buttons */}
-              <div className="flex flex-wrap gap-4 animate-in" style={{ animationName: 'fade-up', animationDuration: '0.8s', animationDelay: '0.6s', animationFillMode: 'both' }}>
-                <p className={`text-white/60 bg-white/10 mb-10 p-3 rounded text-xs ${
+              <div className="flex flex-wrap gap-4 animate-in justify-center lg:justify-start" style={{ animationName: 'fade-up', animationDuration: '0.8s', animationDelay: '0.6s', animationFillMode: 'both' }}>
+                <p className={`text-white/60 bg-white/10 mb-10 p-3 rounded text-xs w-full text-center lg:w-auto ${
                   language === 'he' 
-                    ? 'border-r-4 border-blue-500 pr-5 ml-20 rounded-l-2xl text-right' 
-                    : 'border-l-4 border-blue-500 pl-5 mr-20 rounded-r-2xl text-left'
+                    ? 'lg:border-r-4 lg:border-blue-500 lg:pr-5 lg:ml-20 lg:rounded-l-2xl lg:text-right' 
+                    : 'lg:border-l-4 lg:border-blue-500 lg:pl-5 lg:mr-20 lg:rounded-r-2xl lg:text-left'
                 }`} dir={language === 'he' ? 'rtl' : 'ltr'}>
                   {t(`hero.${userType}.description`)}</p>
-                <Link href="/services" className="flex items-center gap-2 bg-transparent border border-cyan-400/30 text-white px-8 py-4 rounded-full hover:bg-cyan-400/10 transition-all">
+                <Link href="/services" className="flex items-center justify-center gap-2 bg-transparent border border-cyan-400/30 text-white px-8 py-4 rounded-full hover:bg-cyan-400/10 transition-all">
                   <span>{t(`hero.${userType}.servicesButton`)}</span>
                  
                 </Link>
-                <Link href="/contact" className="flex items-center gap-2 border-white/10 gradient-to-r from-cyan-400/40 to-cyan-400/40 bg-cyan-400/40 border-cyan-400/40 text-white px-8 py-4 rounded-full hover:bg-cyan-500/40 transition-all">
+                <Link href="/contact" className="flex items-center justify-center gap-2 border-white/10 gradient-to-r from-cyan-400/40 to-cyan-400/40 bg-cyan-400/40 border-cyan-400/40 text-white px-8 py-4 rounded-full hover:bg-cyan-500/40 transition-all">
                   <span>{t(`hero.${userType}.contactButton`)}</span>
                  
                 </Link>

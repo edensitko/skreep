@@ -225,26 +225,7 @@ export default function ServicesPage() {
                     </div>
                   </div>
 
-                  {/* Enhanced Features Section - Mobile Optimized */}
-                  <div className="p-3 sm:p-4 md:p-6 lg:p-8 bg-gradient-to-t from-black/60 via-black/30 to-transparent relative">
-                    <div className="grid grid-cols-1 gap-2 sm:gap-3 md:gap-4">
-                      {(service.features || []).slice(0, 4).map((feature: string, featureIndex: number) => (
-                        <div key={featureIndex} className="flex items-center gap-2 sm:gap-3">
-                          <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-cyan-400/20 to-purple-400/20 rounded-full flex items-center justify-center flex-shrink-0">
-                            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full"></div>
-                          </div>
-                          <span 
-                            className="text-xs sm:text-sm lg:text-base text-white/90 font-medium"
-                            dir={language === 'he' ? 'rtl' : 'ltr'}
-                          >
-                            {feature}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-
-                      </div>
-                      </div>
+                </div>
 
               );
             })}

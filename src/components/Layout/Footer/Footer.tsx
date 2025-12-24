@@ -2,35 +2,15 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 import FooterSection from '@/components/Sections/FooterSection';
-import RippleGrid from '@/components/Hero/RippleGrid';
-import { useUserType } from '@/hooks/useGlobalUserType';
 
 export default function Footer() {
   const { language, t } = useLanguage();
-  const { userType } = useUserType();
   const textDirection = language === 'he' ? 'rtl' : 'ltr';
-  
-  // Color based on user type
-  const rippleColor = userType === 'entrepreneurs' ? '#22C55E' : '#00ffff';
   
   return (
     <footer className="w-full bg-black relative" dir={textDirection}>
-      {/* RippleGrid Background */}
-      <div className="absolute inset-0 z-0 opacity-30">
-        <RippleGrid
-          beamWidth={2}
-          beamHeight={15}
-          beamNumber={10}
-          lightColor={rippleColor}
-          speed={3}
-          noiseIntensity={1.75}
-          scale={0.2}
-          rotation={40}
-        />
-      </div>
       
       {/* Background Image - Small/Medium screens */}
       <div 
