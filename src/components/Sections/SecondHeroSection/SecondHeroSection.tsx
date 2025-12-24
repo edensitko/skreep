@@ -98,7 +98,7 @@ const SecondHeroSection: React.FC = () => {
             </div>
 
             {/* Content Overlay */}
-            <div className="relative z-10 container mx-auto px-4 pt-58 pb-20 lg:pt-58 lg:pb-36">
+            <div className="relative z-10 container mx-auto pt-58 pb-20 lg:pt-58 lg:pb-36">
                 <div className="flex flex-col items-center justify-center gap-10">
                     {/* Content Side */}
                     <div className="w-full max-w-3xl text-center">
