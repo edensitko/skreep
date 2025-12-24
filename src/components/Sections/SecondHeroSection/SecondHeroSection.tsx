@@ -98,7 +98,7 @@ const SecondHeroSection: React.FC = () => {
             </div>
 
             {/* Content Overlay */}
-            <div className="relative z-10 container mx-auto px-10 pt-58 pb-20 lg:pt-58 lg:pb-36">
+            <div className="relative z-10 container mx-auto px-4 pt-58 pb-20 lg:pt-58 lg:pb-36">
                 <div className="flex flex-col items-center justify-center gap-10">
                     {/* Content Side */}
                     <div className="w-full max-w-3xl text-center">
@@ -114,7 +114,7 @@ const SecondHeroSection: React.FC = () => {
                             {t(`hero.${userType}.subtitle`)}
                         </p>
 
-                        <p className={`text-white/60 text-sm md:text-base mb-8 text-center max-w-xl mx-auto`}>
+                        <p className={`text-white/60 px-12 text-sm md:text-base mb-8 text-center max-w-xl mx-auto`}>
                             {t(`hero.${userType}.description`)}
                         </p>
 
