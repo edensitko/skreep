@@ -36,7 +36,8 @@ export const DECORATIVE_ELEMENTS: ReadonlyArray<DecorativeElement> = [
 ] as const;
 
 export const SECTION_CONTENT = {
-  text: "יותר מ-111+ לקוחות שעבדנו איתם",
+  text_he: "יותר מ-111+ לקוחות שעבדנו איתם",
+  text_en: "More than 111+ clients we've worked with",
   height: "h-[700px]"
 } as const;
 

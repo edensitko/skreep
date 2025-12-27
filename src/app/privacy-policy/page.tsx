@@ -5,8 +5,6 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import PageSEO from '@/components/SEO/PageSEO';
 import LocalSEO from '@/components/SEO/LocalSEO';
 import SEOMeta from '@/components/SEO/SEOMeta';
-import Header from '@/components/Layout/Header/Header';
-import Footer from '@/components/Layout/Footer/Footer';
 import PageHero from '@/components/Layout/PageHero';
 
 export default function PrivacyPolicyPage() {
@@ -141,8 +139,6 @@ export default function PrivacyPolicyPage() {
       <LocalSEO />
       <SEOMeta />
 
-      <Header />
-
       {/* Hero Section with RippleGrid */}
       <PageHero 
         title={content.title}
@@ -191,8 +187,6 @@ export default function PrivacyPolicyPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 }

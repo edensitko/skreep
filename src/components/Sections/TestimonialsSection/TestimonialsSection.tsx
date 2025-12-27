@@ -3,7 +3,7 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import TestimonialCard from './TestimonialCard';
-import { TESTIMONIALS_DATA } from './constants';
+import { TESTIMONIALS_DATA_HE, TESTIMONIALS_DATA_EN } from './constants';
 
 /**
  * Testimonials section with continuous carousels
@@ -19,8 +19,8 @@ function TestimonialsSection() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   
-  // Use testimonials data from constants
-  const testimonialsData = TESTIMONIALS_DATA;
+  // Use language-aware testimonials data
+  const testimonialsData = language === 'he' ? TESTIMONIALS_DATA_HE : TESTIMONIALS_DATA_EN;
 
   // Intersection Observer for title animation
   useEffect(() => {
@@ -62,7 +62,7 @@ function TestimonialsSection() {
     <section 
       id="testimonials" 
       className="w-full py-16 md:py-24 relative overflow-hidden bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl"
-      dir="rtl"
+      dir={language === 'he' ? 'rtl' : 'ltr'}
       role="region"
       aria-label={t('testimonials.sectionAriaLabel')}
     >
@@ -74,7 +74,7 @@ function TestimonialsSection() {
             className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-3xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out text-center ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
-            dir="rtl"
+            dir={language === 'he' ? 'rtl' : 'ltr'}
           >
             {t('testimonials.title')}
           </h2>
@@ -84,7 +84,7 @@ function TestimonialsSection() {
             className={`text-md font-light md:text-lg text-white/70 mx-auto transition-all duration-1000 delay-200 ${
               isSubtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
-            dir="rtl"
+            dir={language === 'he' ? 'rtl' : 'ltr'}
             style={{ textAlign: 'center' }}
           >
             {t('testimonials.subtitle') || (language === 'he' ? 'חוויות אמיתיות מלקוחות מרוצים שבחרו לעבוד איתנו' : 'Real experiences from satisfied clients who chose to work with us')}
@@ -103,7 +103,7 @@ function TestimonialsSection() {
               <div key={`ltr-${testimonial.id}-${index}`} className="flex-shrink-0">
                 <TestimonialCard 
                   testimonial={testimonial}
-                  language="he"
+                  language={language}
                   index={index}
                 />
               </div>
@@ -123,7 +123,7 @@ function TestimonialsSection() {
               <div key={`rtl-${testimonial.id}-${index}`} className="flex-shrink-0">
                 <TestimonialCard 
                   testimonial={testimonial}
-                  language="he"
+                  language={language}
                   index={index}
                 />
               </div>

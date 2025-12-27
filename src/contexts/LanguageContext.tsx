@@ -21,17 +21,23 @@ const messages = {
   en: enMessages
 };
 
-// Function to safely get language from localStorage
+// Function to safely get language from localStorage or browser preference
 const getStoredLanguage = (): Language => {
-  if (typeof window === 'undefined') return 'he'; // Default to Hebrew on server
+  if (typeof window === 'undefined') return 'en'; // Default to English on server
+  
+  // First check localStorage
   const savedLanguage = localStorage.getItem('language') as Language;
-  return (savedLanguage && (savedLanguage === 'he' || savedLanguage === 'en')) 
-    ? savedLanguage 
-    : 'he';
+  if (savedLanguage && (savedLanguage === 'he' || savedLanguage === 'en')) {
+    return savedLanguage;
+  }
+  
+  // Default to English for new users
+  // Only switch to Hebrew if explicitly requested
+  return 'en';
 };
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Language>('he');
+  const [language, setLanguage] = useState<Language>('en'); // Default to English
   const [isMounted, setIsMounted] = useState(false);
 
   // Set initial language after mount to avoid hydration mismatch
@@ -57,9 +63,16 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   // Handle language change with page reload
   const handleLanguageChange = (lang: Language) => {
     if (lang !== language) {
+      // Update localStorage immediately
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('language', lang);
+      }
       setLanguage(lang);
       if (typeof window !== 'undefined') {
-        window.location.reload();
+        // Small delay to ensure state is updated
+        setTimeout(() => {
+          window.location.reload();
+        }, 100);
       }
     }
   };

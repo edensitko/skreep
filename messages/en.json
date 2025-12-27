@@ -209,6 +209,33 @@
         "features": ["AWS & Azure", "Data Security", "Automated Backups", "24/7 Monitoring", "Docker Containers", "Kubernetes"],
         "color": "from-cyan-500 to-blue-600",
         "imageBg": "/assets/images/servicesimg/3.png"
+      },
+      {
+        "id": "saas-development",
+        "title": "SaaS Development",
+        "description": "Smart, secure and scalable SaaS solutions",
+        "longDescription": "Development of cloud-based SaaS systems with interactive dashboards, data analysis, user management and advanced integrations.",
+        "features": ["Real-time Dashboards", "External Services Integration", "Custom Development", "Cloud Scalability & Advanced Security"],
+        "color": "from-indigo-500 to-purple-600",
+        "imageBg": "/assets/images/servicesimg/4.png"
+      },
+      {
+        "id": "data-analytics",
+        "title": "Data Analytics & BI",
+        "description": "Data-driven business insights",
+        "longDescription": "Creating advanced data analysis systems and interactive dashboards for data-driven decision making.",
+        "features": ["Interactive Dashboards", "Advanced Data Analysis", "Automated Reports", "Business Forecasting"],
+        "color": "from-indigo-500 to-purple-600",
+        "imageBg": "/assets/images/servicesimg/6.png"
+      },
+      {
+        "id": "chatbot-development",
+        "title": "Chatbot Development",
+        "description": "Smart chatbots for customer service and sales",
+        "longDescription": "Development of AI-powered chatbots for WhatsApp, Facebook, Telegram and websites. Automated 24/7 customer service with natural conversation capabilities.",
+        "features": ["WhatsApp Chatbot", "GPT-4 Integration", "24/7 Customer Service", "Automatic Lead Collection", "Hebrew & English Support", "Conversation Dashboard"],
+        "color": "from-violet-500 to-purple-600",
+        "imageBg": "/assets/images/servicesimg/1.png"
       }
     ]
   },
@@ -582,6 +609,83 @@
   },
   "common": {
     "loading": "Loading...",
-    "error": "Error"
+    "error": "Error",
+    "allServices": "All Services",
+    "toProject": "To Project",
+    "viewMoreArticles": "View more articles",
+    "formSuccess": "Form submitted successfully! We will get back to you soon"
+  },
+  "innovation": {
+    "line1": "Innovation & Technology",
+    "line2": "Changing the Game"
+  },
+  "lineShape": {
+    "text": "More than 111+ clients we've worked with",
+    "ariaLabel": "Decorative background"
+  },
+  "noCodeBenefits": {
+    "ariaLabel": "No-code solutions benefits",
+    "entrepreneurs": {
+      "title": "Your Journey from Idea to Product",
+      "subtitle": "How we take your idea and develop it into a market-ready digital solution",
+      "benefits": [
+        {
+          "icon": "1",
+          "title": "Research & Analysis",
+          "description": "Understanding the idea, identifying target audience, competitor analysis and defining a precise MVP that can go to market quickly."
+        },
+        {
+          "icon": "2",
+          "title": "MVP Design",
+          "description": "Creating a simple, focused and quick-to-execute initial design that presents the idea in an attractive and understandable way."
+        },
+        {
+          "icon": "3",
+          "title": "Initial Development",
+          "description": "Building the first version of the product with minimum capabilities (MVP), with emphasis on short development times."
+        },
+        {
+          "icon": "4",
+          "title": "Testing & Experimentation",
+          "description": "Operational testing with early users, quick feedback collection and preparation for the next iteration."
+        },
+        {
+          "icon": "5",
+          "title": "Launch & Feedback",
+          "description": "Launching the system in a live environment, support during implementation and ongoing support for issues and optimization."
+        }
+      ]
+    },
+    "business": {
+      "title": "Our Professional Process",
+      "subtitle": "A structured and professional process that ensures quality results and meeting deadlines",
+      "benefits": [
+        {
+          "icon": "1",
+          "title": "Research & Analysis",
+          "description": "Mapping existing systems, identifying operational needs, and defining precise requirements that support business growth."
+        },
+        {
+          "icon": "2",
+          "title": "User Experience Design",
+          "description": "Designing efficient interfaces for employees and customers, with adaptation to company branding and maintaining an easy and clear user experience."
+        },
+        {
+          "icon": "3",
+          "title": "Development & Implementation",
+          "description": "Developing custom modules, integration with existing systems, while ensuring security, performance and scalability."
+        },
+        {
+          "icon": "4",
+          "title": "Testing & Quality Assurance",
+          "description": "Performing thorough testing at every stage, including end-user adaptation, functional integrity and load handling."
+        },
+        {
+          "icon": "5",
+          "title": "Launch & Support",
+          "description": "Launching the system in a live environment, support during implementation and ongoing support for issues and optimization."
+        }
+      ]
+    }
   }
 }

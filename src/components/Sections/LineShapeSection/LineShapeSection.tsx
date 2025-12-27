@@ -4,12 +4,15 @@ import React, { memo } from 'react';
 import DiagonalLines from './DiagonalLines';
 import { LINE_SHAPE_CONFIG, DECORATIVE_ELEMENTS, SECTION_CONTENT, GRID_STYLES } from './constants';
 import { generateMainLines, generateCrossLines } from './utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 /**
  * Line Shape section with animated diagonal lines and decorative elements
  * Creates a dynamic visual background pattern
  */
 function LineShapeSection() {
+  const { language, t } = useLanguage();
+  
   // ============================================================================
   // COMPUTED VALUES
   // ============================================================================
@@ -21,7 +24,7 @@ function LineShapeSection() {
     <section 
       className="relative w-full bg-black overflow-hidden"
       role="region"
-      aria-label="רקע דקורטיבי"
+      aria-label={t('lineShape.ariaLabel') || (language === 'he' ? 'רקע דקורטיבי' : 'Decorative background')}
     >
       {/* Line Shape Container */}
       <div className={`line-shape w-full ${SECTION_CONTENT.height} relative`}>
@@ -55,8 +58,8 @@ function LineShapeSection() {
         {/* Central Content Area */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white/60">
-            <p className="text-lg font-medium" dir="rtl">
-              {SECTION_CONTENT.text}
+            <p className="text-lg font-medium" dir={language === 'he' ? 'rtl' : 'ltr'}>
+              {t('lineShape.text') || (language === 'he' ? SECTION_CONTENT.text_he : SECTION_CONTENT.text_en)}
             </p>
           </div>
         </div>

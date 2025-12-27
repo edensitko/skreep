@@ -69,9 +69,9 @@ const projectsDataEn: ProjectCard[] = [
 
 function OurProjectsSection() {
   const { language, t } = useLanguage();
-  
+
   const currentProjectsData = language === 'he' ? projectsDataHe : projectsDataEn;
-  
+
   const [selectedProject, setSelectedProject] = useState<ProjectCard | null>(currentProjectsData[0]);
   const [isVisible, setIsVisible] = useState(false);
   const [isSubtitleVisible, setIsSubtitleVisible] = useState(false);
@@ -136,7 +136,7 @@ function OurProjectsSection() {
     if (scrollContainerRef.current) {
       const container = scrollContainerRef.current;
       const isLargeScreen = window.innerWidth >= 768;
-      
+
       if (isLargeScreen) {
         container.scrollTo({ left: 0, behavior: 'auto' });
       } else {
@@ -153,22 +153,22 @@ function OurProjectsSection() {
         const container = scrollContainerRef.current;
         const containerRect = container.getBoundingClientRect();
         const centerX = containerRect.left + containerRect.width / 2;
-        
+
         const cards = container.querySelectorAll('[data-project-id]') as NodeListOf<HTMLElement>;
         let closestCard: HTMLElement | null = null;
         let closestDistance = Infinity;
-        
+
         cards.forEach((card: HTMLElement) => {
           const cardRect = card.getBoundingClientRect();
           const cardCenterX = cardRect.left + cardRect.width / 2;
           const distance = Math.abs(centerX - cardCenterX);
-          
+
           if (distance < closestDistance) {
             closestDistance = distance;
             closestCard = card;
           }
         });
-        
+
         if (closestCard) {
           const projectId = (closestCard as HTMLElement).getAttribute('data-project-id');
           if (projectId) {
@@ -185,7 +185,7 @@ function OurProjectsSection() {
     if (container) {
       container.addEventListener('scroll', handleScroll);
       handleScroll();
-      
+
       return () => {
         container.removeEventListener('scroll', handleScroll);
       };
@@ -218,29 +218,27 @@ function OurProjectsSection() {
         <div className="mx-auto max-w-full px-0">
           {/* Header */}
           <div className="text-center pt-16 pb-8 w-full">
-            <h1 
+            <h1
               ref={titleRef}
-              className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-3xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out ${
-                isVisible 
-                  ? 'opacity-100 translate-y-0' 
+              className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-3xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out ${isVisible
+                  ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-8'
-              }`} 
+                }`}
               dir={language === 'he' ? 'rtl' : 'ltr'}
               style={{ textAlign: 'center' }}
             >
               {t('ourProjects.title') || (language === 'he' ? 'חלק מהעבודות שלנו' : 'Some of Our Work')}
             </h1>
-            
-            <p 
+
+            <p
               ref={subtitleRef}
-              className={`text-md font-light md:text-lg text-white/70 mx-auto transition-all duration-1000 delay-200 ${
-                isSubtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
+              className={`text-md font-light md:text-lg text-white/70 mx-auto transition-all duration-1000 delay-200 ${isSubtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
               dir={language === 'he' ? 'rtl' : 'ltr'}
               style={{ textAlign: 'center' }}
             >
-              {t('ourProjects.subtitle') || (language === 'he' 
-                ? 'פתרונות דיגיטליים מתקדמים שיצרנו עבור לקוחותינו' 
+              {t('ourProjects.subtitle') || (language === 'he'
+                ? 'פתרונות דיגיטליים מתקדמים שיצרנו עבור לקוחותינו'
                 : 'Advanced digital solutions we created for our clients')}
             </p>
           </div>
@@ -257,7 +255,7 @@ function OurProjectsSection() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
-            
+
             <button
               onClick={scrollRight}
               className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
@@ -269,7 +267,7 @@ function OurProjectsSection() {
             </button>
 
             {/* Cards Container */}
-            <div 
+            <div
               ref={scrollContainerRef}
               className="overflow-x-auto scrollbar-hide"
               style={{ scrollBehavior: 'smooth', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -280,11 +278,10 @@ function OurProjectsSection() {
                     key={`${project.id}-${index}`}
                     data-project-id={project.id}
                     onClick={() => selectProject(project)}
-                    className={`flex-shrink-0 w-52 lg:w-60 h-32 md:h-32 backdrop-blur-sm border rounded-2xl p-4 md:p-6 cursor-pointer group transition-all duration-300 hover:scale-90 bg-cover bg-center bg-no-repeat relative overflow-hidden ${
-                      selectedProject?.id === project.id
+                    className={`flex-shrink-0 w-52 lg:w-60 h-32 md:h-32 backdrop-blur-sm border rounded-2xl p-4 md:p-6 cursor-pointer group transition-all duration-300 hover:scale-90 bg-cover bg-center bg-no-repeat relative overflow-hidden ${selectedProject?.id === project.id
                         ? 'opacity-100 border-white/80 shadow-lg'
                         : 'opacity-70 border-white/20 hover:border-white/30 hover:opacity-90'
-                    }`}
+                      }`}
                     style={{
                       backgroundImage: `url(${project.imageBg})`,
                       backgroundSize: 'cover',
@@ -294,7 +291,7 @@ function OurProjectsSection() {
                     dir={language === 'he' ? 'rtl' : 'ltr'}
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-black/50 rounded-2xl"></div>
-                    
+
                     <div className="text-center relative z-20">
                       <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-3 group-hover:text-cyan-200 transition-colors">
                         {project.title}
@@ -313,13 +310,13 @@ function OurProjectsSection() {
         <div className="mt-6 w-[85%] mx-auto relative">
           {/* Main Content Container */}
           <div className="bg-gradient-to-br from-black/30 via-black/20 to-black/10 backdrop-blur-3xl border border-white/20 rounded-3xl lg:rounded-4xl shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-700 ease-out hover:backdrop-blur-[12px] hover:border-white/30 hover:shadow-cyan-400/10 hover:shadow-2xl">
-            
+
             {/* Animated Background Effects */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-60 rounded-3xl lg:rounded-4xl"></div>
             <div className="absolute inset-0 bg-gradient-to-tl from-cyan-400/8 via-transparent to-purple-400/8 opacity-50 rounded-3xl lg:rounded-4xl"></div>
-            
+
             {/* Full-Width Image Banner */}
-            <div 
+            <div
               className="w-full h-32 md:h-40 lg:h-48 bg-cover bg-center bg-no-repeat relative overflow-hidden rounded-t-3xl lg:rounded-t-4xl"
               style={{
                 backgroundImage: `url(${selectedProject.imageBg})`,
@@ -331,22 +328,49 @@ function OurProjectsSection() {
             </div>
 
             {/* Content Wrapper */}
-            <div 
+            <div
               key={selectedProject.id}
               className="relative z-10 p-6 lg:p-8"
+              dir={language === 'he' ? 'rtl' : 'ltr'}
             >
               {/* Header Section */}
-              <div className="text-center mb-8">
-                <h2 className="text-2xl lg:text-3xl font-bold bg-gradient-to-br from-white via-white/90 to-white/70 bg-clip-text text-transparent mb-3 leading-tight">
+              <div className="mb-8">
+                <h2 className="text-2xl lg:text-3xl font-bold bg-gradient-to-br from-white via-white/90 to-white/70 bg-clip-text text-transparent mb-3 leading-tight text-start">
                   {selectedProject.title}
                 </h2>
-                <p className="text-white/80 text-base lg:text-lg leading-relaxed max-w-2xl mx-auto" dir={language === 'he' ? 'rtl' : 'ltr'}>
+                <p className="text-white/80 text-base lg:text-lg leading-relaxed max-w-2xl text-start">
                   {selectedProject.description}
                 </p>
               </div>
 
+              {/* View Project Button - Inside Card */}
+              <div className="flex justify-start">
+                <Link
+                  href={`/projects/${selectedProject.id}`}
+                  className="bg-white/05 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1 text-white text-sm font-light flex items-center gap-2 hover:bg-white/15 hover:scale-105 transition-all duration-300"
+                >
+                  {t('common.toProject') || (language === 'he' ? 'לפרויקט' : 'To project')}
+                  <svg
+                    className={`transition-all duration-300 ${language === 'he' ? '' : 'rotate-180'}`}
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 12H5M12 19L5 12L12 5"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </Link>
+              </div>
+
             </div>
-            
+
             {/* Enhanced Background Decorations */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
               <div className="absolute top-1/4 right-1/4 w-40 h-40 bg-cyan-400/10 rounded-full blur-3xl animate-pulse"></div>
@@ -354,28 +378,28 @@ function OurProjectsSection() {
               <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-blue-400/8 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
             </div>
           </div>
-          
+
           {/* View More Button */}
           <div className="flex justify-center mt-8">
-            <Link 
+            <Link
               href="/projects"
-              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3 text-white font-semibold flex items-center gap-2 hover:bg-white/15 hover:scale-110 transition-all duration-300" 
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3 text-white font-semibold flex items-center gap-2 hover:bg-white/15 hover:scale-110 transition-all duration-300"
               dir={language === 'he' ? 'rtl' : 'ltr'}
             >
               {t('ourProjects.viewMoreProjects') || (language === 'he' ? 'לכל הפרויקטים' : 'View All Projects')}
-              <svg 
-                className="transition-all duration-300" 
-                width="16" 
-                height="16" 
-                viewBox="0 0 24 24" 
-                fill="none" 
+              <svg
+                className={`transition-all duration-300 ${language === 'he' ? '' : 'rotate-180'}`}
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path 
-                  d="M19 12H5M12 19L5 12L12 5" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
+                <path
+                  d="M19 12H5M12 19L5 12L12 5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                   strokeLinejoin="round"
                 />
               </svg>
@@ -383,7 +407,7 @@ function OurProjectsSection() {
           </div>
         </div>
       )}
-      
+
       {/* Hide scrollbar styles */}
       <style jsx>{`
         .scrollbar-hide::-webkit-scrollbar {

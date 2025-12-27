@@ -14,7 +14,7 @@ import type { PageSEOProps } from '@/lib/seo/utils';
  * Hook for multilingual SEO management
  */
 export function useMultilingualSEO() {
-  const { language } = useContext(LanguageContext) || { language: 'he' };
+  const { language } = useContext(LanguageContext) || { language: 'en' };
   const currentLang = language as 'he' | 'en';
   const langConfig = seoConfig.multilingual[currentLang];
 

@@ -3,11 +3,11 @@ import ClientLayout from "@/components/Layout/ClientLayout";
 import { UserTypeProvider } from "@/hooks/useGlobalUserType";
 import { ConditionalLayout } from "@/components/Layout/ConditionalLayout";
 import Analytics from "@/components/SEO/Analytics";
-import CookieConsent from "@/components/SEO/CookieConsent";
 import DynamicMetadata from "@/components/Layout/DynamicMetadata";
 import { DynamicHtmlWrapper } from "@/components/Layout/DynamicHtmlWrapper";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AEO, LocalSEO, PageSEO } from '@/components/SEO';
+import CookieConsent from "@/components/CookieConsent";
 
 export default function RootLayout({
   children,
@@ -99,7 +99,7 @@ export default function RootLayout({
   const structuredData = JSON.stringify(ldJson);
 
   return (
-    <html lang="he" dir="rtl" suppressHydrationWarning>
+    <html lang="en" dir="ltr" suppressHydrationWarning>
       <head>
         <script
           id="structured-data"

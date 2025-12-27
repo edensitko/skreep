@@ -40,7 +40,7 @@ const AEO = ({
   questions = [],
   howTo,
   product,
-  language = 'he',
+  language = 'en',
   onStructuredData
 }: AEOProps): React.JSX.Element => {
   const structuredData = useMemo<StructuredDataItem[]>(() => {

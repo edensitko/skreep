@@ -159,16 +159,16 @@ export const useIntersectionAnimation = (onVisibilityChange: (isVisible: boolean
 };
 
 /**
- * Hook for managing benefits based on user type
+ * Hook for managing benefits based on user type and language
  */
-export const useBenefitsData = (userType: UserType) => {
+export const useBenefitsData = (userType: UserType, language: string = 'en') => {
   const [benefits, setBenefits] = useState<readonly Benefit[]>(() => 
-    getBenefitsByUserType(userType)
+    getBenefitsByUserType(userType, language)
   );
 
   useEffect(() => {
-    setBenefits(getBenefitsByUserType(userType));
-  }, [userType]);
+    setBenefits(getBenefitsByUserType(userType, language));
+  }, [userType, language]);
 
   return benefits;
 };

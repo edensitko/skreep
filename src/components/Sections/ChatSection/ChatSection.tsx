@@ -237,12 +237,28 @@ const ChatSection: React.FC = () => {
                   <button
                     onClick={handleSendMessage}
                     disabled={!inputValue.trim() || chatState.isLoading}
-                    className={`px-4 lg:px-6 py-2 lg:py-3 rounded-full font-medium transition-all duration-300 text-sm lg:text-base ${inputValue.trim() && !chatState.isLoading
-                      ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-white hover:from-cyan-500 hover:to-blue-600 hover:scale-105'
-                      : 'bg-white/10 text-white/50 border border-white/20 cursor-not-allowed'
+                    className={`px-4 lg:px-6 py-2 lg:py-3 rounded-full font-medium transition-all duration-300 text-sm lg:text-base flex items-center gap-2 ${inputValue.trim() && !chatState.isLoading
+                      ? 'bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/15 hover:scale-105'
+                      : 'bg-white/5 text-white/50 border border-white/10 cursor-not-allowed'
                       }`}
                   >
                     {t('chatSection.sendButton')}
+                    <svg 
+                      className="transition-all duration-300" 
+                      width="14" 
+                      height="14" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path 
+                        d={language === 'he' ? "M19 12H5M12 19L5 12L12 5" : "M5 12H19M12 5L19 12L12 19"}
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                      />
+                    </svg>
                   </button>
                 </div>
               </div>

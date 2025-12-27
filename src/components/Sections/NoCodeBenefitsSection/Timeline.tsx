@@ -3,6 +3,7 @@
 import React, { memo } from 'react';
 import BenefitCard from './BenefitCard';
 import TimelineIcon from './TimelineIcon';
+import { useLanguage } from '@/contexts/LanguageContext';
 import type { TimelineProps } from './types';
 
 /**
@@ -16,6 +17,9 @@ const Timeline = memo<TimelineProps>(({
   setItemRef,
   className = '' 
 }) => {
+  const { language } = useLanguage();
+  const isRTL = language === 'he';
+  
   return (
     <div className={`relative ${className}`}>
       {/* Enhanced Timeline Background */}
@@ -23,8 +27,8 @@ const Timeline = memo<TimelineProps>(({
         {/* Desktop Timeline Spine */}
         <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-white/10 to-transparent" />
         
-        {/* Mobile Timeline Spine - Right positioned for RTL */}
-        <div className="md:hidden absolute right-6 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-white/10 to-transparent" />
+        {/* Mobile Timeline Spine - Right for RTL (Hebrew), Left for LTR (English) */}
+        <div className={`md:hidden absolute top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-white/10 to-transparent ${isRTL ? 'right-6' : 'left-6'}`} />
         
         {/* Desktop Progress Line */}
         <div 
@@ -32,9 +36,9 @@ const Timeline = memo<TimelineProps>(({
           style={{ height: `${scrollProgress * 100}%` }}
         />
         
-        {/* Mobile Progress Line - Right positioned for RTL */}
+        {/* Mobile Progress Line - Right for RTL, Left for LTR */}
         <div 
-          className="md:hidden absolute right-6 top-0 w-1 bg-gradient-to-b from-cyan-400/80 via-purple-400/60 to-cyan-400/80 transition-all duration-500 ease-out"
+          className={`md:hidden absolute top-0 w-1 bg-gradient-to-b from-cyan-400/80 via-purple-400/60 to-cyan-400/80 transition-all duration-500 ease-out ${isRTL ? 'right-6' : 'left-6'}`}
           style={{ height: `${scrollProgress * 100}%` }}
         />
       </div>
@@ -43,7 +47,7 @@ const Timeline = memo<TimelineProps>(({
       <div className="relative space-y-20 md:space-y-32">
         {benefits.map((benefit, index) => {
           const isEven = index % 2 === 0;
-          const delay = index * 100; // Reduced from 200ms to 100ms for faster appearance
+          const delay = index * 100;
           
           return (
             <div 
@@ -64,8 +68,8 @@ const Timeline = memo<TimelineProps>(({
                 }`} />
               </div>
               
-              {/* Mobile Timeline Node Connection */}
-              <div className="md:hidden absolute right-6 transform translate-x-1/2 top-6 z-20">
+              {/* Mobile Timeline Node Connection - Right for RTL, Left for LTR */}
+              <div className={`md:hidden absolute top-6 z-20 ${isRTL ? 'right-6 transform translate-x-1/2' : 'left-6 transform -translate-x-1/2'}`}>
                 <div className={`w-4 h-4 rounded-full border-2 border-black bg-gradient-to-r ${benefit.gradient || 'from-cyan-400 to-purple-400'} transition-all duration-700 scale-100 opacity-100`} />
               </div>
 
@@ -114,11 +118,11 @@ const Timeline = memo<TimelineProps>(({
                 </div>
               </div>
               
-              {/* Enhanced Mobile Layout */}
+              {/* Enhanced Mobile Layout - Cards on left for RTL, Cards on right for LTR */}
               <div className="md:hidden">
-                <div className="flex items-start pr-16 pl-4">
-                  {/* Mobile Timeline Icon - Positioned over right timeline */}
-                  <div className="absolute right-6 transform translate-x-1/2 top-2">
+                <div className={`flex items-start ${isRTL ? 'pr-16 pl-4' : 'pl-16 pr-4'}`}>
+                  {/* Mobile Timeline Icon - Positioned over timeline */}
+                  <div className={`absolute top-2 ${isRTL ? 'right-6 transform translate-x-1/2' : 'left-6 transform -translate-x-1/2'}`}>
                     <div className={`transform transition-all duration-700 ${
                       visibleItems[index] ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
                     }`}
@@ -136,7 +140,7 @@ const Timeline = memo<TimelineProps>(({
                   {/* Mobile Benefit Card */}
                   <div className="flex-1">
                     <div className={`transform transition-all duration-1000 ease-out ${
-                      visibleItems[index] ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
+                      visibleItems[index] ? 'translate-x-0 opacity-100' : (isRTL ? 'translate-x-8 opacity-0' : '-translate-x-8 opacity-0')
                     }`}
                     style={{ transitionDelay: `${delay + 50}ms` }}
                     >
@@ -179,8 +183,8 @@ const Timeline = memo<TimelineProps>(({
             </div>
           </div>
           
-          {/* Mobile version - positioned at right timeline */}
-          <div className="md:hidden absolute right-6 transform translate-x-1/2">
+          {/* Mobile version - positioned at timeline (right for RTL, left for LTR) */}
+          <div className={`md:hidden absolute ${isRTL ? 'right-6 transform translate-x-1/2' : 'left-6 transform -translate-x-1/2'}`}>
             <div 
               className={`w-8 h-8 rounded-full bg-gradient-to-r from-cyan-400 via-purple-400 to-cyan-400 transition-all duration-1000 ${
                 isHydrated && scrollProgress > 0.8 ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
@@ -210,24 +214,17 @@ const Timeline = memo<TimelineProps>(({
             <button 
             className="group relative bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3 transition-all duration-300 hover:bg-white/15 hover:scale-110"
             onClick={() => {
-              // Scroll to contact section or open contact form
               const contactSection = document.getElementById('contact');
               if (contactSection) {
                 contactSection.scrollIntoView({ behavior: 'smooth' });
               } else {
-                // Fallback: navigate to contact page
                 window.location.href = '/contact';
               }
             }}
           >
             <span className="relative z-10 text-white font-semibold text-base group-hover:text-cyan-100 transition-colors duration-300">
-              המסע שלכם מתחיל כאן
+              {isRTL ? 'המסע שלכם מתחיל כאן' : 'Your Journey Starts Here'}
             </span>
-            
-            {/* Button Icon */}
-            <div className="relative z-10 inline-flex items-center mr-2">
-              {/* ICON OF TAP */}
-            </div>
             
             {/* Hover Effect Overlay */}
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />

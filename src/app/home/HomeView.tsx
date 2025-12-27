@@ -11,13 +11,13 @@ import InnovationSection from '@/components/Sections/InnovationSection/Innovatio
 import InnovationSection2 from '@/components/Sections/InnovationSection/InnovationSection2';
 
 const AIConsultantCTASection = dynamic(() => import('@/components/Sections/AIConsultantCTASection'), { loading: () => <div className="h-64 bg-black/20 animate-pulse" /> });
-const StatsSection           = dynamic(() => import('@/components/Sections/StatsSection/StatsSection'), { loading: () => <div className="h-48 bg-black/20 animate-pulse" /> });
-const FAQSection             = dynamic(() => import('@/components/Sections/FAQSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
-const TestimonialsSection    = dynamic(() => import('@/components/Sections/TestimonialsSection'), { loading: () => <div className="h-64 bg-black/20 animate-pulse" /> });
+const StatsSection = dynamic(() => import('@/components/Sections/StatsSection/StatsSection'), { loading: () => <div className="h-48 bg-black/20 animate-pulse" /> });
+const FAQSection = dynamic(() => import('@/components/Sections/FAQSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
+const TestimonialsSection = dynamic(() => import('@/components/Sections/TestimonialsSection'), { loading: () => <div className="h-64 bg-black/20 animate-pulse" /> });
 const ComparisonTableSection = dynamic(() => import('@/components/Sections/ComparisonTableSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
-const ContactFormSection     = dynamic(() => import('@/components/Sections/ContactFormSection/ContactFormSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
-const ChatSection            = dynamic(() => import('@/components/Sections/ChatSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
-const BlogSection            = dynamic(() => import('@/components/Sections/BlogSection/BlogSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
+const ContactFormSection = dynamic(() => import('@/components/Sections/ContactFormSection/ContactFormSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
+const ChatSection = dynamic(() => import('@/components/Sections/ChatSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
+const BlogSection = dynamic(() => import('@/components/Sections/BlogSection/BlogSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
 
 export default function HomeView() {
   return (

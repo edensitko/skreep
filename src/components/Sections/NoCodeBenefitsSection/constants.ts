@@ -4,7 +4,7 @@ import type { Benefit } from './types';
 // CONSTANTS & CONFIGURATION
 // ============================================================================
 
-export const ENTREPRENEURS_BENEFITS: readonly Benefit[] = [
+export const ENTREPRENEURS_BENEFITS_HE: readonly Benefit[] = [
   {
     icon: '1',
     title: 'אפיון ומחקר שוק',
@@ -47,7 +47,50 @@ export const ENTREPRENEURS_BENEFITS: readonly Benefit[] = [
   }
 ] as const;
 
-export const BUSINESS_BENEFITS: readonly Benefit[] = [
+export const ENTREPRENEURS_BENEFITS_EN: readonly Benefit[] = [
+  {
+    icon: '1',
+    title: 'Research & Analysis',
+    description: 'Understanding the idea, identifying target audience, competitor analysis and defining a precise MVP that can go to market quickly.',
+    gradient: 'from-cyan-400 to-purple-400',
+    bgImage: '/assets/images/img/1.png',
+    image: '/assets/images/numbers/1.png'
+  },
+  {
+    icon: '2',
+    title: 'MVP Design',
+    description: 'Creating a simple, focused and quick-to-execute initial design that presents the idea in an attractive and understandable way.',
+    gradient: 'from-cyan-400 to-purple-400',
+    bgImage: '/assets/images/img/1.png',
+    image: '/assets/images/numbers/2.png'
+  },
+  {
+    icon: '3',
+    title: 'Initial Development',
+    description: 'Building the first version of the product with minimum capabilities (MVP), with emphasis on short development times.',
+    gradient: 'from-cyan-400 to-purple-400',
+    bgImage: '/assets/images/img/1.png',
+    image: '/assets/images/numbers/3.png'
+  },
+  {
+    icon: '4',
+    title: 'Testing & Experimentation',
+    description: 'Operational testing with early users, quick feedback collection and preparation for the next iteration.',
+    gradient: 'from-cyan-400 to-purple-400',
+    bgImage: '/assets/images/img/1.png',
+    image: '/assets/images/numbers/4.png'
+  },
+  {
+    icon: '5',
+    title: 'Launch & Feedback',
+    description: 'Launching the system in a live environment, support during implementation and ongoing support for issues and optimization.',
+    gradient: 'from-cyan-400 to-purple-400',
+    bgImage: '/assets/images/img/1.png',
+    image: '/assets/images/numbers/5.png'
+  }
+] as const;
+
+export const BUSINESS_BENEFITS_HE: readonly Benefit[] = [
   {
     icon: '1',
     title: 'אפיון ומחקר',
@@ -90,7 +133,63 @@ export const BUSINESS_BENEFITS: readonly Benefit[] = [
   }
 ] as const;
 
+export const BUSINESS_BENEFITS_EN: readonly Benefit[] = [
+  {
+    icon: '1',
+    title: 'Research & Analysis',
+    description: 'Mapping existing systems, identifying operational needs, and defining precise requirements that support business growth.',
+    gradient: 'from-cyan-400 to-purple-400',
+    bgImage: '/assets/images/img/1.png',
+    image: '/assets/images/numbers/1.png'
+  },
+  {
+    icon: '2',
+    title: 'User Experience Design',
+    description: 'Designing efficient interfaces for employees and customers, with adaptation to company branding and maintaining an easy and clear user experience.',
+    gradient: 'from-cyan-400 to-purple-400',
+    bgImage: '/assets/images/img/1.png',
+    image: '/assets/images/numbers/2.png'
+  },
+  {
+    icon: '3',
+    title: 'Development & Implementation',
+    description: 'Developing custom modules, integration with existing systems, while ensuring security, performance and scalability.',
+    gradient: 'from-cyan-400 to-purple-400',
+    bgImage: '/assets/images/img/1.png',
+    image: '/assets/images/numbers/3.png'
+  },
+  {
+    icon: '4',
+    title: 'Testing & Quality Assurance',
+    description: 'Performing thorough testing at every stage, including end-user adaptation, functional integrity and load handling.',
+    gradient: 'from-cyan-400 to-purple-400',
+    bgImage: '/assets/images/img/1.png',
+    image: '/assets/images/numbers/4.png'
+  },
+  {
+    icon: '5',
+    title: 'Launch & Support',
+    description: 'Launching the system in a live environment, support during implementation and ongoing support for issues and optimization.',
+    gradient: 'from-cyan-400 to-purple-400',
+    bgImage: '/assets/images/img/1.png',
+    image: '/assets/images/numbers/5.png'
+  }
+] as const;
+
+// Backward compatibility exports
+export const ENTREPRENEURS_BENEFITS = ENTREPRENEURS_BENEFITS_HE;
+export const BUSINESS_BENEFITS = BUSINESS_BENEFITS_HE;
+
 export const SECTION_CONTENT = {
+  entrepreneursTitle_he: 'המסע שלכם מרעיון למוצר',
+  entrepreneursTitle_en: 'Your Journey from Idea to Product',
+  businessTitle_he: 'התהליך המקצועי שלנו',
+  businessTitle_en: 'Our Professional Process',
+  entrepreneursSubtitle_he: 'איך אנחנו לוקחים את הרעיון שלכם ומפתחים אותו לפתרון דיגיטלי מוכן לשוק',
+  entrepreneursSubtitle_en: 'How we take your idea and develop it into a market-ready digital solution',
+  businessSubtitle_he: 'תהליך מובנה ומקצועי שמבטיח תוצאות איכותיות ועמידה בלוחות זמנים',
+  businessSubtitle_en: 'A structured and professional process that ensures quality results and meeting deadlines',
+  // Backward compatibility
   entrepreneursTitle: 'המסע שלכם מרעיון למוצר',
   businessTitle: 'התהליך המקצועי שלנו',
   entrepreneursSubtitle: 'איך אנחנו לוקחים את הרעיון שלכם ומפתחים אותו לפתרון דיגיטלי מוכן לשוק',

@@ -2,6 +2,7 @@
 
 import React, { memo } from 'react';
 import { useUserType } from '@/hooks/useGlobalUserType';
+import { useLanguage } from '@/contexts/LanguageContext';
 import Timeline from './Timeline';
 import { SECTION_CONTENT } from './constants';
 import { 
@@ -22,7 +23,8 @@ function NoCodeBenefitsSection() {
   // ============================================================================
   
   const { userType } = useUserType();
-  const benefits = useBenefitsData(userType);
+  const { language, t } = useLanguage();
+  const benefits = useBenefitsData(userType, language);
   
   const { 
     state, 
@@ -47,20 +49,20 @@ function NoCodeBenefitsSection() {
   // ============================================================================
   
   const sectionTitle = userType === 'entrepreneurs' 
-    ? SECTION_CONTENT.entrepreneursTitle 
-    : SECTION_CONTENT.businessTitle;
+    ? (t('noCodeBenefits.entrepreneurs.title') || (language === 'he' ? SECTION_CONTENT.entrepreneursTitle_he : SECTION_CONTENT.entrepreneursTitle_en))
+    : (t('noCodeBenefits.business.title') || (language === 'he' ? SECTION_CONTENT.businessTitle_he : SECTION_CONTENT.businessTitle_en));
     
   const sectionSubtitle = userType === 'entrepreneurs'
-    ? SECTION_CONTENT.entrepreneursSubtitle
-    : SECTION_CONTENT.businessSubtitle;
+    ? (t('noCodeBenefits.entrepreneurs.subtitle') || (language === 'he' ? SECTION_CONTENT.entrepreneursSubtitle_he : SECTION_CONTENT.entrepreneursSubtitle_en))
+    : (t('noCodeBenefits.business.subtitle') || (language === 'he' ? SECTION_CONTENT.businessSubtitle_he : SECTION_CONTENT.businessSubtitle_en));
 
   return (
     <section 
       ref={sectionRef}
       className="relative w-[95%] mx-auto pt-20 md:pt-20 overflow-hidden"
-      dir="rtl"
+      dir={language === 'he' ? 'rtl' : 'ltr'}
       role="region"
-      aria-label="יתרונות פתרונות ללא קוד"
+      aria-label={t('noCodeBenefits.ariaLabel') || (language === 'he' ? 'יתרונות פתרונות ללא קוד' : 'No-code solutions benefits')}
     >
       {/* Background Elements */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -94,7 +96,7 @@ function NoCodeBenefitsSection() {
             className={`font-bold bg-gradient-to-br from-white via-white-60 to-white/20 bg-clip-text text-transparent text-3xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out ${
               state.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
-            dir="rtl"
+            dir={language === 'he' ? 'rtl' : 'ltr'}
             style={{ textAlign: 'center' }}
           >
             {sectionTitle}
@@ -104,6 +106,7 @@ function NoCodeBenefitsSection() {
             className={`text-md  font-light md:text-lg text-white/70 mx-auto transition-all duration-1000 delay-200 ${
               state.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
+            dir={language === 'he' ? 'rtl' : 'ltr'}
           >
             {sectionSubtitle}
           </p>

@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
-import Header from '@/components/Layout/Header/Header';
-import Footer from '@/components/Layout/Footer/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
 import LocalSEO from '@/components/SEO/LocalSEO';
 import SEOMeta from '@/components/SEO/SEOMeta';
@@ -107,10 +106,16 @@ export default function ServicesPage() {
 
   // Use translated services data
   const servicesData = React.useMemo(() => {
-    const translatedServices = t('interactiveServices.items') || [];
+    // Import messages directly based on language
+    const messages = language === 'he' 
+      ? require('../../../messages/he.json')
+      : require('../../../messages/en.json');
+    
+    const translatedServices = messages.interactiveServices?.items;
+    
     if (Array.isArray(translatedServices) && translatedServices.length > 0) {
-      return translatedServices.map((service: { imageBg?: string; title: string; subtitle: string; description: string; longDescription?: string; features?: string[] }, index: number) => ({
-        id: index + 1,
+      return translatedServices.map((service: { id?: string; imageBg?: string; title: string; description: string; longDescription?: string; features?: string[] }, index: number) => ({
+        id: service.id || `service-${index + 1}`,
         image: service.imageBg || `/assets/images/servicesimg/${index + 1}.png`,
         title: service.title,
         subtitle: service.description,
@@ -120,17 +125,9 @@ export default function ServicesPage() {
       }));
     }
     
-    // Fallback to hardcoded data if translation fails
-    return SERVICES_DATA.map((service, index) => ({
-      id: index + 1,
-      image: service.imageBg,
-      title: service.title,
-      subtitle: service.description,
-      description: service.longDescription,
-      features: service.features || [],
-      delay: index * 100
-    }));
-  }, [t]);
+    // This should not happen now, but keeping as ultimate fallback
+    return [];
+  }, [language]);
 
   return (
     <div className="min-h-screen bg-black">
@@ -151,8 +148,6 @@ export default function ServicesPage() {
       />
       
       <LocalSEO showMap={false} />
-
-      <Header />
       
       {/* Hero Section with RippleGrid */}
       <PageHero 
@@ -165,7 +160,7 @@ export default function ServicesPage() {
       />
 
       {/* Enhanced Services Grid Section */}
-      <section ref={contentRef} className="relative py-20 px-4 overflow-hidden">
+      <section ref={contentRef} className="relative py-8 px-4 overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-10 left-10 w-72 h-72 bg-gradient-to-r from-cyan-400/8 to-blue-400/8 rounded-full blur-3xl animate-pulse"></div>
@@ -178,11 +173,12 @@ export default function ServicesPage() {
 
           {/* Enhanced Services Grid - Mobile 2 Columns */}
           <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-8 lg:gap-12 max-w-6xl mx-auto">
-            {servicesData.map((service, index) => {
+            {servicesData.map((service) => {
               return (
-                <div
+                <Link
                   key={service.id}
-                  className="relative bg-gradient-to-br from-black/40 via-black/20 to-black/10 backdrop-blur-2xl border border-white/20 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer"
+                  href={`/services/${service.id}`}
+                  className="relative bg-white/5 backdrop-blur-2xl border border-white/20 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer hover:scale-[1.02] hover:border-cyan-400/40 hover:bg-white/10 transition-all duration-500 shadow-xl shadow-black/20 group"
                   style={{
                     animationDelay: `${service.delay}ms`
                   }}
@@ -192,7 +188,7 @@ export default function ServicesPage() {
                     <img
                       src={service.image}
                       alt={service.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
@@ -201,19 +197,11 @@ export default function ServicesPage() {
                     <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4 md:p-6 lg:p-8">
                       {/* Service Title */}
                       <h3 
-                        className="text-md sm:text-lg md:text-xl lg:text-2xl font-bold mb-1 sm:mb-2 md:mb-3 text-white drop-shadow-2xl"
+                        className="text-md sm:text-lg md:text-xl lg:text-2xl font-bold mb-2 sm:mb-3 md:mb-4 text-white drop-shadow-2xl"
                         dir="ltr"
                       >
                         {service.title}
                       </h3>
-
-                      {/* Service Subtitle with Badge - Mobile Optimized */}
-                      <div className="flex justify-center mb-2 sm:mb-3 md:mb-4">
-                        <span className="inline-flex items-center bg-gradient-to-r from-cyan-400/20 to-purple-400/20 backdrop-blur-xl border border-cyan-400/30 text-cyan-300 px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 rounded-full text-xs sm:text-sm font-semibold">
-                          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-cyan-400 rounded-full mr-1 sm:mr-2 animate-pulse"></div>
-                          <span dir={language === 'he' ? 'rtl' : 'ltr'}>{service.subtitle}</span>
-                        </span>
-                      </div>
 
                       {/* Service Description - Mobile Optimized */}
                       <p 
@@ -222,18 +210,26 @@ export default function ServicesPage() {
                       >
                         {service.description}
                       </p>
+
+                      {/* View More Indicator */}
+                      <div className={`mt-4 flex items-center justify-center gap-2 text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${language === 'he' ? 'flex-row-reverse' : ''}`}>
+                        <span className="text-sm font-medium">{language === 'he' ? 'לפרטים נוספים' : 'View Details'}</span>
+                        <svg className={`w-4 h-4 transition-transform ${language === 'he' ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
 
-                </div>
+                </Link>
 
               );
             })}
           </div>
 
           {/* Call to Action */}
-          <div className="text-center mt-20">
-            <div className="bg-gradient-to-br from-black/40 via-black/20 to-black/10 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 lg:p-12">
+          <div className="text-center mt-12">
+            <div className="bg-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 lg:p-12 shadow-xl shadow-black/20 hover:bg-white/10 transition-all duration-300">
               <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">
                 {language === 'he' ? 'מוכנים להתחיל?' : 'Ready to Get Started?'}
               </h3>
@@ -257,9 +253,6 @@ export default function ServicesPage() {
    
        <InnovationSection/>  
 <ContactFormSection/>
-      <Footer />
-    
-
     </div>
   );
 }

@@ -90,7 +90,7 @@ function PartnersSection() {
       className="relative overflow-hidden pt-10 w-[100%] mx-auto bg-gradient-to-br"
       role="region"
       aria-label={t('partners.ariaLabel')}
-      dir="rtl"
+      dir={language === 'he' ? 'rtl' : 'ltr'}
     >
       <div className="mx-auto max-w-full px-0">
         {/* Header */}
@@ -103,9 +103,9 @@ function PartnersSection() {
                 : 'opacity-0 translate-y-8'
             }`}
             style={{ textAlign: 'center' }}
-            dir="rtl"
+            dir={language === 'he' ? 'rtl' : 'ltr'}
           >
-            {t('partners.title') || 'חלק מהצלחות שלנו'}
+            {t('partners.title') || (language === 'he' ? 'חלק מהצלחות שלנו' : 'Part of Our Success')}
           </h1>
         </div>
         

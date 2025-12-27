@@ -116,7 +116,7 @@ function FooterSection() {
             {/* Copyright Text */}
             <div className="text-center" dir={textDirection}>
               <span className="text-white text-sm">
-                2025 © כל הזכויות שמורות ל-סקריפ מערכות
+                {language === 'he' ? '2025 © כל הזכויות שמורות ל-סקריפ מערכות' : '2025 © All rights reserved to Skreep Systems'}
               </span>
             </div>
           </div>
@@ -147,7 +147,7 @@ function FooterSection() {
             
             {/* Copyright Text */}
             <span className="text-white">
-              2025 © כל הזכויות שמורות ל-סקריפ מערכות
+              {language === 'he' ? '2025 © כל הזכויות שמורות ל-סקריפ מערכות' : '2025 © All rights reserved to Skreep Systems'}
             </span>
 
             {/* Scroll to Top Button */}
@@ -178,25 +178,6 @@ function FooterSection() {
               )}
             </div>
 
-            {/* Navigation Links */}
-            <nav 
-              className={`flex items-center ${language === 'he' ? 'space-x-reverse space-x-6' : 'space-x-6'}`} 
-              dir={textDirection} 
-              aria-label={t('footer.ariaLabels.navigation')}
-            >
-              {footerLinks.map((link, index) => (
-                <React.Fragment key={link.text}>
-                  {index > 0 && <span className="font-medium text-white">|</span>}
-                  <a 
-                    href={link.href} 
-                    className="font-medium hover:text-white hover:underline transition-colors text-white"
-                    aria-label={link.ariaLabel}
-                  >
-                    {link.text}
-                  </a>
-                </React.Fragment>
-              ))}
-            </nav>
           </div>
         </div>
       </footer>

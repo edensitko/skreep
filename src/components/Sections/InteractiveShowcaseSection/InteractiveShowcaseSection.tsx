@@ -3,6 +3,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
+// Import translations directly
+import heMessages from '../../../../messages/he.json';
+import enMessages from '../../../../messages/en.json';
+
 interface ServiceCard {
   id: string;
   title: string;
@@ -13,89 +17,32 @@ interface ServiceCard {
   imageBg: string;
 }
 
-const servicesData: ServiceCard[] = [
-  {
-    id: 'ai-solutions',
-    title: 'פתרונות בינה מלאכותית',
-    description: 'מערכות AI מתקדמות לעסקים',
-    longDescription: 'פיתוח פתרונות בינה מלאכותית מותאמים אישית שמשפרים את היעילות העסקית ומאפשרים קבלת החלטות מבוססות נתונים.',
-    features: ["בינה מלאכותית לעסקים", "ניתוח נתונים חכם", "אוטומציה חכמה", " צ'אט בוטים חכמים"],
-    color: 'from-blue-500 to-purple-600',
-    imageBg: '/assets/images/servicesimg/1.png'
-  },
-  {
-    id: 'web-development',
-    title: 'פיתוח אתרים ',
-    description: 'פתרונות דיגיטליים מותאמים אישית',
-    longDescription: 'יצירת אתרים ואפליקציות מתקדמות עם עיצוב רספונסיבי, ביצועים מהירים וחוויית משתמש מעולה.',
-    features: ['עיצוב רספונסיבי', 'ביצועים מהירים', 'SEO מתקדם', 'אבטחה גבוהה'],
-    color: 'from-green-500 to-teal-600',
-    imageBg: '/assets/images/servicesimg/2.png'
-  },
-  {
-    id: 'mobile-apps',
-    title: 'פיתוח אפליקציות',
-    description: 'פיתוח מובייל והיברידיות עם חוויית משתמש וביצועים גבוהים.',
-    longDescription: 'פיתוח אפליקציות מובייל נטיביות והיברידיות עם חוויית משתמש וביצועים גבוהים.',
-    features: ['פיתוח אנדרואיד ', 'פיתוח iOS ', 'עיצוב UX/UI מתקדם', 'אינטגרציה עם API'],
-    color: 'from-pink-500 to-rose-600',
-    imageBg: '/assets/images/servicesimg/10.png'
-  },
-  {
-    id: 'automation',
-    title: 'אוטומציה ותהליכים',
-    description: 'חיסכון בזמן ומשאבים',
-    longDescription: 'יישום פתרונות אוטומציה מתקדמים שמייעלים תהליכים עסקיים ומפחיתים עלויות תפעול.',
-    features: ['אוטומציה של תהליכים', 'ניהול זרימת עבודה', 'דוחות אוטומטיים', 'אינטגרציות מתקדמות'],
-    color: 'from-orange-500 to-red-600',
-    imageBg: '/assets/images/servicesimg/5.png'
-  },
-  {
-    id: 'cloud-solutions',
-    title: 'פתרונות ענן',
-    description: 'תשתיות ענן מתקדמות ומאובטחות',
-    longDescription: 'הקמה וניהול של תשתיות ענן מתקדמות עם זמינות גבוהה, אבטחה מקסימלית וגמישות מלאה.',
-    features: ['AWS & Azure', 'אבטחת מידע', 'גיבויים אוטומטיים', 'ניטור 24/7'],
-    color: 'from-cyan-500 to-blue-600',
-    imageBg: '/assets/images/servicesimg/3.png'
-  },
-  {
-    id: 'saas-development',
-    title: 'פיתוח SaaS',
-    description: 'פתרונות SaaS חכמים, מאובטחים ומדרגיים',
-    longDescription: 'פיתוח מערכות SaaS מבוססות ענן עם דשבורדים אינטראקטיביים, ניתוח נתונים, ניהול משתמשים ואינטגרציות מתקדמות.',
-    features: [
-      'דשבורדים בזמן אמת',
-      'אינטגרציה עם שירותים חיצוניים',
-      ' פיתוח בהתאמה אישית ',
-      'סקיילביליות בענן ואבטחה מתקדמת'
-    ],
-    color: 'from-indigo-500 to-purple-600',
-    imageBg: '/assets/images/servicesimg/4.png'
-  }
-  
-
-];
+const messages = {
+  he: heMessages,
+  en: enMessages
+};
 
 function InteractiveShowcaseSection() {
   const { language, t } = useLanguage();
   
-  // Use translated services data
+  // Get services data directly from translation files
   const translatedServices = React.useMemo(() => {
-    const services = t('interactiveServices.items') || [];
+    const currentMessages = messages[language as 'he' | 'en'];
+    const services = currentMessages?.interactiveServices?.items;
+    
     if (Array.isArray(services) && services.length > 0) {
-      return services.map((service: Record<string, unknown>) => ({
+      return services.map((service) => ({
         id: String(service.id || ''),
         title: String(service.title || ''),
         description: String(service.description || ''),
         longDescription: String(service.longDescription || ''),
-        features: Array.isArray(service.features) ? service.features.map(f => String(f)) : [],
+        features: Array.isArray(service.features) ? service.features.map((f: string) => String(f)) : [],
         color: String(service.color || ''),
         imageBg: String(service.imageBg || '')
       }));
     }
-    return servicesData; // Fallback to hardcoded data
-  }, [t]);
+    return [];
+  }, [language]);
   
   const [selectedService, setSelectedService] = useState<ServiceCard | null>(translatedServices[0]);
   const [isVisible, setIsVisible] = useState(false);
@@ -197,7 +144,7 @@ function InteractiveShowcaseSection() {
         if (closestCard) {
           const serviceId = (closestCard as HTMLElement).getAttribute('data-service-id');
           if (serviceId) {
-            const service = servicesData.find(s => s.id === serviceId);
+            const service = translatedServices.find(s => s.id === serviceId);
             if (service && selectedService?.id !== service.id) {
               setSelectedService(service);
             }
@@ -215,7 +162,7 @@ function InteractiveShowcaseSection() {
         container.removeEventListener('scroll', handleScroll);
       };
     }
-  }, [selectedService]);
+  }, [selectedService, translatedServices]);
 
   const selectService = (service: ServiceCard) => {
     setSelectedService(service);
@@ -393,6 +340,33 @@ function InteractiveShowcaseSection() {
               <div className="absolute bottom-1/4 left-1/4 w-32 h-32 bg-purple-400/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
               <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-blue-400/8 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
             </div>
+          </div>
+
+          {/* View All Services Button - Outside the card */}
+          <div className="flex justify-center mt-8">
+            <a
+              href="/services"
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3 text-white font-semibold flex items-center gap-2 hover:bg-white/15 hover:scale-110 transition-all duration-300"
+              dir={language === 'he' ? 'rtl' : 'ltr'}
+            >
+              {t('common.allServices') || (language === 'he' ? 'כל השירותים' : 'All Services')}
+              <svg 
+                className={`transition-all duration-300 ${language === 'he' ? '' : 'rotate-180'}`}
+                width="16" 
+                height="16" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path 
+                  d="M19 12H5M12 19L5 12L12 5" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </a>
           </div>
         </div>
       )}

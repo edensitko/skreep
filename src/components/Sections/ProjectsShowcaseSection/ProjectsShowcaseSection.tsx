@@ -68,9 +68,9 @@ const projectsDataEn: ProjectCard[] = [
 
 function ProjectsShowcaseSection() {
   const { language } = useLanguage();
-  
+
   const currentProjectsData = language === 'he' ? projectsData : projectsDataEn;
-  
+
   const [selectedProject, setSelectedProject] = useState<ProjectCard | null>(currentProjectsData[0]);
   const [isVisible, setIsVisible] = useState(false);
   const [isSubtitleVisible, setIsSubtitleVisible] = useState(false);
@@ -135,7 +135,7 @@ function ProjectsShowcaseSection() {
     if (scrollContainerRef.current) {
       const container = scrollContainerRef.current;
       const isLargeScreen = window.innerWidth >= 768;
-      
+
       if (isLargeScreen) {
         container.scrollTo({ left: 0, behavior: 'auto' });
       } else {
@@ -152,22 +152,22 @@ function ProjectsShowcaseSection() {
         const container = scrollContainerRef.current;
         const containerRect = container.getBoundingClientRect();
         const centerX = containerRect.left + containerRect.width / 2;
-        
+
         const cards = container.querySelectorAll('[data-project-id]') as NodeListOf<HTMLElement>;
         let closestCard: HTMLElement | null = null;
         let closestDistance = Infinity;
-        
+
         cards.forEach((card: HTMLElement) => {
           const cardRect = card.getBoundingClientRect();
           const cardCenterX = cardRect.left + cardRect.width / 2;
           const distance = Math.abs(centerX - cardCenterX);
-          
+
           if (distance < closestDistance) {
             closestDistance = distance;
             closestCard = card;
           }
         });
-        
+
         if (closestCard) {
           const projectId = (closestCard as HTMLElement).getAttribute('data-project-id');
           if (projectId) {
@@ -184,7 +184,7 @@ function ProjectsShowcaseSection() {
     if (container) {
       container.addEventListener('scroll', handleScroll);
       handleScroll();
-      
+
       return () => {
         container.removeEventListener('scroll', handleScroll);
       };
@@ -217,29 +217,27 @@ function ProjectsShowcaseSection() {
         <div className="mx-auto max-w-full px-0">
           {/* Header */}
           <div className="text-center pt-16 pb-8 w-full">
-            <h1 
+            <h1
               ref={titleRef}
-              className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-3xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out ${
-                isVisible 
-                  ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-8'
-              }`} 
+              className={`font-bold bg-gradient-to-br from-white via-white/60 to-white/20 bg-clip-text text-transparent text-3xl md:text-4xl lg:text-5xl mb-4 leading-tight tracking-wide transition-all duration-1000 ease-out ${isVisible
+                ? 'opacity-100 translate-y-0'
+                : 'opacity-0 translate-y-8'
+                }`}
               dir={language === 'he' ? 'rtl' : 'ltr'}
               style={{ textAlign: 'center' }}
             >
               {language === 'he' ? 'חלק מהעבודות שלנו' : 'Some of Our Work'}
             </h1>
-            
-            <p 
+
+            <p
               ref={subtitleRef}
-              className={`text-md font-light md:text-lg text-white/70 mx-auto transition-all duration-1000 delay-200 ${
-                isSubtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
+              className={`text-md font-light md:text-lg text-white/70 mx-auto transition-all duration-1000 delay-200 ${isSubtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
               dir={language === 'he' ? 'rtl' : 'ltr'}
               style={{ textAlign: 'center' }}
             >
-              {language === 'he' 
-                ? 'פתרונות דיגיטליים מתקדמים שיצרנו עבור לקוחותינו' 
+              {language === 'he'
+                ? 'פתרונות דיגיטליים מתקדמים שיצרנו עבור לקוחותינו'
                 : 'Advanced digital solutions we created for our clients'}
             </p>
           </div>
@@ -255,7 +253,7 @@ function ProjectsShowcaseSection() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
-            
+
             <button
               onClick={scrollRight}
               className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300"
@@ -266,7 +264,7 @@ function ProjectsShowcaseSection() {
             </button>
 
             {/* Cards Container */}
-            <div 
+            <div
               ref={scrollContainerRef}
               className="overflow-x-auto scrollbar-hide"
               style={{ scrollBehavior: 'smooth' }}
@@ -277,11 +275,10 @@ function ProjectsShowcaseSection() {
                     key={`${project.id}-${index}`}
                     data-project-id={project.id}
                     onClick={() => selectProject(project)}
-                    className={`flex-shrink-0 w-52 lg:w-60 h-32 md:h-32 backdrop-blur-sm border rounded-2xl p-4 md:p-6 cursor-pointer group transition-all duration-300 hover:scale-90 bg-cover bg-center bg-no-repeat relative overflow-hidden ${
-                      selectedProject?.id === project.id
-                        ? 'opacity-100 border-white/80 shadow-lg'
-                        : 'opacity-70 border-white/20 hover:border-white/30 hover:opacity-90'
-                    }`}
+                    className={`flex-shrink-0 w-52 lg:w-60 h-32 md:h-32 backdrop-blur-sm border rounded-2xl p-4 md:p-6 cursor-pointer group transition-all duration-300 hover:scale-90 bg-cover bg-center bg-no-repeat relative overflow-hidden ${selectedProject?.id === project.id
+                      ? 'opacity-100 border-white/80 shadow-lg'
+                      : 'opacity-70 border-white/20 hover:border-white/30 hover:opacity-90'
+                      }`}
                     style={{
                       backgroundImage: `url(${project.imageBg})`,
                       backgroundSize: 'cover',
@@ -291,7 +288,7 @@ function ProjectsShowcaseSection() {
                     dir={language === 'he' ? 'rtl' : 'ltr'}
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-black/50 rounded-2xl"></div>
-                    
+
                     <div className="text-center relative z-20">
                       <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-3 group-hover:text-cyan-200 transition-colors">
                         {project.title}
@@ -310,13 +307,13 @@ function ProjectsShowcaseSection() {
         <div className="mt-6 w-[85%] mx-auto relative">
           {/* Main Content Container */}
           <div className="bg-gradient-to-br from-black/30 via-black/20 to-black/10 backdrop-blur-3xl border border-white/20 rounded-3xl lg:rounded-4xl shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-700 ease-out hover:backdrop-blur-[12px] hover:border-white/30 hover:shadow-cyan-400/10 hover:shadow-2xl">
-            
+
             {/* Animated Background Effects */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-60 rounded-3xl lg:rounded-4xl"></div>
             <div className="absolute inset-0 bg-gradient-to-tl from-cyan-400/8 via-transparent to-purple-400/8 opacity-50 rounded-3xl lg:rounded-4xl"></div>
-            
+
             {/* Full-Width Image Banner */}
-            <div 
+            <div
               className="w-full h-32 md:h-40 lg:h-48 bg-cover bg-center bg-no-repeat relative overflow-hidden rounded-t-3xl lg:rounded-t-4xl"
               style={{
                 backgroundImage: `url(${selectedProject.imageBg})`,
@@ -328,7 +325,7 @@ function ProjectsShowcaseSection() {
             </div>
 
             {/* Content Wrapper */}
-            <div 
+            <div
               key={selectedProject.id}
               className="relative z-10 p-6 lg:p-8"
             >
@@ -348,8 +345,8 @@ function ProjectsShowcaseSection() {
               {/* Features Grid - 2 Columns Mobile, 4 Columns Desktop */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-3">
                 {selectedProject.features.map((feature, index) => (
-                  <div 
-                    key={index} 
+                  <div
+                    key={index}
                     className="flex items-center gap-2 lg:gap-4 p-2 lg:p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20"
                   >
                     <div className="w-5 h-5 lg:w-6 lg:h-6 bg-white/10 border border-white/30 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -365,7 +362,7 @@ function ProjectsShowcaseSection() {
               </div>
 
             </div>
-            
+
             {/* Enhanced Background Decorations */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
               <div className="absolute top-1/4 right-1/4 w-40 h-40 bg-cyan-400/10 rounded-full blur-3xl animate-pulse"></div>

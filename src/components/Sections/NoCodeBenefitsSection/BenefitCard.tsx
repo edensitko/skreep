@@ -73,11 +73,6 @@ const BenefitCard = memo<BenefitCardProps>(({
             {benefit.description}
           </p>
           
-          {/* Hover Indicator */}
-          <div className="mt-6 flex items-center opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-            <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${benefit.gradient || 'from-cyan-400 to-purple-400'} mr-2`} />
-            <span className="text-white/60 text-sm font-medium">לחץ לפרטים נוספים</span>
-          </div>
         </div>
         
         {/* Enhanced Hover Effects */}

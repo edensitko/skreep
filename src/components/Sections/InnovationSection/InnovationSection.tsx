@@ -5,9 +5,13 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import ScrollVelocity from './ScrollVelocity';
 
 const InnovationSection = () => {
- 
+  const { language, t } = useLanguage();
   const velocity = 20;
 
+  const texts = [
+    t('innovation.line1') || (language === 'he' ? 'חדשנות וטכנולוגיה' : 'Innovation & Technology'),
+    t('innovation.line2') || (language === 'he' ? 'משנים את כללי המשחק' : 'Changing the Game')
+  ];
   
   return (
     <section 
@@ -30,7 +34,7 @@ const InnovationSection = () => {
   
             {/* Add ScrollVelocity component */}
             <ScrollVelocity
-              texts={['חדשנות וטכונולוגיה', 'משנים את כללי המשחק']} 
+              texts={texts} 
               velocity={velocity} 
               className="custom-scroll-text"
             />

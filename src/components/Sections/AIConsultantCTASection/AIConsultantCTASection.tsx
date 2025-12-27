@@ -103,7 +103,7 @@ function AIConsultantCTASection() {
       `}</style>
       
       <section 
-        className="mx-auto theme-container container px-4 py-6 md:py-8"
+        className="mx-auto theme-container container px-3 py-6 md:py-8"
         role="region"
         aria-label={t('aiConsultantCTA.sectionAriaLabel')}
       >
@@ -121,7 +121,7 @@ function AIConsultantCTASection() {
             >
               <button
                 onClick={handlePrimaryClick}
-                className="group bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-8 py-3 text-white font-semibold hover:bg-white/15 hover:scale-110 transition-all duration-300 min-w-[240px] md:min-w-[280px]"
+                className="group bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-3 text-white font-light hover:bg-white/15 hover:scale-110 transition-all duration-300 min-w-[240px] md:min-w-[280px]"
                 dir={language === 'he' ? 'rtl' : 'ltr'}
               >
                 <span className="flex items-center gap-2">

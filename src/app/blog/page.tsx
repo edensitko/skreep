@@ -3,8 +3,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
-import Header from '@/components/Layout/Header/Header';
-import Footer from '@/components/Layout/Footer/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
 import LocalSEO from '@/components/SEO/LocalSEO';
 import SEOMeta from '@/components/SEO/SEOMeta';
@@ -79,8 +77,6 @@ export default function Blog() {
       />
       
       <LocalSEO showMap={false} />
-
-      <Header />
       
       {/* Hero Section with RippleGrid */}
       <PageHero 
@@ -94,10 +90,10 @@ export default function Blog() {
 
       {/* Featured Post Section */}
       <div ref={contentRef}>
-        <section className="py-8 px-4">
+        <section className="py-4 px-4">
           <div className="container mx-auto">
             <Link href={`/blog/${featuredPost.slug}`} className="block">
-              <div className="bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/30 rounded-2xl lg:rounded-4xl before:absolute before:inset-0 before:rounded-2xl lg:before:rounded-4xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl lg:after:rounded-4xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden p-8 hover:border-cyan-400/30 transition-all duration-300 group">
+              <div className="bg-white/5 backdrop-blur-2xl border border-white/20 rounded-2xl lg:rounded-3xl relative overflow-hidden p-8 hover:border-cyan-400/40 hover:bg-white/10 transition-all duration-300 group shadow-xl shadow-black/20">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                   <div className="relative overflow-hidden rounded-xl">
                     <img 
@@ -139,9 +135,9 @@ export default function Blog() {
         </section>
 
       {/* Blog Posts Grid Section */}
-      <section className="py-16 px-4">
+      <section className="py-8 px-4">
         <div className="container mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold mb-12 bg-gradient-to-br from-white via-white/80 to-white/60 bg-clip-text text-transparent text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-8 bg-gradient-to-br from-white via-white/80 to-white/60 bg-clip-text text-transparent text-center">
             {language === 'he' ? 'מאמרים נוספים' : 'More Articles'}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
@@ -149,7 +145,7 @@ export default function Blog() {
               <Link
                 key={post.id}
                 href={`/blog/${post.slug}`}
-                className="group relative bg-black/20 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden hover:scale-[1.02] hover:border-cyan-400/30 transition-all duration-500"
+                className="group relative bg-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl overflow-hidden hover:scale-[1.02] hover:border-cyan-400/40 hover:bg-white/10 transition-all duration-500 shadow-xl shadow-black/20"
                 style={{
                   animationDelay: `${index * 100}ms`
                 }}
@@ -222,7 +218,6 @@ export default function Blog() {
 
       <InnovationSection/>
       <ContactFormSection/>
-      <Footer />
     </div>
   );
 }

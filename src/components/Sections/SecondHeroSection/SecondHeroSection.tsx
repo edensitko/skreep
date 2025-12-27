@@ -83,7 +83,7 @@ const SecondHeroSection: React.FC = () => {
                     <LightPillar
                         topColor={colors.topColor}
                         bottomColor={colors.bottomColor}
-                        intensity={isMobile ? 0.45 : 0.5}
+                        intensity={isMobile ? 0.3 : 0.5}
                         rotationSpeed={0.7}
                         glowAmount={0.005}
                         pillarWidth={isMobile ? 3 : 3.0}
@@ -98,13 +98,13 @@ const SecondHeroSection: React.FC = () => {
             </div>
 
             {/* Content Overlay */}
-            <div className="relative z-10 container mx-auto px-10 pt-58 pb-20 lg:pt-58 lg:pb-36">
+            <div className="relative z-10 container mx-auto px-1 pt-54 pb-20 lg:pt-58 lg:pb-36">
                 <div className="flex flex-col items-center justify-center gap-10">
                     {/* Content Side */}
                     <div className="w-full max-w-3xl text-center">
-                        <h2 className="text-5xl md:text-5xl xl:text-5xl italic text-white/90 font-semilight mb-6 text-center">
+                        <h2 className="text-4xl md:text-5xl xl:text-6xl italic text-white/90 font-semilight mb-6 text-center">
                             <span>{t(`hero.${userType}.title`)}</span>
-                            <span className={`relative inline-block px-3 font-semilight italic text-white uppercase mx-1 ${userType === 'entrepreneurs' ? 'bg-gradient-to-r from-green-400' : 'bg-gradient-to-r from-cyan-400'
+                            <span className={`relative inline-block px-1 font-semilight italic text-white uppercase mx-1 ${userType === 'entrepreneurs' ? 'bg-gradient-to-r from-green-400' : 'bg-gradient-to-r from-cyan-400'
                                 }`}>
                                 <span className="relative z-10">{t(`hero.${userType}.titleHighlight`)}</span>
                             </span>
@@ -114,7 +114,7 @@ const SecondHeroSection: React.FC = () => {
                             {t(`hero.${userType}.subtitle`)}
                         </p>
 
-                        <p className={`text-white/60 text-sm md:text-base mb-8 text-center max-w-xl mx-auto`}>
+                        <p className={`text-white/60 text-sm md:text-base mb-8 px-10 text-center max-w-xl mx-auto`}>
                             {t(`hero.${userType}.description`)}
                         </p>
 
@@ -142,16 +142,16 @@ const SecondHeroSection: React.FC = () => {
                     </div>
 
                     {/* Image Section - Below Content */}
-                    <div className="w-full max-w-md">
-                        <div className="relative w-full h-[300px] md:h-[400px] flex items-center justify-center">
-                            <div className={`absolute w-[250px] h-[250px] rounded-full blur-3xl ${userType === 'entrepreneurs' ? 'bg-green-400/20' : 'bg-cyan-400/20'
+                    <div className="w-full max-w-xs md:max-w-md">
+                        <div className="relative w-full h-[220px] md:h-[400px] flex items-center justify-center p-4 pt-16">
+                            <div className={`absolute w-[180px] h-[180px] md:w-[250px] md:h-[250px] rounded-full blur-3xl ${userType === 'entrepreneurs' ? 'bg-green-400/20' : 'bg-cyan-400/20'
                                 }`}></div>
                             <Image
                                 src={userType === 'entrepreneurs' ? '/assets/images/hero/hero2.webp' : '/assets/images/hero/hero1.webp'}
                                 alt="Hero Image"
                                 width={500}
                                 height={350}
-                                className="w-full h-auto relative z-10"
+                                className="w-full h-auto relative z-10 animate-float max-w-[280px] md:max-w-full"
                             />
                         </div>
                     </div>

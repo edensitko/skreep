@@ -1,4 +1,4 @@
-import { ENTREPRENEURS_BENEFITS, BUSINESS_BENEFITS, ANIMATION_CONFIG } from './constants';
+import { ENTREPRENEURS_BENEFITS_HE, ENTREPRENEURS_BENEFITS_EN, BUSINESS_BENEFITS_HE, BUSINESS_BENEFITS_EN, ANIMATION_CONFIG } from './constants';
 import type { Benefit, UserType } from './types';
 
 // ============================================================================
@@ -6,10 +6,13 @@ import type { Benefit, UserType } from './types';
 // ============================================================================
 
 /**
- * Get benefits data based on user type
+ * Get benefits data based on user type and language
  */
-export const getBenefitsByUserType = (userType: UserType): readonly Benefit[] => {
-  return userType === 'entrepreneurs' ? ENTREPRENEURS_BENEFITS : BUSINESS_BENEFITS;
+export const getBenefitsByUserType = (userType: UserType, language: string = 'en'): readonly Benefit[] => {
+  if (userType === 'entrepreneurs') {
+    return language === 'he' ? ENTREPRENEURS_BENEFITS_HE : ENTREPRENEURS_BENEFITS_EN;
+  }
+  return language === 'he' ? BUSINESS_BENEFITS_HE : BUSINESS_BENEFITS_EN;
 };
 
 /**

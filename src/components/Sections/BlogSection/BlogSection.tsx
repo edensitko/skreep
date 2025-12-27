@@ -219,7 +219,7 @@ const BlogSection = () => {
             >
               {language === 'he' ? 'ראה עוד מאמרים' : 'View more articles'}
               <svg 
-                className="transition-all duration-300" 
+                className={`transition-all duration-300 ${language === 'he' ? '' : 'rotate-180'}`}
                 width="16" 
                 height="16" 
                 viewBox="0 0 24 24" 
