@@ -166,11 +166,6 @@ export default function Header() {
                       </Link>
                     </li>
                     <li className="relative py-1">
-                      <Link href="/contact" className="relative font-medium leading-5 hover:text-cyan-400 text-white block py-2 transition-colors">
-                        {t('header.contact')}
-                      </Link>
-                    </li>
-                    <li className="relative py-1">
                       <Link href="/projects" className="relative font-medium leading-5 hover:text-cyan-400 text-white block py-2 transition-colors">
                         {t('header.projects')}
                       </Link>
@@ -293,15 +288,6 @@ export default function Header() {
                 </li>
                 <li>
                   <Link 
-                    href="/contact" 
-                    className="block text-white text-lg font-semibold hover:text-cyan-400 transition-colors py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {t('header.contact')}
-                  </Link>
-                </li>
-                <li>
-                  <Link 
                     href="/projects" 
                     className="block text-white text-lg font-semibold hover:text-cyan-400 transition-colors py-2"
                     onClick={() => setMobileMenuOpen(false)}
@@ -325,7 +311,7 @@ export default function Header() {
                 <Link 
                   href="/contact" 
                   key={`mobile-cta-${language}`}
-                  className="w-full bg-cyan-400 text-black px-6 py-4 rounded-full font-semibold hover:bg-cyan-500 transition-all flex items-center justify-center gap-2 flex-row"
+                  className="w-full bg-gradient-to-l from-cyan-400/10 via-cyan-400/30 to-cyan-400/60 text-white border border-white/20 px-6 py-4 rounded-full font-semibold hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 flex-row"
                   onClick={() => setMobileMenuOpen(false)}
                   dir="ltr"
                 >

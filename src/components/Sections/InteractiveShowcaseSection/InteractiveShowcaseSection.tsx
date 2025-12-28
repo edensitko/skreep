@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 // Import translations directly
@@ -344,7 +345,7 @@ function InteractiveShowcaseSection() {
 
           {/* View All Services Button - Outside the card */}
           <div className="flex justify-center mt-8">
-            <a
+            <Link
               href="/services"
               className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-3 text-white font-semibold flex items-center gap-2 hover:bg-white/15 hover:scale-110 transition-all duration-300"
               dir={language === 'he' ? 'rtl' : 'ltr'}
@@ -366,7 +367,7 @@ function InteractiveShowcaseSection() {
                   strokeLinejoin="round"
                 />
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
       )}

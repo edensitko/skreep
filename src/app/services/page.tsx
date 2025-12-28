@@ -1,28 +1,26 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 import PageSEO from '@/components/SEO/PageSEO';
 import LocalSEO from '@/components/SEO/LocalSEO';
 import SEOMeta from '@/components/SEO/SEOMeta';
-import { SERVICES_DATA } from '@/components/Sections/InteractiveShowcaseSection/constants';
 import ContactFormSection from '@/components/Sections/ContactFormSection';
 import InnovationSection from '@/components/Sections/InnovationSection/InnovationSection';
 import PageHero from '@/components/Layout/PageHero';
+import heMessages from '../../../messages/he.json';
+import enMessages from '../../../messages/en.json';
 
 export default function ServicesPage() {
-  const [isVisible, setIsVisible] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
 
   // Intersection observer for content animation
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+      () => {
+        // Animation logic can be added here if needed
       },
       {
         threshold: 0.1,
@@ -42,52 +40,6 @@ export default function ServicesPage() {
     };
   }, []);
 
-  // SEO data for services
-  const seoServicesData = React.useMemo(() => [
-    {
-      name: language === 'he' ? "בינה מלאכותית" : "Artificial Intelligence Solutions",
-      description: language === 'he' ? "פיתוח מערכות AI מתקדמות לעסקים, כולל עיבוד שפה טבעית וניתוח נתונים חכם" : "Development of advanced AI systems for businesses, including natural language processing and smart data analysis",
-      provider: "Skreep",
-      areaServed: ["Israel", "Tel Aviv", "Jerusalem", "Haifa"],
-      serviceType: "Artificial Intelligence"
-    },
-    {
-      name: language === 'he' ? "אוטומציה חכמה" : "Smart Automation",
-      description: language === 'he' ? "יצירת תהליכי עבודה אוטומטיים המשפרים יעילות ומפחיתים עלויות תפעול" : "Creating automated workflows that improve efficiency and reduce operational costs",
-      provider: "Skreep",
-      areaServed: ["Israel", "Tel Aviv", "Jerusalem", "Haifa"],
-      serviceType: "Business Automation"
-    },
-    {
-      name: language === 'he' ? "צ'אטבוטים" : "Chatbot Development",
-      description: language === 'he' ? "פיתוח צ'אטבוטים חכמים המספקים שירות לקוחות מקצועי מסביב לשעון" : "Development of smart chatbots that provide professional customer service around the clock",
-      provider: "Skreep",
-      areaServed: ["Israel", "Tel Aviv", "Jerusalem", "Haifa"],
-      serviceType: "Customer Service Technology"
-    },
-    {
-      name: language === 'he' ? "ניתוח נתונים" : "Data Analysis",
-      description: language === 'he' ? "ניתוח מתקדם של נתונים עסקיים ליצירת תובנות ושיפור קבלת החלטות" : "Advanced analysis of business data to generate insights and improve decision making",
-      provider: "Skreep",
-      areaServed: ["Israel", "Tel Aviv", "Jerusalem", "Haifa"],
-      serviceType: "Data Analytics"
-    },
-    {
-      name: language === 'he' ? "אינטגרציה" : "System Integration",
-      description: language === 'he' ? "אינטגרציה חלקה של פתרונות AI עם מערכות ארגוניות קיימות" : "Seamless integration of AI solutions with existing organizational systems",
-      provider: "Skreep",
-      areaServed: ["Israel", "Tel Aviv", "Jerusalem", "Haifa"],
-      serviceType: "Technology Integration"
-    },
-    {
-      name: language === 'he' ? "ייעוץ טכנולוגי" : "Technology Consulting",
-      description: language === 'he' ? "ייעוץ מקצועי והכשרה לצוותים ביישום טכנולוגיות AI מתקדמות" : "Professional consulting and training for teams in implementing advanced AI technologies",
-      provider: "Skreep",
-      areaServed: ["Israel", "Tel Aviv", "Jerusalem", "Haifa"],
-      serviceType: "Technology Consulting"
-    }
-  ], [language]);
-
   // FAQ data for SEO
   const faqData = React.useMemo(() => [
     {
@@ -106,11 +58,8 @@ export default function ServicesPage() {
 
   // Use translated services data
   const servicesData = React.useMemo(() => {
-    // Import messages directly based on language
-    const messages = language === 'he' 
-      ? require('../../../messages/he.json')
-      : require('../../../messages/en.json');
-    
+    // Use imported messages based on language
+    const messages = language === 'he' ? heMessages : enMessages;
     const translatedServices = messages.interactiveServices?.items;
     
     if (Array.isArray(translatedServices) && translatedServices.length > 0) {
@@ -171,81 +120,85 @@ export default function ServicesPage() {
           {/* Section Header */}
        
 
-          {/* Enhanced Services Grid - Mobile 2 Columns */}
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-8 lg:gap-12 max-w-6xl mx-auto">
+          {/* Enhanced Services Grid - 2 Columns Mobile, 3 Desktop */}
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 max-w-7xl mx-auto">
             {servicesData.map((service) => {
+              // Truncate description to 300 words
+              const truncateText = (text: string, maxWords: number = 50) => {
+                const words = text.split(' ');
+                if (words.length <= maxWords) return text;
+                return words.slice(0, maxWords).join(' ') + '...';
+              };
+
               return (
-                <Link
+                <div
                   key={service.id}
-                  href={`/services/${service.id}`}
-                  className="relative bg-white/5 backdrop-blur-2xl border border-white/20 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer hover:scale-[1.02] hover:border-cyan-400/40 hover:bg-white/10 transition-all duration-500 shadow-xl shadow-black/20 group"
+                  className="relative bg-gradient-to-br from-black/40 via-black/30 to-black/20 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl shadow-black/50 group hover:border-cyan-400/30 hover:shadow-cyan-400/20 transition-all duration-500 flex flex-col h-[450px] md:h-[500px]"
                   style={{
                     animationDelay: `${service.delay}ms`
                   }}
                 >
-                  {/* Enhanced Image Section - Mobile Optimized */}
-                  <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden">
+                  {/* Top Half - Image with Shadow Overlay */}
+                  <div className="relative h-1/2 overflow-hidden">
                     <img
                       src={service.image}
                       alt={service.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                    {/* Black shadow gradient from bottom */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                     
-                    {/* Enhanced Overlay Content - Mobile Optimized */}
-                    <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4 md:p-6 lg:p-8">
-                      {/* Service Title */}
+                    {/* Additional subtle overlay for better text readability */}
+                    <div className="absolute inset-0 bg-black/20"></div>
+                  </div>
+
+                  {/* Bottom Half - Content */}
+                  <div className="flex flex-col justify-between h-1/2 p-4 md:p-6">
+                    {/* Title and Description in Center */}
+                    <div className="flex-1 flex flex-col justify-center text-center">
                       <h3 
-                        className="text-md sm:text-lg md:text-xl lg:text-2xl font-bold mb-2 sm:mb-3 md:mb-4 text-white drop-shadow-2xl"
-                        dir="ltr"
+                        className="text-lg md:text-xl lg:text-2xl font-bold mb-3 md:mb-4 text-white group-hover:text-cyan-400 transition-colors duration-300"
+                        dir={language === 'he' ? 'rtl' : 'ltr'}
                       >
                         {service.title}
                       </h3>
 
-                      {/* Service Description - Mobile Optimized */}
                       <p 
-                        className="text-white/90 leading-relaxed text-center text-xs sm:text-sm md:text-base drop-shadow-lg"
+                        className="text-white/80 leading-relaxed text-xs md:text-sm lg:text-base mb-4 md:mb-6"
                         dir={language === 'he' ? 'rtl' : 'ltr'}
                       >
-                        {service.description}
+                        {truncateText(service.description, 25)}
                       </p>
+                    </div>
 
-                      {/* View More Indicator */}
-                      <div className={`mt-4 flex items-center justify-center gap-2 text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${language === 'he' ? 'flex-row-reverse' : ''}`}>
-                        <span className="text-sm font-medium">{language === 'he' ? 'לפרטים נוספים' : 'View Details'}</span>
-                        <svg className={`w-4 h-4 transition-transform ${language === 'he' ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    {/* Read More Button at Bottom */}
+                    <div className="flex justify-center">
+                      <Link
+                        href={`/services/${service.id}`}
+                        className="bg-gradient-to-l from-cyan-400/10 via-cyan-400/30 to-cyan-400/60 text-white border border-white/20 px-4 md:px-6 py-2 md:py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-400/30 flex items-center gap-2"
+                        dir={language === 'he' ? 'rtl' : 'ltr'}
+                      >
+                        <span className="text-xs md:text-sm lg:text-base">
+                          {language === 'he' ? 'לפרטים נוספים' : 'View Details'}
+                        </span>
+                        <svg 
+                          className={`w-3 h-3 md:w-4 md:h-4 transition-transform group-hover:translate-x-1 ${language === 'he' ? 'rotate-180' : ''}`} 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
-                      </div>
+                      </Link>
                     </div>
                   </div>
 
-                </Link>
-
+                  {/* Hover Effect Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/5 to-purple-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                </div>
               );
             })}
-          </div>
-
-          {/* Call to Action */}
-          <div className="text-center mt-12">
-            <div className="bg-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 lg:p-12 shadow-xl shadow-black/20 hover:bg-white/10 transition-all duration-300">
-              <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">
-                {language === 'he' ? 'מוכנים להתחיל?' : 'Ready to Get Started?'}
-              </h3>
-              <p className="text-white/70 text-lg mb-8 max-w-2xl mx-auto" dir={language === 'he' ? 'rtl' : 'ltr'}>
-                {language === 'he' 
-                  ? 'צרו איתנו קשר עוד היום ונתחיל לעבוד על הפתרון המושלם עבורכם'
-                  : 'Contact us today and let\'s start working on the perfect solution for you'
-                }
-              </p>
-              <button className="bg-gradient-to-r from-cyan-400/30 to-purple-400/30 text-white border border-cyan-400/50 px-8 py-4 rounded-full font-semibold text-lg hover:scale-105 hover:shadow-xl hover:shadow-cyan-400/30 transition-all duration-300 flex items-center space-x-3 mx-auto">
-                <span>{language === 'he' ? 'בואו נתחיל' : 'Let\'s Start'}</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </button>
-            </div>
           </div>
         </div>
       </section>

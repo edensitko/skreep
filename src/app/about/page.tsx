@@ -55,25 +55,33 @@ export default function AboutPage() {
       id: 1,
       icon: "🚀",
       title: language === 'he' ? "חדשנות" : "Innovation",
-      description: language === 'he' ? "אנחנו תמיד בחזית הטכנולוגיה, מפתחים פתרונות חדשניים ומתקדמים" : "We're always at the forefront of technology, developing innovative and advanced solutions"
+      description: language === 'he' ? "אנו מובילים את המהפכה הטכנולוגית עם פתרונות AI חדשניים שמשנים את עולם העסקים" : "We lead the technological revolution with innovative AI solutions that transform the business world",
+      color: "from-blue-500/20 to-cyan-500/20",
+      accentColor: "text-cyan-400"
     },
     {
       id: 2,
       icon: "🎯",
       title: language === 'he' ? "מצוינות" : "Excellence",
-      description: language === 'he' ? "אנחנו שואפים למצוינות בכל מה שאנחנו עושים ומתחייבים לאיכות הגבוהה ביותר" : "We strive for excellence in everything we do and commit to the highest quality"
+      description: language === 'he' ? "כל פרויקט שאנו מבצעים עובר בקרת איכות קפדנית ומספק תוצאות יוצאות דופן" : "Every project we execute undergoes rigorous quality control and delivers exceptional results",
+      color: "from-purple-500/20 to-pink-500/20",
+      accentColor: "text-purple-400"
     },
     {
       id: 3,
       icon: "🤝",
       title: language === 'he' ? "שותפות" : "Partnership",
-      description: language === 'he' ? "אנחנו רואים בלקוחותינו שותפים לדרך ועובדים יחד להשגת המטרות" : "We see our clients as partners and work together to achieve goals"
+      description: language === 'he' ? "אנו בונים קשרים ארוכי טווח עם לקוחותינו ומלווים אותם לאורך כל המסע הדיגיטלי" : "We build long-term relationships with our clients and accompany them throughout their digital journey",
+      color: "from-green-500/20 to-emerald-500/20",
+      accentColor: "text-green-400"
     },
     {
       id: 4,
       icon: "🌟",
       title: language === 'he' ? "שקיפות" : "Transparency",
-      description: language === 'he' ? "אנחנו מאמינים בתקשורת פתוחה וכנה עם הלקוחות והצוות שלנו" : "We believe in open and honest communication with our clients and team"
+      description: language === 'he' ? "תקשורת פתוחה וכנה היא הבסיס לכל פרויקט מוצלח - אנו מעדכנים בכל שלב" : "Open and honest communication is the foundation of every successful project - we update at every step",
+      color: "from-orange-500/20 to-yellow-500/20",
+      accentColor: "text-orange-400"
     }
   ], [language]);
 
@@ -112,7 +120,7 @@ export default function AboutPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative min-h-[500px] pt-32 pb-20 px-4 overflow-hidden">
+      <section className="relative min-h-[250px] pt-32 pb-2 px-4 overflow-hidden">
         {/* RippleGrid Background */}
         <div className="absolute inset-0 z-0 opacity-40">
           <RippleGrid
@@ -155,7 +163,7 @@ export default function AboutPage() {
       </section>
 
       {/* Company Story Section */}
-      <section className="py-16 px-4">
+      <section className="py-8 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="bg-gradient-to-br from-black/40 via-black/20 to-black/10 backdrop-blur-xl border border-white/20 rounded-3xl relative overflow-hidden p-8 md:p-12">
             {/* Decorative elements */}
@@ -186,53 +194,87 @@ export default function AboutPage() {
       </section>
 
       {/* Company Values Section */}
-      <section className="py-16 px-4">
+      <section className="py-12 px-4">
         <div className="container mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold mb-12 bg-gradient-to-br from-white via-white/80 to-white/60 bg-clip-text text-transparent text-center">
-            {language === 'he' ? 'הערכים שלנו' : 'Our Values'}
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-br from-white via-cyan-400 to-white bg-clip-text text-transparent">
+              {language === 'he' ? 'הערכים שמנחים אותנו' : 'The Values That Guide Us'}
+            </h2>
+            <p className="text-white/70 text-lg md:text-xl max-w-3xl mx-auto" dir={language === 'he' ? 'rtl' : 'ltr'}>
+              {language === 'he' 
+                ? 'הערכים הבסיסיים שלנו הם הבסיס לכל מה שאנו עושים ומשקפים את המחויבות שלנו למצוינות'
+                : 'Our core values are the foundation of everything we do and reflect our commitment to excellence'
+              }
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
             {companyValues.map((value, index) => (
               <div
                 key={value.id}
-                className="group relative bg-black/20 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden hover:scale-[1.02] hover:border-white/20 transition-all duration-500 cursor-pointer"
+                className="group relative bg-gradient-to-br from-black/50 via-black/40 to-black/30 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden hover:border-cyan-400/30 hover:shadow-2xl hover:shadow-cyan-400/10 transition-all duration-700 cursor-pointer"
                 style={{
-                  animationDelay: `${index * 100}ms`
+                  animationDelay: `${index * 150}ms`
                 }}
               >
-                {/* Icon Section */}
-                <div className="relative h-64 md:h-72 overflow-hidden bg-gradient-to-br from-cyan-500/20 to-purple-600/20">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/50 to-black/20"></div>
-                  
-                  {/* Overlay Content */}
-                  <div className="absolute inset-0 flex flex-col justify-center items-center p-6">
-                    {/* Value Icon */}
-                    <div className="text-6xl mb-4 drop-shadow-lg">
-                      {value.icon}
+                {/* Background Pattern */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${value.color} opacity-30`}></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                
+                {/* Floating Elements */}
+                <div className="absolute top-4 right-4 w-20 h-20 bg-white/5 rounded-full blur-xl"></div>
+                <div className="absolute bottom-4 left-4 w-16 h-16 bg-cyan-400/10 rounded-full blur-lg"></div>
+                
+                <div className="relative z-10 p-8 md:p-10 h-full flex flex-col">
+                  {/* Icon and Title */}
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-16 h-16 bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-white/15 transition-all duration-300">
+                      <span className="text-3xl">{value.icon}</span>
                     </div>
+                    <div>
+                      <h3 
+                        className={`text-2xl md:text-3xl font-bold ${value.accentColor} group-hover:scale-105 transition-transform duration-300`}
+                        dir={language === 'he' ? 'rtl' : 'ltr'}
+                      >
+                        {value.title}
+                      </h3>
+                    </div>
+                  </div>
 
-                    {/* Value Title */}
-                    <h3 
-                      className="text-xl md:text-2xl font-bold mb-2 text-white drop-shadow-lg text-center"
-                      dir="ltr"
-                    >
-                      {value.title}
-                    </h3>
-
-                    {/* Value Description */}
+                  {/* Description */}
+                  <div className="flex-1">
                     <p 
-                      className="text-white/90 leading-relaxed text-center text-sm drop-shadow-md"
+                      className="text-white/85 leading-relaxed text-base md:text-lg group-hover:text-white transition-colors duration-300"
                       dir={language === 'he' ? 'rtl' : 'ltr'}
                     >
                       {value.description}
                     </p>
                   </div>
+
+                  {/* Bottom Accent Line */}
+                  <div className={`mt-6 h-1 bg-gradient-to-r ${value.color.replace('/20', '/60')} rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`}></div>
                 </div>
 
-                {/* Hover Effect Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
+                {/* Hover Glow Effect */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${value.color.replace('/20', '/5')} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}></div>
               </div>
             ))}
+          </div>
+
+          {/* Bottom Stats */}
+          <div className="mt-16 grid grid-cols-3 gap-8 max-w-2xl mx-auto">
+            <div className="text-center">
+              <div className="text-3xl md:text-4xl font-bold text-cyan-400 mb-2">100+</div>
+              <div className="text-white/70 text-sm md:text-base">{language === 'he' ? 'פרויקטים מוצלחים' : 'Successful Projects'}</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl md:text-4xl font-bold text-purple-400 mb-2">5+</div>
+              <div className="text-white/70 text-sm md:text-base">{language === 'he' ? 'שנות ניסיון' : 'Years Experience'}</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl md:text-4xl font-bold text-green-400 mb-2">24/7</div>
+              <div className="text-white/70 text-sm md:text-base">{language === 'he' ? 'תמיכה מלאה' : 'Full Support'}</div>
+            </div>
           </div>
         </div>
       </section>

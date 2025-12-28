@@ -1,319 +1,353 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import Header from '@/components/Layout/Header/Header';
-import Footer from '@/components/Layout/Footer/Footer';
 import PageSEO from '@/components/SEO/PageSEO';
-import LocalSEO from '@/components/SEO/LocalSEO';
-import SEOMeta from '@/components/SEO/SEOMeta';
-import PageHero from '@/components/Layout/PageHero';
+import { Message, ChatState } from '@/components/Sections/ChatSection/types';
+import { ChatMessage as OpenAIChatMessage } from '@/lib/openai/chat';
 
-export default function AIConsultantPage() {
-  const [messages, setMessages] = useState<Array<{id: number, text: string, isUser: boolean}>>([]);
-  const [inputMessage, setInputMessage] = useState('');
+interface PhoneChatMessage {
+  id: string;
+  text: string;
+  timestamp: Date;
+  isUser: boolean;
+}
+
+const AIConsultantPage: React.FC = () => {
+  const { language, t } = useLanguage();
+  const [inputValue, setInputValue] = useState('');
+  const [messages, setMessages] = useState<PhoneChatMessage[]>([]);
+  const [isTyping, setIsTyping] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const [conversationHistory, setConversationHistory] = useState<OpenAIChatMessage[]>([]);
+  
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { language } = useLanguage();
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  // Ensure component is mounted before rendering interactive elements
-  useEffect(() => {
-    setIsMounted(true);
+  // Auto-scroll to bottom
+  const scrollToBottom = useCallback(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   }, []);
 
-  // Auto scroll to bottom when new messages are added
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
-
-  // Initialize with welcome message
-  useEffect(() => {
-    const welcomeMessage = {
-      id: Date.now(),
-      text: language === 'he' 
-        ? 'שלום! אני היועץ הדיגיטלי של סקריפ. איך אני יכול לעזור לך היום בנושאי בינה מלאכותית ופתרונות טכנולוגיים?'
-        : 'Hello! I\'m Skreep\'s AI consultant. How can I help you today with AI and technology solutions?',
-      isUser: false
-    };
-    setMessages([welcomeMessage]);
-  }, [language]);
+    if (messages.length > 0) {
+      setTimeout(scrollToBottom, 100);
+    }
+  }, [messages, scrollToBottom]);
 
   // Generate bot response using OpenAI API
-  const generateBotResponse = async (userMessage: string): Promise<string> => {
+  const generateBotResponse = useCallback(async (userMessage: string): Promise<string> => {
     try {
-      const response = await fetch('/api/ai-consultation', {
+      const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+      if (!apiKey) {
+        return language === 'he'
+          ? 'מצטער, שירות הצ\'אט אינו זמין כרגע. אנא צור קשר ישירות.'
+          : 'Sorry, chat service is currently unavailable. Please contact us directly.';
+      }
+
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          businessQuery: userMessage,
-          language: language
+          model: 'gpt-4-turbo-preview',
+          messages: [
+            {
+              role: 'system',
+              content: `You are Skreepy AI, the expert AI consultant for Skreep - advanced artificial intelligence solutions for businesses in Israel.
+## Response Guidelines:
+- **Language:** ALWAYS respond in the SAME language the user writes in (Hebrew or English)
+- **Tone:** Professional, friendly, and helpful
+- **Length:** Short and clean responses - up to 3-4 sentences`
+            },
+            ...conversationHistory,
+            { role: 'user', content: userMessage }
+          ],
+          max_tokens: 1500,
+          temperature: 0.7,
         })
       });
 
       const data = await response.json();
-      
-      if (!response.ok) {
-        console.error('API Error:', data);
-        return data.error || (language === 'he' ? 'מצטער, אירעה שגיאה. אנא נסה שוב.' : 'Sorry, an error occurred. Please try again.');
-      }
-      
-      if (data.message) {
-        return data.message;
+
+      if (data.choices && data.choices[0]?.message?.content) {
+        const assistantMessage = data.choices[0].message.content;
+        setConversationHistory(prev => [
+          ...prev,
+          { role: 'user', content: userMessage },
+          { role: 'assistant', content: assistantMessage }
+        ]);
+        return assistantMessage;
       } else {
-        return data.error || (language === 'he' ? 'מצטער, אירעה שגיאה. אנא נסה שוב.' : 'Sorry, an error occurred. Please try again.');
+        return language === 'he' ? 'מצטער, אירעה שגיאה. אנא נסה שוב.' : 'Sorry, an error occurred. Please try again.';
       }
     } catch (error) {
-      console.error('AI Consultation API Error:', error);
-      return language === 'he' 
+      console.error('Chat API Error:', error);
+      return language === 'he'
         ? 'מצטער, לא הצלחתי להתחבר לשרת. אנא בדוק את החיבור לאינטרנט ונסה שוב.'
         : 'Sorry, I couldn\'t connect to the server. Please check your internet connection and try again.';
     }
-  };
+  }, [conversationHistory, language]);
 
-  const handleSendMessage = async () => {
-    if (!inputMessage.trim()) return;
+  // Handle sending message
+  const handleSendMessage = useCallback(async () => {
+    if (!inputValue.trim() || isLoading) return;
 
-    const currentInput = inputMessage.trim();
-    const userMessageId = Date.now();
-    
-    const userMessage = {
-      id: userMessageId,
-      text: currentInput,
+    const userMessageText = inputValue.trim();
+    const userMessage: PhoneChatMessage = {
+      id: Date.now().toString(),
+      text: userMessageText,
+      timestamp: new Date(),
       isUser: true
     };
 
-    // Add user message immediately
     setMessages(prev => [...prev, userMessage]);
-    setInputMessage('');
+    setInputValue('');
     setIsLoading(true);
+    
+    setTimeout(() => setIsTyping(true), 500);
 
-    // Get AI response from OpenAI API
     try {
-      const botResponseText = await generateBotResponse(currentInput);
-      
-      const aiResponse = {
-        id: Date.now() + Math.random(), // Ensure unique ID
+      const botResponseText = await generateBotResponse(userMessageText);
+      const botMessage: PhoneChatMessage = {
+        id: (Date.now() + 1).toString(),
         text: botResponseText,
+        timestamp: new Date(),
         isUser: false
       };
       
-      setMessages(prev => [...prev, aiResponse]);
+      setIsTyping(false);
+      setMessages(prev => [...prev, botMessage]);
       setIsLoading(false);
     } catch (error) {
-      console.error('Error getting AI response:', error);
-      
-      const errorMessage = {
-        id: Date.now() + Math.random(),
+      console.error('Error getting bot response:', error);
+      const errorMessage: PhoneChatMessage = {
+        id: (Date.now() + 1).toString(),
         text: language === 'he' ? 'מצטער, אירעה שגיאה. אנא נסה שוב.' : 'Sorry, an error occurred. Please try again.',
+        timestamp: new Date(),
         isUser: false
       };
-      
+      setIsTyping(false);
       setMessages(prev => [...prev, errorMessage]);
       setIsLoading(false);
     }
-  };
+  }, [inputValue, isLoading, generateBotResponse, language]);
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyPress = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
+  }, [handleSendMessage]);
+
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  }, []);
+
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
-  // FAQ data for SEO
-  const faqData = React.useMemo(() => [
-    {
-      question: language === 'he' ? "איך עובד היועץ הדיגיטלי של סקריפ?" : "How does Skreep's AI consultant work?",
-      answer: language === 'he' ? "היועץ הדיגיטלי שלנו משתמש בטכנולוגיית בינה מלאכותית מתקדמת כדי לספק ייעוץ מותאם אישית בנושאי AI ופתרונות טכנולוגיים" : "Our AI consultant uses advanced artificial intelligence technology to provide personalized advice on AI and technology solutions"
-    },
-    {
-      question: language === 'he' ? "האם השירות זמין 24/7?" : "Is the service available 24/7?",
-      answer: language === 'he' ? "כן, היועץ הדיגיטלי זמין 24 שעות ביממה, 7 ימים בשבוע לענות על השאלות שלכם" : "Yes, the AI consultant is available 24 hours a day, 7 days a week to answer your questions"
-    }
-  ], [language]);
-
   return (
-    <div className="min-h-screen bg-black">
-      {/* SEO Components */}
-      <SEOMeta 
-        title={language === 'he' ? "יועץ AI דיגיטלי - צ'אטבוט חכם | Skreep" : "AI Digital Consultant - Smart Chatbot | Skreep"}
-        description={language === 'he' ? "שוחח עם היועץ הדיגיטלי החכם של סקריפ. קבל ייעוץ מקצועי בנושאי בינה מלאכותית ופתרונות טכנולוגיים 24/7" : "Chat with Skreep's smart AI consultant. Get professional advice on artificial intelligence and technology solutions 24/7"}
-        keywords={language === 'he' ? ["יועץ AI", "צ'אטבוט", "בינה מלאכותית", "ייעוץ טכנולוגי", "סקריפ"] : ["AI consultant", "chatbot", "artificial intelligence", "technology consulting", "skreep"]}
-        image="/assets/images/ai-consultant-og.jpg"
-        canonical="https://skreep.com/ai-consultant"
-      />
-      
-      <PageSEO 
-        pageType="services"
-        title={language === 'he' ? "יועץ AI דיגיטלי - צ'אטבוט חכם" : "AI Digital Consultant - Smart Chatbot"}
-        description={language === 'he' ? "יועץ דיגיטלי חכם לייעוץ בנושאי AI" : "Smart digital consultant for AI advice"}
-        faqs={faqData}
-      />
-      
-      <LocalSEO showMap={false} />
-
-      <Header />
-      
-      {/* Hero Section with RippleGrid */}
-      <PageHero 
-        title={language === 'he' ? 'יועץ AI דיגיטלי' : 'AI Digital Consultant'}
-        subtitle={language === 'he' 
-          ? 'שוחח עם היועץ הדיגיטלי החכם שלנו וקבל ייעוץ מקצועי בנושאי בינה מלאכותית ופתרונות טכנולוגיים'
-          : 'Chat with our smart AI consultant and get professional advice on artificial intelligence and technology solutions'
+    <>
+      <PageSEO
+        title={language === 'he' ? 'יועץ AI | Skreep' : 'AI Consultant | Skreep'}
+        description={language === 'he' 
+          ? 'שוחח עם יועץ הבינה המלאכותית שלנו וקבל ייעוץ מקצועי לעסק שלך'
+          : 'Chat with our AI consultant and get professional advice for your business'
         }
-        language={language as 'he' | 'en'}
+        pageType="ai-consultant"
       />
 
-      {/* Main AI Consultant Section */}
-      <section className="py-16 px-4">
-        <div className="container mx-auto">
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 py-20 px-4">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-20 mt-16">
+            <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-6">
+              {language === 'he' ? 'יועץ AI' : 'AI Consultant'}
+            </h1>
+            <p className="text-white/80 text-xl max-w-3xl mx-auto leading-relaxed">
+              {language === 'he' 
+                ? 'שוחח עם יועץ הבינה המלאכותית המתקדם שלנו וקבל ייעוץ מקצועי מותאם אישית לפיתוח העסק שלך'
+                : 'Chat with our advanced AI consultant and get personalized professional advice for developing your business'
+              }
+            </p>
+          </div>
 
-          {/* Chat Interface */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-6xl mx-auto">
-            {/* Chat Container */}
-            <div className="order-1 lg:order-1">
-              <div className="">
-                
-                {/* Chat Messages */}
-                <div className="h-80 md:h-96 lg:h-[500px] overflow-y-auto p-4 md:p-6 space-y-4">
-                {messages.map((message) => (
-                  <div
-                    key={message.id}
-                    className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div
-                      className={`max-w-[280px] md:max-w-md lg:max-w-lg px-3 md:px-4 py-2 md:py-3 rounded-2xl ${
-                        message.isUser
-                          ? 'bg-cyan-400/20 text-white ml-2 md:ml-4'
-                          : 'bg-white/10 text-white/90 mr-2 md:mr-4'
-                      }`}
-                      dir={language === 'he' ? 'rtl' : 'ltr'}
-                    >
-                      <p className="text-sm md:text-base leading-relaxed">
-                        {message.text}
-                      </p>
-                    </div>
+          <div className="flex justify-center items-center">
+            {/* Phone Container */}
+            <div className="relative">
+              {/* Phone Frame */}
+              <div className="w-[380px] h-[720px] bg-gradient-to-b from-gray-800 to-gray-900 rounded-[3.5rem] p-3 shadow-2xl border-2 border-gray-600">
+                {/* Phone Screen */}
+                <div className="w-full h-full bg-black rounded-[3rem] overflow-hidden relative flex flex-col">
+                  {/* Status Bar */}
+                  <div className="bg-gray-900 px-6 py-3 flex justify-center items-center text-white text-sm">
+                    <span className="font-medium bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                      {language === 'he' ? 'יועץ AI' : 'AI Consultant'}
+                    </span>
                   </div>
-                ))}
-                
-                {isLoading && (
-                  <div className="flex justify-start">
-                    <div className="bg-white/10 text-white/90 px-3 md:px-4 py-2 md:py-3 rounded-2xl mr-2 md:mr-4">
-                      <div className="flex space-x-2">
-                        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+
+                  {/* Messages Area */}
+                  <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-gray-950">
+                    {messages.length === 0 && (
+                      <div className="text-center py-8">
+                        <h3 className="text-white font-semibold text-lg mb-4">
+                          {language === 'he' ? 'ברוכים הבאים!' : 'Welcome!'}
+                        </h3>
+                        <p className="text-white/60 text-sm leading-relaxed max-w-xs mx-auto mb-6">
+                          {language === 'he' 
+                            ? 'שלח הודעה כדי להתחיל שיחה עם יועץ הבינה המלאכותית שלנו'
+                            : 'Send a message to start chatting with our AI consultant'
+                          }
+                        </p>
+                        
+                        {/* Quick Questions inside chat */}
+                        <div className="space-y-2">
+                          <p className="text-white/50 text-xs mb-3">
+                            {language === 'he' ? 'שאלות מהירות:' : 'Quick questions:'}
+                          </p>
+                          {language === 'he' ? (
+                            <>
+                              <button 
+                                onClick={() => setInputValue('אני רוצה אתר לעסק שלי')} 
+                                className="block w-full px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-xs mb-2"
+                              >
+                                אני רוצה אתר לעסק שלי
+                              </button>
+                              <button 
+                                onClick={() => setInputValue('איך אוכל לשלב AI בעסק שלי?')} 
+                                className="block w-full px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-xs mb-2"
+                              >
+                                איך אוכל לשלב AI בעסק שלי?
+                              </button>
+                              <button 
+                                onClick={() => setInputValue('מה זה MVP?')} 
+                                className="block w-full px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-xs mb-2"
+                              >
+                                מה זה MVP?
+                              </button>
+                              <button 
+                                onClick={() => setInputValue('כמה זמן לוקח לפתח אפליקציה?')} 
+                                className="block w-full px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-xs"
+                              >
+                                כמה זמן לוקח לפתח אפליקציה?
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <button 
+                                onClick={() => setInputValue('I want a website for my business')} 
+                                className="block w-full px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-xs mb-2"
+                              >
+                                I want a website for my business
+                              </button>
+                              <button 
+                                onClick={() => setInputValue('How can I integrate AI into my business?')} 
+                                className="block w-full px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-xs mb-2"
+                              >
+                                How can I integrate AI into my business?
+                              </button>
+                              <button 
+                                onClick={() => setInputValue('What is an MVP?')} 
+                                className="block w-full px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-xs mb-2"
+                              >
+                                What is an MVP?
+                              </button>
+                              <button 
+                                onClick={() => setInputValue('How long does it take to develop an app?')} 
+                                className="block w-full px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-xs"
+                              >
+                                How long does it take to develop an app?
+                              </button>
+                            </>
+                          )}
+                        </div>
                       </div>
+                    )}
+
+                    {messages.map((message) => (
+                      <div
+                        key={message.id}
+                        className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
+                      >
+                        <div
+                          className={`max-w-[85%] rounded-2xl px-4 py-3 ${
+                            message.isUser
+                              ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-br-md'
+                              : 'bg-gray-800 text-white rounded-bl-md'
+                          }`}
+                        >
+                          <p className="text-sm leading-relaxed">{message.text}</p>
+                          <p className={`text-xs mt-2 ${
+                            message.isUser ? 'text-white/80' : 'text-gray-400'
+                          }`}>
+                            {formatTime(message.timestamp)}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+
+                    {isTyping && (
+                      <div className="flex justify-start">
+                        <div className="bg-gray-800 rounded-2xl rounded-bl-md px-5 py-4">
+                          <div className="flex space-x-1.5">
+                            <div className="w-2.5 h-2.5 bg-gray-400 rounded-full animate-bounce"></div>
+                            <div className="w-2.5 h-2.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                            <div className="w-2.5 h-2.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    <div ref={messagesEndRef} />
+                  </div>
+
+                  {/* Input Area - Fixed at bottom */}
+                  <div className="bg-gray-900 p-6 border-t border-gray-700 flex-shrink-0">
+                    <div className="flex items-center gap-4">
+                      <input
+                        ref={inputRef}
+                        type="text"
+                        value={inputValue}
+                        onChange={handleInputChange}
+                        onKeyDown={handleKeyPress}
+                        placeholder={language === 'he' ? 'כתוב הודעה...' : 'Type a message...'}
+                        className="flex-1 bg-gray-800 border border-gray-600 rounded-full px-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300 text-sm"
+                        dir={language === 'he' ? 'rtl' : 'ltr'}
+                      />
+                      <button
+                        onClick={handleSendMessage}
+                        disabled={!inputValue.trim() || isLoading}
+                        className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 flex-shrink-0 ${
+                          inputValue.trim() && !isLoading
+                            ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:scale-105'
+                            : 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                        }`}
+                      >
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            strokeWidth={2} 
+                            d={language === 'he' ? "M19 12H5M12 19L5 12L12 5" : "M5 12H19M12 5L19 12L12 19"}
+                          />
+                        </svg>
+                      </button>
                     </div>
                   </div>
-                )}
-                
-                <div ref={messagesEndRef} />
-                </div>
-
-                {/* Chat Input */}
-                <div className="border-t border-white/20 p-2 md:p-6">
-                  <div className="flex gap-1 md:gap-4">
-                  {isMounted ? (
-                    <textarea
-                      key="chat-input"
-                      value={inputMessage}
-                      onChange={(e) => {
-                        const newValue = e.target.value;
-                        console.log('Input changed:', newValue);
-                        setInputMessage(newValue);
-                      }}
-                      onKeyDown={handleKeyDown}
-                      placeholder={language === 'he' ? 'כתוב את השאלה שלך כאן...' : 'Type your question here...'}
-                      className="flex-1 bg-white/10 border border-white/20 rounded-xl px-3 md:px-4 py-2 md:py-3 text-white placeholder-white/50 focus:outline-none focus:border-cyan-400/50 resize-none text-sm md:text-base"
-                      rows={2}
-                      dir={language === 'he' ? 'rtl' : 'ltr'}
-                      autoComplete="off"
-                    />
-                  ) : (
-                    <div className="flex-1 bg-white/10 border border-white/20 rounded-xl px-3 md:px-4 py-2 md:py-3 text-white/50 h-[60px] md:h-[68px] flex items-center text-sm md:text-base">
-                      Loading...
-                    </div>
-                  )}
-                  <button
-                    onClick={() => {
-                      console.log('Button clicked, input:', inputMessage);
-                      handleSendMessage();
-                    }}
-                    disabled={!inputMessage.trim() || isLoading || !isMounted}
-                    className="bg-gradient-to-l from-cyan-400/10 via-cyan-400/30 to-cyan-400/60  text-white text-xs border border-white/20 px-2 md:px-4 py-2 rounded-xl  transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed md:text-sm"
-                    type="button"
-                  >
-                    {language === 'he' ? 'שלח' : 'Send'}
-                  </button>
-                  </div>
-                </div>
-
-                {/* Background decorative elements */}
-                <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                  <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-cyan-400/5 rounded-full blur-3xl"></div>
-                  <div className="absolute bottom-1/4 left-1/4 w-24 h-24 bg-purple-400/5 rounded-full blur-3xl"></div>
                 </div>
               </div>
             </div>
-
-            {/* AI Consultant Image */}
-       
           </div>
         </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-16 px-4">
-        <div className="container mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold mb-12 bg-gradient-to-br from-white via-white/80 to-white/60 bg-clip-text text-transparent text-center">
-            {language === 'he' ? 'מה היועץ יכול לעזור לך' : 'How Our AI Consultant Can Help'}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {[
-              {
-                icon: "🤖",
-                title: language === 'he' ? "ייעוץ AI" : "AI Consulting",
-                description: language === 'he' ? "קבל ייעוץ מקצועי על פתרונות בינה מלאכותית המתאימים לעסק שלך" : "Get professional advice on AI solutions suitable for your business"
-              },
-              {
-                icon: "💡",
-                title: language === 'he' ? "רעיונות חדשניים" : "Innovative Ideas",
-                description: language === 'he' ? "גלה רעיונות חדשניים לשיפור התהליכים העסקיים שלך באמצעות טכנולוגיה" : "Discover innovative ideas to improve your business processes through technology"
-              },
-              {
-                icon: "🔧",
-                title: language === 'he' ? "פתרונות טכניים" : "Technical Solutions",
-                description: language === 'he' ? "קבל המלצות על כלים וטכנולוגיות שיעזרו לך להשיג את המטרות שלך" : "Get recommendations on tools and technologies to help you achieve your goals"
-              }
-            ].map((feature, index) => (
-              <div
-                key={index}
-                className="bg-gradient-to-br from-black/25 via-black/15 to-black/5 backdrop-blur-3xl border border-white/30 rounded-2xl lg:rounded-4xl before:absolute before:inset-0 before:rounded-2xl lg:before:rounded-4xl before:bg-gradient-to-br before:from-white/20 before:via-white/5 before:to-transparent before:opacity-60 after:absolute after:inset-0 after:rounded-2xl lg:after:rounded-4xl after:bg-gradient-to-tl after:from-cyan-400/10 after:via-transparent after:to-purple-400/10 after:opacity-50 relative overflow-hidden p-6 text-center"
-              >
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 
-                  className="text-lg md:text-xl font-bold mb-3 bg-gradient-to-br from-white via-white/80 to-white/60 bg-clip-text text-transparent"
-                  dir={language === 'he' ? 'rtl' : 'ltr'}
-                >
-                  {feature.title}
-                </h3>
-                <p 
-                  className="text-white/80 leading-relaxed text-sm"
-                  dir={language === 'he' ? 'rtl' : 'ltr'}
-                >
-                  {feature.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
+      </div>
+    </>
   );
-}
+};
+
+export default AIConsultantPage;
