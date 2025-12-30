@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useState } from 'react';
+import React, { useRef, useLayoutEffect, useState, useCallback } from 'react';
 import {
   motion,
   useScroll,
@@ -8,6 +8,7 @@ import {
   useVelocity,
   useAnimationFrame
 } from 'motion/react';
+import { useMemoryOptimizer, throttle } from '@/utils/memoryOptimization';
 
 interface VelocityMapping {
   input: [number, number];
@@ -47,16 +48,17 @@ interface ScrollVelocityProps {
 function useElementWidth<T extends HTMLElement>(ref: React.RefObject<T | null>): number {
   const [width, setWidth] = useState(0);
 
-  useLayoutEffect(() => {
-    function updateWidth() {
-      if (ref.current) {
-        setWidth(ref.current.offsetWidth);
-      }
+  const updateWidth = useCallback(throttle(() => {
+    if (ref.current) {
+      setWidth(ref.current.offsetWidth);
     }
+  }, 100), [ref]);
+
+  useLayoutEffect(() => {
     updateWidth();
     window.addEventListener('resize', updateWidth);
     return () => window.removeEventListener('resize', updateWidth);
-  }, [ref]);
+  }, [updateWidth]);
 
   return width;
 }
@@ -67,14 +69,16 @@ export const ScrollVelocity: React.FC<ScrollVelocityProps> = ({
   velocity = 100,
   className = '',
   damping = 50,
-  stiffness = 700,
-  numCopies = 15,
-  velocityMapping = { input: [0, 1000], output: [0, 5] },
+  stiffness = 400, // Reduced from 700
+  numCopies = 8, // Reduced from 15
+  velocityMapping = { input: [0, 1000], output: [0, 3] }, // Reduced output range
   parallaxClassName,
   scrollerClassName,
   parallaxStyle,
   scrollerStyle
 }) => {
+  const { addTimeout, addInterval } = useMemoryOptimizer();
+
   function VelocityText({
     children,
     baseVelocity = velocity,
@@ -100,7 +104,7 @@ export const ScrollVelocity: React.FC<ScrollVelocityProps> = ({
     const velocityFactor = useTransform(
       smoothVelocity,
       velocityMapping?.input || [0, 1000],
-      velocityMapping?.output || [0, 5],
+      velocityMapping?.output || [0, 3],
       { clamp: false }
     );
 
@@ -120,21 +124,31 @@ export const ScrollVelocity: React.FC<ScrollVelocityProps> = ({
 
     const directionFactor = useRef<number>(1);
     const isScrolling = useRef<boolean>(false);
-    const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+    const scrollTimeout = useRef<number | null>(null);
+    const animationFrameId = useRef<number | null>(null);
+
+    // Throttled scroll handler
+    const handleScrollStart = useCallback(throttle(() => {
+      isScrolling.current = true;
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+      
+      const timeoutId = window.setTimeout(() => {
+        isScrolling.current = false;
+        // Cancel animation frame when not scrolling
+        if (animationFrameId.current) {
+          cancelAnimationFrame(animationFrameId.current);
+          animationFrameId.current = null;
+        }
+      }, 200);
+      
+      addTimeout(timeoutId);
+      scrollTimeout.current = timeoutId;
+    }, 16), [addTimeout]); // 16ms throttle for 60fps
 
     // Track scrolling state
     useLayoutEffect(() => {
-      const handleScrollStart = () => {
-        isScrolling.current = true;
-        if (scrollTimeout.current) {
-          clearTimeout(scrollTimeout.current);
-        }
-        // Set timeout to detect when scrolling stops
-        scrollTimeout.current = setTimeout(() => {
-          isScrolling.current = false;
-        }, 150); // 150ms delay after scroll stops
-      };
-
       window.addEventListener('scroll', handleScrollStart, { passive: true });
       
       return () => {
@@ -142,12 +156,15 @@ export const ScrollVelocity: React.FC<ScrollVelocityProps> = ({
         if (scrollTimeout.current) {
           clearTimeout(scrollTimeout.current);
         }
+        if (animationFrameId.current) {
+          cancelAnimationFrame(animationFrameId.current);
+        }
       };
-    }, []);
+    }, [handleScrollStart]);
 
     useAnimationFrame((t, delta) => {
-      // Only animate when actively scrolling
-      if (!isScrolling.current) return;
+      // Only animate when actively scrolling and limit frame rate
+      if (!isScrolling.current || delta < 16) return; // Limit to ~60fps
 
       let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
 

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -119,71 +119,99 @@ function InteractiveShowcaseSection() {
     }
   }, []);
 
-  // Detect centered service on scroll (mobile)
+  // Detect centered service on scroll (mobile) - throttled for performance
   useEffect(() => {
+    let scrollTimeout: number | null = null;
+    
     const handleScroll = () => {
-      if (scrollContainerRef.current && window.innerWidth < 768) {
-        const container = scrollContainerRef.current;
-        const containerRect = container.getBoundingClientRect();
-        const centerX = containerRect.left + containerRect.width / 2;
+      if (scrollTimeout) return;
+      
+      scrollTimeout = window.setTimeout(() => {
+        scrollTimeout = null;
         
-        const cards = container.querySelectorAll('[data-service-id]') as NodeListOf<HTMLElement>;
-        let closestCard: HTMLElement | null = null;
-        let closestDistance = Infinity;
-        
-        cards.forEach((card: HTMLElement) => {
-          const cardRect = card.getBoundingClientRect();
-          const cardCenterX = cardRect.left + cardRect.width / 2;
-          const distance = Math.abs(centerX - cardCenterX);
+        if (scrollContainerRef.current && window.innerWidth < 768) {
+          const container = scrollContainerRef.current;
+          const containerRect = container.getBoundingClientRect();
+          const centerX = containerRect.left + containerRect.width / 2;
           
-          if (distance < closestDistance) {
-            closestDistance = distance;
-            closestCard = card;
-          }
-        });
-        
-        if (closestCard) {
-          const serviceId = (closestCard as HTMLElement).getAttribute('data-service-id');
-          if (serviceId) {
-            const service = translatedServices.find(s => s.id === serviceId);
-            if (service && selectedService?.id !== service.id) {
-              setSelectedService(service);
+          const cards = container.querySelectorAll('[data-service-id]') as NodeListOf<HTMLElement>;
+          let closestCard: HTMLElement | null = null;
+          let closestDistance = Infinity;
+          
+          cards.forEach((card: HTMLElement) => {
+            const cardRect = card.getBoundingClientRect();
+            const cardCenterX = cardRect.left + cardRect.width / 2;
+            const distance = Math.abs(centerX - cardCenterX);
+            
+            if (distance < closestDistance) {
+              closestDistance = distance;
+              closestCard = card;
+            }
+          });
+          
+          if (closestCard) {
+            const serviceId = (closestCard as HTMLElement).getAttribute('data-service-id');
+            if (serviceId) {
+              const service = translatedServices.find(s => s.id === serviceId);
+              if (service && selectedService?.id !== service.id) {
+                setSelectedService(service);
+              }
             }
           }
         }
-      }
+      }, 50); // Throttle to 20fps
     };
 
     const container = scrollContainerRef.current;
     if (container) {
-      container.addEventListener('scroll', handleScroll);
+      container.addEventListener('scroll', handleScroll, { passive: true });
       handleScroll();
       
       return () => {
         container.removeEventListener('scroll', handleScroll);
+        if (scrollTimeout) {
+          clearTimeout(scrollTimeout);
+        }
       };
     }
   }, [selectedService, translatedServices]);
 
-  const selectService = (service: ServiceCard) => {
-    setSelectedService(service);
-  };
+  // Memoize expensive operations
+  const selectService = useCallback((service: ServiceCard) => {
+    if (selectedService?.id !== service.id) {
+      setSelectedService(service);
+      
+      // Smooth scroll to content box on mobile
+      if (window.innerWidth < 768) {
+        setTimeout(() => {
+          const contentBox = document.querySelector('[data-content-box]');
+          if (contentBox) {
+            contentBox.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'start',
+              inline: 'nearest'
+            });
+          }
+        }, 100);
+      }
+    }
+  }, [selectedService?.id]);
 
-  const scrollLeft = () => {
+  const scrollLeft = useCallback(() => {
     if (scrollContainerRef.current) {
       const isMobile = window.innerWidth < 768;
       const scrollAmount = isMobile ? 240 : 280;
       scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
-  };
+  }, []);
 
-  const scrollRight = () => {
+  const scrollRight = useCallback(() => {
     if (scrollContainerRef.current) {
       const isMobile = window.innerWidth < 768;
       const scrollAmount = isMobile ? 240 : 280;
       scrollContainerRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
     }
-  };
+  }, []);
 
   return (
     <>
@@ -240,7 +268,7 @@ function InteractiveShowcaseSection() {
             {/* Cards Container */}
             <div 
               ref={scrollContainerRef}
-              className="overflow-x-auto scrollbar-hide"
+              className="overflow-x-auto scrollbar-hide pb-2"
               style={{ scrollBehavior: 'smooth' }}
             >
               <div className="flex gap-4 md:gap-6 p-2 pl-[calc(50vw-12rem)] md:pl-2 pr-[calc(50vw-12rem)] md:pr-2 min-w-max">
@@ -249,9 +277,9 @@ function InteractiveShowcaseSection() {
                     key={`${service.id}-${index}`}
                     data-service-id={service.id}
                     onClick={() => selectService(service)}
-                    className={`flex-shrink-0 w-52 lg:w-60 h-32 md:h-32 backdrop-blur-sm border rounded-2xl p-4 md:p-6 cursor-pointer group transition-all duration-300 hover:scale-90 bg-cover bg-center bg-no-repeat relative overflow-hidden ${
+                    className={`flex-shrink-0 w-52 lg:w-60 h-36 md:h-36 backdrop-blur-sm border rounded-2xl p-4 md:p-6 cursor-pointer group transition-all duration-300 hover:scale-105 bg-cover bg-center bg-no-repeat relative overflow-hidden ${
                       selectedService?.id === service.id
-                        ? 'opacity-100 border-white/80 shadow-lg'
+                        ? 'opacity-100 border-cyan-400/60 shadow-lg shadow-cyan-400/20 scale-105 ring-2 ring-cyan-400/30'
                         : 'opacity-70 border-white/20 hover:border-white/30 hover:opacity-90'
                     }`}
                     style={{
@@ -264,10 +292,27 @@ function InteractiveShowcaseSection() {
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-black/50 rounded-2xl"></div>
                     
-                    <div className="text-center relative z-20">
-                      <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-3 group-hover:text-cyan-200 transition-colors">
+                    <div className="text-center relative z-20 h-full flex flex-col justify-center">
+                      <h3 className="text-lg md:text-xl font-bold text-white mb-2 group-hover:text-cyan-200 transition-colors">
                         {service.title}
                       </h3>
+                      <p className="text-white/70 text-sm group-hover:text-white/90 transition-colors line-clamp-2">
+                        {service.description}
+                      </p>
+                    </div>
+                    
+                    {/* Selection Indicator */}
+                    {selectedService?.id === service.id && (
+                      <div className="absolute top-3 right-3 w-8 h-8 bg-cyan-400 rounded-full flex items-center justify-center animate-pulse-glow">
+                        <svg className="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                    )}
+                    
+                    {/* Click Indicator */}
+                    <div className="absolute bottom-3 left-3 text-white/60 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                      {language === 'he' ? 'לחץ לפרטים' : 'Click for details'}
                     </div>
                   </div>
                 ))}
@@ -279,9 +324,14 @@ function InteractiveShowcaseSection() {
 
       {/* Enhanced Content Box */}
       {selectedService && (
-        <div className="mt-6 w-[85%] mx-auto relative">
+        <div className="mt-6 w-[85%] mx-auto relative" data-content-box>
           {/* Main Content Container */}
-          <div className="bg-gradient-to-br from-black/30 via-black/20 to-black/10 backdrop-blur-3xl border border-white/20 rounded-3xl lg:rounded-4xl shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-700 ease-out hover:backdrop-blur-[12px] hover:border-white/30 hover:shadow-cyan-400/10 hover:shadow-2xl">
+          <div className="bg-gradient-to-br from-black/30 via-black/20 to-black/10 backdrop-blur-3xl border border-white/20 rounded-3xl lg:rounded-4xl shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-700 ease-out hover:backdrop-blur-[12px] hover:border-white/30 hover:shadow-cyan-400/10 hover:shadow-2xl animate-in"
+               style={{ 
+                 animationName: 'fade-in-up', 
+                 animationDuration: '0.6s', 
+                 animationFillMode: 'both' 
+               }}>
             
             {/* Animated Background Effects */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-60 rounded-3xl lg:rounded-4xl"></div>
@@ -289,7 +339,7 @@ function InteractiveShowcaseSection() {
             
             {/* Full-Width Image Banner */}
             <div 
-              className="w-full h-32 md:h-40 lg:h-48 bg-cover bg-center bg-no-repeat relative overflow-hidden rounded-t-3xl lg:rounded-t-4xl"
+              className="w-full h-32 md:h-40 lg:h-48 bg-cover bg-center bg-no-repeat relative overflow-hidden rounded-t-3xl lg:rounded-t-4xl transition-all duration-500"
               style={{
                 backgroundImage: `url(${selectedService.imageBg})`,
               }}
@@ -297,6 +347,13 @@ function InteractiveShowcaseSection() {
               {/* Image Overlay */}
               <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60"></div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+              
+              {/* Service Icon/Badge */}
+              <div className="absolute top-4 left-4 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full p-3">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
             </div>
 
             {/* Content Wrapper */}
@@ -315,7 +372,7 @@ function InteractiveShowcaseSection() {
               </div>
 
               {/* Features Grid - 2 Columns Mobile, 3 Columns Desktop */}
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-3">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-3 mb-8">
                 {selectedService.features.map((feature, index) => (
                   <div 
                     key={index} 
@@ -331,6 +388,36 @@ function InteractiveShowcaseSection() {
                     </span>
                   </div>
                 ))}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link
+                  href={`/services/${selectedService.id}`}
+                  className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-8 py-3 rounded-full font-semibold hover:from-cyan-500 hover:to-blue-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-cyan-400/25 flex items-center gap-2"
+                  dir={language === 'he' ? 'rtl' : 'ltr'}
+                >
+                  {language === 'he' ? 'למידע נוסף' : 'Learn More'}
+                  <svg 
+                    className={`w-4 h-4 transition-transform duration-300 ${language === 'he' ? 'rotate-180' : ''}`}
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+                
+                <Link
+                  href="/contact"
+                  className="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-3 rounded-full font-semibold hover:bg-white/20 hover:border-white/30 transition-all duration-300 hover:scale-105 flex items-center gap-2"
+                  dir={language === 'he' ? 'rtl' : 'ltr'}
+                >
+                  {language === 'he' ? 'קבל הצעת מחיר' : 'Get Quote'}
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                </Link>
               </div>
 
             </div>

@@ -55,12 +55,40 @@ const LightPillar: React.FC<LightPillarProps> = ({
     }
   }, []);
 
+  // Add memory monitoring and cleanup
+  useEffect(() => {
+    let memoryCheckInterval: number | null = null;
+    
+    // Monitor memory usage and force cleanup if needed
+    if ('memory' in performance) {
+      memoryCheckInterval = window.setInterval(() => {
+        const memInfo = (performance as { memory?: { usedJSHeapSize: number } }).memory;
+        if (memInfo && memInfo.usedJSHeapSize > 100 * 1024 * 1024) { // 100MB threshold
+          // Force garbage collection if available
+          if ('gc' in window) {
+            (window as { gc?: () => void }).gc?.();
+          }
+        }
+      }, 30000); // Check every 30 seconds
+    }
+
+    return () => {
+      if (memoryCheckInterval) {
+        clearInterval(memoryCheckInterval);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     if (!containerRef.current || !webGLSupported) return;
 
     const container = containerRef.current;
     const width = container.clientWidth;
     const height = container.clientHeight;
+
+    // Reduce quality on mobile devices to save memory
+    const isMobile = window.innerWidth < 768;
+    const pixelRatio = Math.min(window.devicePixelRatio, isMobile ? 1 : 1.5);
 
     // Scene setup
     const scene = new THREE.Scene();
@@ -72,12 +100,13 @@ const LightPillar: React.FC<LightPillarProps> = ({
     let renderer: THREE.WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({
-        antialias: false,
+        antialias: false, // Disabled for better performance
         alpha: true,
-        powerPreference: 'high-performance',
+        powerPreference: 'default', // Changed from high-performance to save battery
         precision: 'lowp',
         stencil: false,
-        depth: false
+        depth: false,
+        preserveDrawingBuffer: false // Added for better memory management
       });
     } catch (error) {
       console.error('Failed to create WebGL renderer:', error);
@@ -86,7 +115,9 @@ const LightPillar: React.FC<LightPillarProps> = ({
     }
 
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(pixelRatio);
+    // Reduce context memory usage
+    renderer.info.autoReset = true;
     container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
@@ -132,20 +163,19 @@ const LightPillar: React.FC<LightPillarProps> = ({
         return mat2(c, -s, s, c);
       }
 
-      // Procedural noise function
+      // Simplified noise function for better performance
       float noise(vec2 coord) {
-        float G = E;
-        vec2 r = (G * sin(G * coord));
-        return fract(r.x * r.y * (1.0 + coord.x));
+        return fract(sin(dot(coord, vec2(12.9898, 78.233))) * 43758.5453);
       }
 
-      // Apply layered wave deformation to position
+      // Simplified wave deformation - reduced iterations
       vec3 applyWaveDeformation(vec3 pos, float timeOffset) {
         float frequency = 1.0;
         float amplitude = 1.0;
         vec3 deformed = pos;
         
-        for(float i = 0.0; i < 4.0; i++) {
+        // Reduced from 4 to 2 iterations for better performance
+        for(float i = 0.0; i < 2.0; i++) {
           deformed.xz *= rot(0.4);
           float phase = timeOffset * i * 2.0;
           vec3 oscillation = cos(deformed.zxy * frequency - phase);
@@ -157,11 +187,10 @@ const LightPillar: React.FC<LightPillarProps> = ({
         return deformed;
       }
 
-      // Polynomial smooth blending between two values
+      // Simplified blending functions
       float blendMin(float a, float b, float k) {
-        float scaledK = k * 4.0;
-        float h = max(scaledK - abs(a - b), 0.0);
-        return min(a, b) - h * h * 0.25 / scaledK;
+        float h = max(k - abs(a - b), 0.0);
+        return min(a, b) - h * h * 0.25 / k;
       }
 
       float blendMax(float a, float b, float k) {
@@ -179,7 +208,7 @@ const LightPillar: React.FC<LightPillarProps> = ({
         vec3 origin = vec3(0.0, 0.0, -10.0);
         vec3 direction = normalize(vec3(uv, 1.0));
 
-        float maxDepth = 50.0;
+        float maxDepth = 30.0; // Reduced from 50.0
         float depth = 0.1;
 
         mat2 rotX = rot(uTime * 0.3);
@@ -189,7 +218,8 @@ const LightPillar: React.FC<LightPillarProps> = ({
 
         vec3 color = vec3(0.0);
 
-        for(float i = 0.0; i < 100.0; i++) {
+        // Reduced iterations from 100 to 50 for better performance
+        for(float i = 0.0; i < 50.0; i++) {
           vec3 pos = origin + direction * depth;
           pos.xz *= rotX;
 
@@ -218,9 +248,9 @@ const LightPillar: React.FC<LightPillarProps> = ({
         float widthNormalization = uPillarWidth / 3.0;
         color = tanh(color * uGlowAmount / widthNormalization);
 
-        // Add noise postprocessing
+        // Simplified noise postprocessing
         float rnd = noise(gl_FragCoord.xy);
-        color -= rnd / 15.0 * uNoiseIntensity;
+        color -= rnd * 0.05 * uNoiseIntensity; // Reduced noise impact
 
         gl_FragColor = vec4(color * uIntensity, 1.0);
       }
@@ -305,13 +335,31 @@ const LightPillar: React.FC<LightPillarProps> = ({
       interactionTarget.addEventListener('touchstart', handleTouchStart, { passive: true });
     }
 
-    // Animation loop with fixed timestep
+    // Animation loop with adaptive frame rate and visibility check
     let lastTime = performance.now();
-    const targetFPS = 60;
+    const deviceIsMobile = window.innerWidth < 768;
+    const targetFPS = deviceIsMobile ? 30 : 45; // Reduced FPS for better performance
     const frameTime = 1000 / targetFPS;
+    let isVisible = true;
+
+    // Intersection Observer to pause animation when not visible
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (!isVisible && rafRef.current) {
+          cancelAnimationFrame(rafRef.current);
+          rafRef.current = null;
+        } else if (isVisible && !rafRef.current) {
+          rafRef.current = requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(container);
 
     const animate = (currentTime: number) => {
-      if (!materialRef.current || !rendererRef.current || !sceneRef.current || !cameraRef.current) return;
+      if (!materialRef.current || !rendererRef.current || !sceneRef.current || !cameraRef.current || !isVisible) return;
 
       const deltaTime = currentTime - lastTime;
       if (deltaTime >= frameTime) {
@@ -348,6 +396,7 @@ const LightPillar: React.FC<LightPillarProps> = ({
 
     // Cleanup
     return () => {
+      observer.disconnect();
       window.removeEventListener('resize', handleResize);
       if (interactive) {
         interactionTarget.removeEventListener('mousemove', handleMouseMove);
@@ -357,13 +406,31 @@ const LightPillar: React.FC<LightPillarProps> = ({
 
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
       }
 
       if (rendererRef.current) {
+        // Force garbage collection of WebGL resources
         rendererRef.current.dispose();
         rendererRef.current.forceContextLoss();
-        if (container.contains(rendererRef.current.domElement)) {
-          container.removeChild(rendererRef.current.domElement);
+        const canvas = rendererRef.current.domElement;
+        if (container.contains(canvas)) {
+          container.removeChild(canvas);
+        }
+        // Clear canvas context
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (gl && 'getParameter' in gl) {
+          const webglContext = gl as WebGLRenderingContext;
+          const numTextureUnits = webglContext.getParameter(webglContext.MAX_TEXTURE_IMAGE_UNITS);
+          for (let unit = 0; unit < numTextureUnits; ++unit) {
+            webglContext.activeTexture(webglContext.TEXTURE0 + unit);
+            webglContext.bindTexture(webglContext.TEXTURE_2D, null);
+            webglContext.bindTexture(webglContext.TEXTURE_CUBE_MAP, null);
+          }
+          webglContext.bindBuffer(webglContext.ARRAY_BUFFER, null);
+          webglContext.bindBuffer(webglContext.ELEMENT_ARRAY_BUFFER, null);
+          webglContext.bindRenderbuffer(webglContext.RENDERBUFFER, null);
+          webglContext.bindFramebuffer(webglContext.FRAMEBUFFER, null);
         }
       }
 
@@ -375,6 +442,7 @@ const LightPillar: React.FC<LightPillarProps> = ({
         geometryRef.current.dispose();
       }
 
+      // Clear all references
       rendererRef.current = null;
       materialRef.current = null;
       sceneRef.current = null;

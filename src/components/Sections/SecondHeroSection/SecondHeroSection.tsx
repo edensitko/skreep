@@ -83,14 +83,14 @@ const SecondHeroSection: React.FC = () => {
                     <LightPillar
                         topColor={colors.topColor}
                         bottomColor={colors.bottomColor}
-                        intensity={isMobile ? 0.3 : 0.5}
-                        rotationSpeed={0.7}
-                        glowAmount={0.005}
-                        pillarWidth={isMobile ? 3 : 3.0}
-                        pillarHeight={isMobile ? 0.5 : 0.4}
-                        noiseIntensity={0.3}
-                        pillarRotation={isMobile ? 20 : 40}
-                        interactive={true}
+                        intensity={isMobile ? 0.2 : 0.4} // Reduced intensity
+                        rotationSpeed={0.5} // Reduced rotation speed
+                        glowAmount={0.003} // Reduced glow
+                        pillarWidth={isMobile ? 2.5 : 2.8} // Reduced pillar width
+                        pillarHeight={isMobile ? 0.3 : 0.35} // Reduced pillar height
+                        noiseIntensity={0.2} // Reduced noise
+                        pillarRotation={isMobile ? 15 : 30} // Reduced rotation
+                        interactive={!isMobile} // Disable interaction on mobile
                         mixBlendMode="screen"
                         parentRef={sectionRef}
                     />

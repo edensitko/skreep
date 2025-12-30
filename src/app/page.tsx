@@ -5,45 +5,82 @@ import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
 import Header from '@/components/Layout/Header/Header';
 import Footer from '@/components/Layout/Footer/Footer';
-import HeroGrid from '@/components/Hero/HeroGrid';
 import PartnersSection from '@/components/Sections/PartnersSection';
 import AboutSection from '@/components/Sections/AboutSection';
-import OurProjectsSection from '@/components/Sections/OurProjectsSection';
-import ServicesSection from '@/components/Sections/InteractiveShowcaseSection';
-import InnovationSection from '@/components/Sections/InnovationSection/InnovationSection';
-import InnovationSection2 from '@/components/Sections/InnovationSection/InnovationSection2';
-import NoCodeBenefitsSection from '@/components/Sections/NoCodeBenefitsSection';
 import SecondHeroSection from '@/components/Sections/SecondHeroSection';
 
-import HeroBackground from '@/components/Hero/HeroBackground';
+// Lazy load heavy components with intersection observer
+const OurProjectsSection = dynamic(() => import('@/components/Sections/OurProjectsSection'), {
+  loading: () => <div className="h-96 bg-black/20 animate-pulse" />
+});
+const ServicesSection = dynamic(() => import('@/components/Sections/InteractiveShowcaseSection'), {
+  loading: () => <div className="h-96 bg-black/20 animate-pulse" />
+});
+const InnovationSection = dynamic(() => import('@/components/Sections/InnovationSection/InnovationSection'), {
+  loading: () => <div className="h-64 bg-black/20 animate-pulse" />
+});
+const InnovationSection2 = dynamic(() => import('@/components/Sections/InnovationSection/InnovationSection2'), { 
+  loading: () => <div className="h-32 bg-black/20 animate-pulse" />
+});
+const NoCodeBenefitsSection = dynamic(() => import('@/components/Sections/NoCodeBenefitsSection'), {
+  loading: () => <div className="h-96 bg-black/20 animate-pulse" />
+});
 
-const AIConsultantCTASection = dynamic(() => import('@/components/Sections/AIConsultantCTASection/AIConsultantCTASection'), { loading: () => <div className="h-64 bg-black/20 animate-pulse" /> });
-const StatsSection           = dynamic(() => import('@/components/Sections/StatsSection/StatsSection'), { loading: () => <div className="h-48 bg-black/20 animate-pulse" /> });
-const FAQSection             = dynamic(() => import('@/components/Sections/FAQSection/FAQSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
-const TestimonialsSection    = dynamic(() => import('@/components/Sections/TestimonialsSection/TestimonialsSection'), { loading: () => <div className="h-64 bg-black/20 animate-pulse" /> });
-const ComparisonTableSection = dynamic(() => import('@/components/Sections/ComparisonTableSection/ComparisonTableSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
-const ContactFormSection     = dynamic(() => import('@/components/Sections/ContactFormSection/ContactFormSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
-const ChatSection            = dynamic(() => import('@/components/Sections/ChatSection/ChatSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
-const BlogSection            = dynamic(() => import('@/components/Sections/BlogSection/BlogSection'), { loading: () => <div className="h-96 bg-black/20 animate-pulse" /> });
+// Heavy animation sections - load only when needed
+const AIConsultantCTASection = dynamic(() => import('@/components/Sections/AIConsultantCTASection/AIConsultantCTASection'), { 
+  loading: () => <div className="h-64 bg-black/20 animate-pulse" />
+});
+const StatsSection = dynamic(() => import('@/components/Sections/StatsSection/StatsSection'), { 
+  loading: () => <div className="h-48 bg-black/20 animate-pulse" />
+});
+const FAQSection = dynamic(() => import('@/components/Sections/FAQSection/FAQSection'), { 
+  loading: () => <div className="h-96 bg-black/20 animate-pulse" />
+});
+const TestimonialsSection = dynamic(() => import('@/components/Sections/TestimonialsSection/TestimonialsSection'), { 
+  loading: () => <div className="h-64 bg-black/20 animate-pulse" />
+});
+const ComparisonTableSection = dynamic(() => import('@/components/Sections/ComparisonTableSection/ComparisonTableSection'), { 
+  loading: () => <div className="h-96 bg-black/20 animate-pulse" />
+});
+const ContactFormSection = dynamic(() => import('@/components/Sections/ContactFormSection/ContactFormSection'), { 
+  loading: () => <div className="h-96 bg-black/20 animate-pulse" />
+});
+const ChatSection = dynamic(() => import('@/components/Sections/ChatSection/ChatSection'), { 
+  loading: () => <div className="h-96 bg-black/20 animate-pulse" />
+});
+const BlogSection = dynamic(() => import('@/components/Sections/BlogSection/BlogSection'), { 
+  loading: () => <div className="h-96 bg-black/20 animate-pulse" />
+});
 export const metadata: Metadata = {
-  title: "סקריפ - פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
-  description: "סקריפ - חברת פתרונות בינה מלאכותית מובילה בישראל. פתרונות טכנולוגיים חדשניים לעסקים: אוטומציה חכמה, צ'אטבוטים, ניתוח נתונים וייעוץ AI. חסכו עלויות והגדילו יעילות עם הפתרונות המתקדמים שלנו.",
+  title: "Skreep - Advanced AI Solutions & Business Automation | Israel",
+  description: "Leading AI solutions company in Israel. We provide advanced artificial intelligence, business automation, web development, mobile apps, and cloud solutions. Transform your business with cutting-edge technology.",
   keywords: [
+    'Skreep',
+    'artificial intelligence Israel',
+    'AI solutions',
+    'business automation',
+    'web development',
+    'mobile apps',
+    'cloud solutions',
+    'chatbots',
+    'data analytics',
+    'SaaS development',
+    'technology consulting',
+    'digital transformation',
+    'AI company Israel',
     'סקריפ',
-    "בינה מלאכותית",
-    "פתרונות טכנולוגיים",
-    "עסקים",
-    "חדשנות",
-    "אוטומציה",
-    "צ'אטבוטים",
-    "אוטומציה עסקית",
-    "בניית אתרים",
-    "פתרונות דיגיטליים",
-    "חדשנות טכנולוגית",
-    "מערכות AI",
-    "שירותי AI",
-    "AI ישראל",
-    "ייעוץ טכנולוגי"
+    'בינה מלאכותית ישראל',
+    'פתרונות AI',
+    'אוטומציה עסקית',
+    'פיתוח אתרים',
+    'אפליקציות מובייל',
+    'פתרונות ענן',
+    'צ\'אטבוטים',
+    'ניתוח נתונים',
+    'פיתוח SaaS',
+    'ייעוץ טכנולוגי',
+    'טרנספורמציה דיגיטלית',
+    'חברת AI ישראל'
   ],
   authors: [{ name: 'Skreep', url: 'https://skreep.com' }],
   creator: 'Skreep',
@@ -57,27 +94,30 @@ export const metadata: Metadata = {
       'x-default': 'https://skreep.com',
     },
   },
+  other: {
+    'google-site-verification': process.env.GOOGLE_SITE_VERIFICATION || '',
+  },
   openGraph: {
-    title: "סקריפ - פתרונות בינה מלאכותית מתקדמים לעסקים",
-    description: "סקריפ - חברת פתרונות בינה מלאכותית מובילה בישראל. פתרונות טכנולוגיים חדשניים לעסקים: אוטומציה חכמה, צ'אטבוטים וניתוח נתונים.",
+    title: "Skreep - Advanced AI Solutions & Business Automation",
+    description: "Leading AI solutions company in Israel. We provide advanced artificial intelligence, business automation, web development, mobile apps, and cloud solutions.",
     url: 'https://skreep.com',
-    siteName: 'סקריפ | Skreep',
+    siteName: 'Skreep | סקריפ',
     images: [
       {
         url: 'https://skreep.com/assets/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Skreep - פתרונות בינה מלאכותית',
+        alt: 'Skreep - Advanced AI Solutions',
       },
     ],
-    locale: 'he_IL',
-    alternateLocale: 'en_US',
+    locale: 'en_US',
+    alternateLocale: ['he_IL'],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: "סקריפ - פתרונות בינה מלאכותית מתקדמים לעסקים",
-    description: "סקריפ - חברת פתרונות בינה מלאכותית מובילה בישראל. פתרונות טכנולוגיים חדשניים לעסקים.",
+    title: "Skreep - Advanced AI Solutions & Business Automation",
+    description: "Leading AI solutions company in Israel. Transform your business with cutting-edge AI technology.",
     site: '@skreep',
     creator: '@skreep',
     images: ['https://skreep.com/assets/images/og-image.jpg'],
@@ -101,94 +141,21 @@ export const metadata: Metadata = {
     apple: [{ url: '/logo-full.webp', sizes: '180x180' }],
   },
   category: 'technology',
-  classification: 'AI Solutions, Technology Services'
+  classification: 'AI Solutions, Technology Services, Business Automation'
 };
 
 export default function RootPage() {
-  // Structured data for better SEO and rich snippets
-  const structuredData = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Skreep",
-      "url": "https://skreep.com",
-      "logo": "https://skreep.com/assets/images/logo-2.png",
-      "description": "פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
-      "foundingDate": "2023",
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+972-50-000-0000",
-        "email": "hello@skreep.com",
-        "contactType": "customer service",
-        "areaServed": "IL",
-        "availableLanguage": ["Hebrew", "English"]
-      },
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "IL",
-        "addressRegion": "Israel"
-      },
-      "sameAs": [
-        "https://www.linkedin.com/company/skreep",
-        "https://twitter.com/skreep"
-      ]
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Skreep",
-      "url": "https://skreep.com",
-      "description": "פתרונות בינה מלאכותית מתקדמים לעסקים",
-      "inLanguage": ["he-IL", "en-US"],
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://skreep.com/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      "name": "פתרונות בינה מלאכותית",
-      "serviceType": "AI Solutions",
-      "provider": {
-        "@type": "Organization",
-        "name": "Skreep"
-      },
-      "areaServed": "Worldwide",
-      "description": "פתרונות AI מותאמים אישית לעסקים: צ'אטבוטים, אוטומציה ובניית אתרים",
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "AI Services",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "name": "צ'אטבוטים חכמים",
-            "description": "פיתוח צ'אטבוטים מתקדמים לשירות לקוחות"
-          },
-          {
-            "@type": "Offer", 
-            "name": "אוטומציה עסקית",
-            "description": "מערכות אוטומציה לייעול תהליכים עסקיים"
-          },
-          {
-            "@type": "Offer",
-            "name": "בניית אתרים",
-            "description": "פיתוח אתרים מתקדמים עם טכנולוגיות AI"
-          }
-        ]
-      }
-    }
-  ];
-
   return (
     <main className="flex bg-black min-h-screen flex-col">
       <Header />
       <SecondHeroSection />
 
+      {/* Load immediately visible sections */}
       <PartnersSection />
       <AboutSection />
       <StatsSection />
+      
+      {/* Lazy load below-the-fold sections */}
       <ChatSection />
       <InnovationSection />
       <ServicesSection />
@@ -201,7 +168,6 @@ export default function RootPage() {
       <BlogSection />
       <InnovationSection2 />
       <ContactFormSection />
-      {/* <HeroBackground /> */}
       <Footer />
     </main>
   );

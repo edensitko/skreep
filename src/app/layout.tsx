@@ -8,6 +8,7 @@ import { DynamicHtmlWrapper } from "@/components/Layout/DynamicHtmlWrapper";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AEO, LocalSEO, PageSEO } from '@/components/SEO';
 import CookieConsent from "@/components/CookieConsent";
+import MemoryMonitor from "@/components/MemoryMonitor";
 
 export default function RootLayout({
   children,
@@ -18,6 +19,7 @@ export default function RootLayout({
     "@type": "Organization",
     "@id": "https://skreep.com#organization",
     name: "Skreep",
+    alternateName: "סקריפ",
     url: "https://skreep.com",
     logo: {
       "@type": "ImageObject",
@@ -25,7 +27,10 @@ export default function RootLayout({
       width: 512,
       height: 512
     },
-    description: "פתרונות בינה מלאכותית מתקדמים לעסקים בישראל",
+    description: {
+      "@language": "en",
+      "@value": "Leading AI solutions company in Israel providing advanced artificial intelligence, business automation, and technology consulting services"
+    },
     sameAs: [
       "https://www.linkedin.com/company/skreep",
       "https://twitter.com/skreep_ai"
@@ -41,7 +46,17 @@ export default function RootLayout({
       "@type": "PostalAddress",
       addressCountry: "IL",
       addressRegion: "Israel"
-    }
+    },
+    knowsAbout: [
+      "Artificial Intelligence",
+      "Business Automation", 
+      "Web Development",
+      "Mobile App Development",
+      "Cloud Solutions",
+      "Data Analytics",
+      "Chatbot Development",
+      "SaaS Development"
+    ]
   };
 
   const website = {
@@ -49,6 +64,7 @@ export default function RootLayout({
     "@id": "https://skreep.com#website",
     url: "https://skreep.com",
     name: "Skreep",
+    alternateName: "סקריפ",
     publisher: { "@id": "https://skreep.com#organization" },
     potentialAction: {
       "@type": "SearchAction",
@@ -58,16 +74,25 @@ export default function RootLayout({
       },
       "query-input": "required name=search_term_string"
     },
-    inLanguage: ["he-IL", "en-US"]
+    inLanguage: ["he-IL", "en-US"],
+    about: [
+      "Artificial Intelligence Solutions",
+      "Business Automation",
+      "Web Development",
+      "Mobile App Development",
+      "Cloud Computing",
+      "Data Analytics",
+      "Technology Consulting"
+    ]
   };
 
   const localBusiness = {
     "@type": "LocalBusiness",
     "@id": "https://skreep.com#business",
-    name: "סקריפ - פתרונות בינה מלאכותית",
+    name: "Skreep - Advanced AI Solutions | סקריפ - פתרונות בינה מלאכותית",
     url: "https://skreep.com",
     telephone: "+972-3-1234567",
-    email: "makwe n",
+    email: "info@skreep.com",
     address: {
       "@type": "PostalAddress",
       streetAddress: "רחוב הטכנולוגיה 123",
@@ -109,6 +134,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased bg-black min-h-screen relative loading font-sans">
         <Analytics />
+        <MemoryMonitor />
         <LanguageProvider>
           <DynamicMetadata />
           <DynamicHtmlWrapper>

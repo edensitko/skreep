@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Enable static export for custom domain
@@ -42,36 +44,70 @@ const nextConfig = {
   
   // Webpack optimizations
   webpack: (config, { dev, isServer }) => {
-    // Reduce memory usage in production
-    if (!dev && !isServer) {
-      config.optimization = {
-        ...config.optimization,
-        splitChunks: {
-          chunks: 'all',
-          cacheGroups: {
-            default: false,
-            vendors: false,
-            // Vendor chunk
-            vendor: {
-              name: 'vendor',
-              chunks: 'all',
-              test: /node_modules/,
-              priority: 20,
+    // Memory optimizations
+    config.optimization = {
+      ...config.optimization,
+      // Split chunks for better caching and memory management
+      splitChunks: {
+        chunks: 'all',
+        minSize: 20000,
+        maxSize: 244000,
+        cacheGroups: {
+          default: false,
+          vendors: false,
+          // Framework chunk (React, Next.js)
+          framework: {
+            name: 'framework',
+            chunks: 'all',
+            test: /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/]/,
+            priority: 40,
+            enforce: true,
+          },
+          // Libraries chunk
+          lib: {
+            test(module) {
+              return module.size() > 160000 && /node_modules[/\\]/.test(module.identifier());
             },
-            // Common chunk
-            common: {
-              name: 'common',
-              minChunks: 2,
-              chunks: 'all',
-              priority: 10,
-              reuseExistingChunk: true,
-              enforce: true,
+            name(module) {
+              const hash = crypto.createHash('sha1');
+              const identifier = module.libIdent ? module.libIdent({ context: config.context }) : module.identifier();
+              if (identifier) {
+                hash.update(identifier);
+                return hash.digest('hex').substring(0, 8);
+              }
+              return 'lib';
             },
+            priority: 30,
+            minChunks: 1,
+            reuseExistingChunk: true,
+          },
+          // Vendor chunk
+          vendor: {
+            name: 'vendor',
+            chunks: 'all',
+            test: /node_modules/,
+            priority: 20,
+          },
+          // Common chunk
+          common: {
+            name: 'common',
+            minChunks: 2,
+            chunks: 'all',
+            priority: 10,
+            reuseExistingChunk: true,
+            enforce: true,
           },
         },
-      };
-    }
-    
+      },
+    };
+
+    // Reduce bundle size by excluding unnecessary modules
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      // Reduce lodash bundle size
+      'lodash': 'lodash-es',
+    };
+
     return config;
   },
   
