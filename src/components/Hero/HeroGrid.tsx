@@ -146,30 +146,30 @@ export default function HeroGrid() {
             </div>
 
             {/* Right Side - Content */}
-            <div className={`w-full lg:w-1/2 order-1 lg:order-2 text-center lg:${language === 'he' ? 'text-right' : 'text-left'}`}>
+            <div className={`w-full lg:w-1/2 order-1 lg:order-2 text-center lg:${language === 'he' ? 'text-right' : 'text-left'} px-2 md:px-0`}>
               {/* Heading */}
-              <h2 className={`text-4xl md:text-5xl xl:text-55 text-white/70 font-semibold mb-[35px] pointer-events-auto xl:ml-5 mx-auto text-center lg:${language === 'he' ? 'text-right' : 'text-left'}`} dir={language === 'he' ? 'rtl' : 'ltr'}>
-                <span>{t(`hero.${userType}.title`)}</span><span className="relative inline-block px-3 font-bold text-white uppercase">
+              <h2 className={`text-3xl md:text-5xl xl:text-55 text-white/70 font-semibold mb-6 md:mb-[35px] pointer-events-auto xl:ml-5 mx-auto text-center lg:${language === 'he' ? 'text-right' : 'text-left'} leading-tight`} dir={language === 'he' ? 'rtl' : 'ltr'}>
+                <span className="block md:inline">{t(`hero.${userType}.title`)}</span><span className="relative inline-block px-2 md:px-3 font-bold text-white uppercase mx-1">
                   <span className="relative z-10">{t(`hero.${userType}.titleHighlight`)}</span>
                   <span className="absolute top-0 left-0 block w-full h-full bg-gradient-to-r from-cyan-400"></span>
                 </span>
                 <br />
-                <span className="italic text-2xl md:text-3xl xl:text-4xl">{t(`hero.${userType}.subtitle`)} </span>
+                <span className="italic text-xl md:text-3xl xl:text-4xl block mt-2">{t(`hero.${userType}.subtitle`)} </span>
               </h2>
 
               {/* CTA Buttons */}
-              <div className="flex flex-wrap gap-4 animate-in justify-center lg:justify-start" style={{ animationName: 'fade-up', animationDuration: '0.8s', animationDelay: '0.6s', animationFillMode: 'both' }}>
-                <p className={`text-white/60 bg-white/10 mb-10 p-3 rounded text-xs w-full text-center lg:w-auto ${
+              <div className="flex flex-col md:flex-row flex-wrap gap-3 md:gap-4 animate-in justify-center lg:justify-start px-2 md:px-0" style={{ animationName: 'fade-up', animationDuration: '0.8s', animationDelay: '0.6s', animationFillMode: 'both' }}>
+                <p className={`text-white/60 bg-white/10 mb-4 md:mb-10 p-3 rounded text-xs w-full text-center lg:w-auto ${
                   language === 'he' 
                     ? 'lg:border-r-4 lg:border-blue-500 lg:pr-5 lg:ml-20 lg:rounded-l-2xl lg:text-right' 
                     : 'lg:border-l-4 lg:border-blue-500 lg:pl-5 lg:mr-20 lg:rounded-r-2xl lg:text-left'
                 }`} dir={language === 'he' ? 'rtl' : 'ltr'}>
                   {t(`hero.${userType}.description`)}</p>
-                <Link href="/services" className="flex items-center justify-center gap-2 bg-transparent border border-cyan-400/30 text-white px-8 py-4 rounded-full hover:bg-cyan-400/10 transition-all">
+                <Link href="/services" className="flex items-center justify-center gap-2 bg-transparent border border-cyan-400/30 text-white px-6 md:px-8 py-3 md:py-4 rounded-full hover:bg-cyan-400/10 transition-all w-full md:w-auto text-sm md:text-base">
                   <span>{t(`hero.${userType}.servicesButton`)}</span>
                  
                 </Link>
-                <Link href="/contact" className="flex items-center justify-center gap-2 border-white/10 gradient-to-r from-cyan-400/40 to-cyan-400/40 bg-cyan-400/40 border-cyan-400/40 text-white px-8 py-4 rounded-full hover:bg-cyan-500/40 transition-all">
+                <Link href="/contact" className="flex items-center justify-center gap-2 border-white/10 gradient-to-r from-cyan-400/40 to-cyan-400/40 bg-cyan-400/40 border-cyan-400/40 text-white px-6 md:px-8 py-3 md:py-4 rounded-full hover:bg-cyan-500/40 transition-all w-full md:w-auto text-sm md:text-base">
                   <span>{t(`hero.${userType}.contactButton`)}</span>
                  
                 </Link>

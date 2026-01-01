@@ -8,7 +8,6 @@ export function generateStaticParams() {
     { id: 'automation' },
     { id: 'mobile-apps' },
     { id: 'cloud-solutions' },
-    { id: 'data-analytics' },
     { id: 'saas-development' },
     { id: 'chatbot-development' },
   ];

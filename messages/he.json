@@ -259,20 +259,6 @@
         "imageBg": "/assets/images/servicesimg/4.png"
       },
       {
-        "id": "data-analytics",
-        "title": "ניתוח נתונים ו-BI",
-        "description": "תובנות עסקיות מבוססות נתונים",
-        "longDescription": "יצירת מערכות ניתוח נתונים מתקדמות ודשבורדים אינטראקטיביים לקבלת החלטות מבוססות נתונים.",
-        "features": [
-          "דשבורדים אינטראקטיביים",
-          "ניתוח נתונים מתקדם",
-          "דוחות אוטומטיים",
-          "תחזיות עסקיות"
-        ],
-        "color": "from-indigo-500 to-purple-600",
-        "imageBg": "/assets/images/servicesimg/6.png"
-      },
-      {
         "id": "chatbot-development",
         "title": "בניית צ'אטבוטים",
         "description": "צ'אטבוטים חכמים לשירות לקוחות ומכירות",
@@ -286,7 +272,7 @@
           "דשבורד ניהול שיחות"
         ],
         "color": "from-violet-500 to-purple-600",
-        "imageBg": "/assets/images/servicesimg/1.png"
+        "imageBg": "/assets/images/servicesimg/12.png"
       }
     ]
   },

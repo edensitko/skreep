@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useUserType } from '@/hooks/useGlobalUserType';
 
 // Import translations directly
 import heMessages from '../../../../messages/he.json';
@@ -25,6 +26,14 @@ const messages = {
 
 function InteractiveShowcaseSection() {
   const { language, t } = useLanguage();
+  const { userType } = useUserType();
+  
+  // Define colors based on user type
+  const colors = {
+    primary: userType === 'entrepreneurs' ? '#22c55e' : '#22d3ee', // green-500 : cyan-400
+    primaryRgb: userType === 'entrepreneurs' ? '34, 197, 94' : '34, 211, 238',
+    hover: userType === 'entrepreneurs' ? '#86efac' : '#a5f3fc', // green-300 : cyan-200
+  };
   
   // Get services data directly from translation files
   const translatedServices = React.useMemo(() => {
@@ -277,9 +286,9 @@ function InteractiveShowcaseSection() {
                     key={`${service.id}-${index}`}
                     data-service-id={service.id}
                     onClick={() => selectService(service)}
-                    className={`flex-shrink-0 w-52 lg:w-60 h-36 md:h-36 backdrop-blur-sm border rounded-2xl p-4 md:p-6 cursor-pointer group transition-all duration-300 hover:scale-105 bg-cover bg-center bg-no-repeat relative overflow-hidden ${
+                    className={`flex-shrink-0 w-52 lg:w-60 h-38 md:h-38 backdrop-blur-sm border rounded-2xl p-4 md:p-6 cursor-pointer group transition-all duration-300 hover:scale-105 bg-cover bg-center bg-no-repeat relative overflow-hidden ${
                       selectedService?.id === service.id
-                        ? 'opacity-100 border-cyan-400/60 shadow-lg shadow-cyan-400/20 scale-105 ring-2 ring-cyan-400/30'
+                        ? 'opacity-100 shadow-lg scale-105 ring-2'
                         : 'opacity-70 border-white/20 hover:border-white/30 hover:opacity-90'
                     }`}
                     style={{
@@ -287,32 +296,30 @@ function InteractiveShowcaseSection() {
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                       backgroundRepeat: 'no-repeat',
+                      ...(selectedService?.id === service.id && {
+                        borderColor: `rgba(${colors.primaryRgb}, 0.6)`,
+                        boxShadow: `0 10px 15px -3px rgba(${colors.primaryRgb}, 0.2), 0 4px 6px -4px rgba(${colors.primaryRgb}, 0.2)`,
+                        '--tw-ring-color': `rgba(${colors.primaryRgb}, 0.3)`,
+                      } as React.CSSProperties),
                     }}
                     dir={language === 'he' ? 'rtl' : 'ltr'}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-black/50 rounded-2xl"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-black/40 to-black/60 rounded-2xl"></div>
                     
                     <div className="text-center relative z-20 h-full flex flex-col justify-center">
-                      <h3 className="text-lg md:text-xl font-bold text-white mb-2 group-hover:text-cyan-200 transition-colors">
+                      <h3 
+                        className="text-lg md:text-xl font-bold text-white mb-2 transition-colors"
+                        style={{
+                          ['--hover-color' as string]: colors.hover,
+                        } as React.CSSProperties}
+                        onMouseEnter={(e) => e.currentTarget.style.color = colors.hover}
+                        onMouseLeave={(e) => e.currentTarget.style.color = 'white'}
+                      >
                         {service.title}
                       </h3>
                       <p className="text-white/70 text-sm group-hover:text-white/90 transition-colors line-clamp-2">
                         {service.description}
                       </p>
-                    </div>
-                    
-                    {/* Selection Indicator */}
-                    {selectedService?.id === service.id && (
-                      <div className="absolute top-3 right-3 w-8 h-8 bg-cyan-400 rounded-full flex items-center justify-center animate-pulse-glow">
-                        <svg className="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                    )}
-                    
-                    {/* Click Indicator */}
-                    <div className="absolute bottom-3 left-3 text-white/60 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                      {language === 'he' ? 'לחץ לפרטים' : 'Click for details'}
                     </div>
                   </div>
                 ))}
@@ -325,110 +332,117 @@ function InteractiveShowcaseSection() {
       {/* Enhanced Content Box */}
       {selectedService && (
         <div className="mt-6 w-[85%] mx-auto relative" data-content-box>
-          {/* Main Content Container */}
-          <div className="bg-gradient-to-br from-black/30 via-black/20 to-black/10 backdrop-blur-3xl border border-white/20 rounded-3xl lg:rounded-4xl shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-700 ease-out hover:backdrop-blur-[12px] hover:border-white/30 hover:shadow-cyan-400/10 hover:shadow-2xl animate-in"
-               style={{ 
-                 animationName: 'fade-in-up', 
-                 animationDuration: '0.6s', 
-                 animationFillMode: 'both' 
-               }}>
-            
-            {/* Animated Background Effects */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-60 rounded-3xl lg:rounded-4xl"></div>
-            <div className="absolute inset-0 bg-gradient-to-tl from-cyan-400/8 via-transparent to-purple-400/8 opacity-50 rounded-3xl lg:rounded-4xl"></div>
-            
-            {/* Full-Width Image Banner */}
+          {/* Main Content Container - Now Clickable */}
+          <Link href={`/services/${selectedService.id}`} className="block group">
             <div 
-              className="w-full h-32 md:h-40 lg:h-48 bg-cover bg-center bg-no-repeat relative overflow-hidden rounded-t-3xl lg:rounded-t-4xl transition-all duration-500"
+              className="bg-gradient-to-br from-black/30 via-black/20 to-black/10 backdrop-blur-3xl border border-white/20 rounded-3xl lg:rounded-4xl shadow-2xl shadow-black/50 relative overflow-hidden transition-all duration-700 ease-out hover:backdrop-blur-[12px] hover:border-white/30 hover:shadow-2xl hover:scale-[1.02] cursor-pointer animate-in"
               style={{
-                backgroundImage: `url(${selectedService.imageBg})`,
+                animationName: 'fade-in-up',
+                animationDuration: '0.6s',
+                animationFillMode: 'both',
+                ['--hover-shadow' as string]: `rgba(${colors.primaryRgb}, 0.1)`,
+              } as React.CSSProperties}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = `0 25px 50px -12px rgba(${colors.primaryRgb}, 0.1)`;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.5)';
               }}
             >
-              {/* Image Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60"></div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
               
-              {/* Service Icon/Badge */}
-              <div className="absolute top-4 left-4 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full p-3">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-            </div>
-
-            {/* Content Wrapper */}
-            <div 
-              key={selectedService.id}
-              className="relative z-10 p-6 lg:p-8"
-            >
-              {/* Header Section */}
-              <div className="text-center mb-8" >
-                <h2 className="text-2xl lg:text-3xl font-bold bg-gradient-to-br from-white via-white/90 to-white/70 bg-clip-text text-transparent mb-3 leading-tight">
-                  {selectedService.title}
-                </h2>
-                <p className="text-white/80 text-base lg:text-lg leading-relaxed max-w-2xl mx-auto">
-                  {selectedService.longDescription}
-                </p>
-              </div>
-
-              {/* Features Grid - 2 Columns Mobile, 3 Columns Desktop */}
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-3 mb-8">
-                {selectedService.features.map((feature, index) => (
-                  <div 
-                    key={index} 
-                    className="flex items-center gap-2 lg:gap-4 p-2 lg:p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20"
-                  >
-                    <div className="w-5 h-5 lg:w-6 lg:h-6 bg-white/10 border border-white/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <svg className="w-2.5 h-2.5 lg:w-3 lg:h-3 text-white/80" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-white/90 text-xs lg:text-sm font-medium">
-                      {feature}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Link
-                  href={`/services/${selectedService.id}`}
-                  className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-8 py-3 rounded-full font-semibold hover:from-cyan-500 hover:to-blue-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-cyan-400/25 flex items-center gap-2"
-                  dir={language === 'he' ? 'rtl' : 'ltr'}
-                >
-                  {language === 'he' ? 'למידע נוסף' : 'Learn More'}
-                  <svg 
-                    className={`w-4 h-4 transition-transform duration-300 ${language === 'he' ? 'rotate-180' : ''}`}
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
+              {/* Animated Background Effects */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-60 rounded-3xl lg:rounded-4xl"></div>
+              <div 
+                className="absolute inset-0 opacity-50 rounded-3xl lg:rounded-4xl"
+                style={{
+                  background: `linear-gradient(to top left, rgba(${colors.primaryRgb}, 0.08), transparent, rgba(168, 85, 247, 0.08))`
+                }}
+              ></div>
+              
+              {/* Full-Width Image Banner */}
+              <div 
+                className="w-full h-32 md:h-40 lg:h-48 bg-cover bg-center bg-no-repeat relative overflow-hidden rounded-t-3xl lg:rounded-t-4xl transition-all duration-500"
+                style={{
+                  backgroundImage: `url(${selectedService.imageBg})`,
+                }}
+              >
+                {/* Image Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
                 
-                <Link
-                  href="/contact"
-                  className="bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-3 rounded-full font-semibold hover:bg-white/20 hover:border-white/30 transition-all duration-300 hover:scale-105 flex items-center gap-2"
-                  dir={language === 'he' ? 'rtl' : 'ltr'}
-                >
-                  {language === 'he' ? 'קבל הצעת מחיר' : 'Get Quote'}
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                {/* Click Indicator */}
+                <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
-                </Link>
+                </div>
               </div>
 
+              {/* Content Wrapper */}
+              <div 
+                key={selectedService.id}
+                className="relative z-10 p-6 lg:p-8"
+              >
+                {/* Header Section */}
+                <div className="text-center mb-8" >
+                  <h2 className="text-2xl lg:text-3xl font-bold bg-gradient-to-br from-white via-white/90 to-white/70 bg-clip-text text-transparent mb-3 leading-tight">
+                    {selectedService.title}
+                  </h2>
+                  <p className="text-white/80 text-base lg:text-lg leading-relaxed max-w-2xl mx-auto">
+                    {selectedService.longDescription}
+                  </p>
+                </div>
+
+                {/* Features Grid - 2 Columns Mobile, 3 Columns Desktop */}
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-3 mb-8">
+                  {selectedService.features.map((feature, index) => (
+                    <div 
+                      key={index} 
+                      className="flex items-center gap-2 lg:gap-4 p-2 lg:p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-white/20"
+                    >
+                      <div className="w-5 h-5 lg:w-6 lg:h-6 bg-white/10 border border-white/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg className="w-2.5 h-2.5 lg:w-3 lg:h-3 text-white/80" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span className="text-white/90 text-xs lg:text-sm font-medium">
+                        {feature}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Click to Learn More Indicator */}
+                <div className="text-center">
+                  <div 
+                    className="inline-flex items-center gap-2 font-medium text-sm opacity-75 hover:opacity-100 transition-opacity"
+                    style={{ color: colors.primary }}
+                  >
+                    <span>{language === 'he' ? 'לחץ למידע נוסף' : 'Click to learn more'}</span>
+                    <svg 
+                      className={`w-4 h-4 transition-transform duration-300 ${language === 'he' ? 'rotate-180' : ''}`}
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+
+              </div>
+              
+              {/* Enhanced Background Decorations */}
+              <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                <div 
+                  className="absolute top-1/4 right-1/4 w-40 h-40 rounded-full blur-3xl animate-pulse"
+                  style={{ backgroundColor: `rgba(${colors.primaryRgb}, 0.1)` }}
+                ></div>
+                <div className="absolute bottom-1/4 left-1/4 w-32 h-32 bg-purple-400/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-lightblue-400/8 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+              </div>
             </div>
-            
-            {/* Enhanced Background Decorations */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-              <div className="absolute top-1/4 right-1/4 w-40 h-40 bg-cyan-400/10 rounded-full blur-3xl animate-pulse"></div>
-              <div className="absolute bottom-1/4 left-1/4 w-32 h-32 bg-purple-400/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-              <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-blue-400/8 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-            </div>
-          </div>
+          </Link>
 
           {/* View All Services Button - Outside the card */}
           <div className="flex justify-center mt-8">

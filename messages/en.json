@@ -1,11 +1,11 @@
 {
   "hero": {
     "business": {
-      "title": "From Idea -",
-      "titleHighlight": " To Winning Product",
+      "title": "From Idea",
+      "titleHighlight": "To Product",
       "subtitle": "Tailored Solutions for Businesses",
       "description": "Developing advanced AI solutions for businesses including websites, chatbots, automations",
-      "servicesButton": "To Our AI Consultant",
+      "servicesButton": "Our AI Consultant",
       "contactButton": "Business Solutions"
     },
     "entrepreneurs": {
@@ -217,16 +217,7 @@
         "longDescription": "Development of cloud-based SaaS systems with interactive dashboards, data analysis, user management and advanced integrations.",
         "features": ["Real-time Dashboards", "External Services Integration", "Custom Development", "Cloud Scalability & Advanced Security"],
         "color": "from-indigo-500 to-purple-600",
-        "imageBg": "/assets/images/servicesimg/4.png"
-      },
-      {
-        "id": "data-analytics",
-        "title": "Data Analytics & BI",
-        "description": "Data-driven business insights",
-        "longDescription": "Creating advanced data analysis systems and interactive dashboards for data-driven decision making.",
-        "features": ["Interactive Dashboards", "Advanced Data Analysis", "Automated Reports", "Business Forecasting"],
-        "color": "from-indigo-500 to-purple-600",
-        "imageBg": "/assets/images/servicesimg/6.png"
+        "imageBg": "/assets/images/servicesimg/12.png"
       },
       {
         "id": "chatbot-development",
@@ -235,7 +226,7 @@
         "longDescription": "Development of AI-powered chatbots for WhatsApp, Facebook, Telegram and websites. Automated 24/7 customer service with natural conversation capabilities.",
         "features": ["WhatsApp Chatbot", "GPT-4 Integration", "24/7 Customer Service", "Automatic Lead Collection", "Hebrew & English Support", "Conversation Dashboard"],
         "color": "from-violet-500 to-purple-600",
-        "imageBg": "/assets/images/servicesimg/1.png"
+        "imageBg": "/assets/images/servicesimg/11.png"
       }
     ]
   },

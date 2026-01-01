@@ -47,11 +47,6 @@ function FooterSection() {
     scrollToTop();
   }, []);
 
-  const handleDesktopScrollToTop = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    scrollToTop();
-  }, []);
-
   // ============================================================================
   // EFFECTS
   // ============================================================================
@@ -149,34 +144,6 @@ function FooterSection() {
             <span className="text-white">
               {language === 'he' ? '2025 © כל הזכויות שמורות ל-סקריפ מערכות' : '2025 © All rights reserved to Skreep Systems'}
             </span>
-
-            {/* Scroll to Top Button */}
-            <div className="relative">
-              {showScrollTop && (
-                <a 
-                  href="#" 
-                  onClick={handleDesktopScrollToTop}
-                  aria-label={t('footer.ariaLabels.scrollToTop')}
-                  className="w-[45px] h-[45px] rounded-full border-[3px] border-black flex justify-center items-center bg-cyan-400 absolute -top-[55px] hover:bg-cyan-300 transition-colors"
-                >
-                  <svg 
-                    width="24" 
-                    height="24" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path 
-                      d="M12 19V5M5 12L12 5L19 12" 
-                      stroke="black" 
-                      strokeWidth="2" 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </a>
-              )}
-            </div>
 
           </div>
         </div>

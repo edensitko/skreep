@@ -64,7 +64,7 @@ export default function HeroGridSecond() {
             {/* Right Side - Content */}
             <div className={`w-full lg:w-1/2 order-1 lg:order-2 text-center lg:${language === 'he' ? 'text-right' : 'text-left'}`}>
               {/* Heading */}
-              <h2 className={`text-4xl md:text-5xl xl:text-55 text-white/70 font-semibold mb-[35px] pointer-events-auto xl:ml-5 mx-auto text-center lg:${language === 'he' ? 'text-right' : 'text-left'}`} dir={language === 'he' ? 'rtl' : 'ltr'}>
+              <h2 className={`text-2xl md:text-5xl xl:text-55 text-white/70 font-semibold mb-[35px] pointer-events-auto xl:ml-5 mx-auto text-center lg:${language === 'he' ? 'text-right' : 'text-left'}`} dir={language === 'he' ? 'rtl' : 'ltr'}>
                 <span>{t(`hero.${userType}.title`)} </span>
                 <span className="relative inline-block px-3 font-bold text-white uppercase">
                   <span className="relative z-10">{t(`hero.${userType}.titleHighlight`)} </span>

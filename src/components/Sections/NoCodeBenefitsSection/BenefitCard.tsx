@@ -1,6 +1,7 @@
 'use client';
 
 import React, { memo } from 'react';
+import { useUserType } from '@/hooks/useGlobalUserType';
 import { ANIMATION_CONFIG } from './constants';
 import type { BenefitCardProps } from './types';
 
@@ -13,6 +14,9 @@ const BenefitCard = memo<BenefitCardProps>(({
 
   className = '' 
 }) => {
+  const { userType } = useUserType();
+  const isEntrepreneur = userType === 'entrepreneurs';
+  
   return (
     <div className={`w-full ${className}`}>
       <div 
@@ -47,6 +51,12 @@ const BenefitCard = memo<BenefitCardProps>(({
                 backgroundSize: '20px 20px'
               }}
             />
+            {/* Green overlay for entrepreneurs */}
+            {isEntrepreneur && (
+              <div 
+                className="absolute inset-0 bg-green-500/90 transition-opacity duration-700"
+              />
+            )}
           </div>
         </div>
         
